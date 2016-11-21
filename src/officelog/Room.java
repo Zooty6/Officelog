@@ -1,6 +1,7 @@
 package officelog;
-// Made by Zooty
-
+/**
+ * @author Zooty
+ */
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;

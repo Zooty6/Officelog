@@ -1,23 +1,18 @@
 package officelog;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 
 public class Officelog extends Application {
     
     @Override
-    public void start(Stage primaryStage) {
-               
+    public void start(Stage primaryStage) throws Exception{
+        /*       
         Button btn = new Button();
         btn.setText("Do the thing");
         btn.setOnAction(new EventHandler<ActionEvent>() {
@@ -39,6 +34,14 @@ public class Officelog extends Application {
         
         primaryStage.setTitle("Test");
         primaryStage.setScene(scene);
+        primaryStage.show();
+*/
+        Parent root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Officelog");
+        primaryStage.setResizable(false);//gombok szétesnek
+        primaryStage.sizeToScene();
         primaryStage.show();
     }
 

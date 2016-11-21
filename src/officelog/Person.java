@@ -1,6 +1,7 @@
 package officelog;
-// Made by Zooty
-
+/**
+ * @author Zooty
+ */
 import java.awt.image.BufferedImage;
 
 

@@ -1,6 +1,7 @@
 package officelog;
-// Made by Zooty
-
+/**
+ * @author Zooty
+ */
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
