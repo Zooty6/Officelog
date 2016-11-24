@@ -1,5 +1,7 @@
 package officelog;
-
+/**
+ * @author Szandi, Zooty
+ */
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +13,8 @@ import javafx.stage.Stage;
 public class Officelog extends Application {
     
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception{        
+        //<editor-fold defaultstate="collapsed" desc="comment">
         /*       
         Button btn = new Button();
         btn.setText("Do the thing");
@@ -35,17 +38,22 @@ public class Officelog extends Application {
         primaryStage.setTitle("Test");
         primaryStage.setScene(scene);
         primaryStage.show();
-*/
+        */
+        //</editor-fold>
+        
         Parent root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
         Scene scene = new Scene(root);
+        
         primaryStage.setScene(scene);
         primaryStage.setTitle("Officelog");
         primaryStage.setResizable(false);//gombok szétesnek
         primaryStage.sizeToScene();
         primaryStage.show();
+        
     }
 
     public static void main(String[] args) {
+        //Model model = new Model();        
         launch(args);
     }
     
