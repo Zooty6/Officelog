@@ -2,9 +2,9 @@ package officelog;
 /* *
  * @author Zooty
  */
-import java.awt.image.BufferedImage;
 import java.util.HashSet;
 import java.util.Set;
+import javafx.scene.image.Image;
 
 
 public class Employee extends Person{
@@ -17,7 +17,7 @@ public class Employee extends Person{
         Permissions = new HashSet<>();
     }
             
-    public Employee(String Name, BufferedImage Pic, int ID, String Job) {
+    public Employee(String Name, Image Pic, int ID, String Job) {
         super(Name, Pic, ID);
         this.Job = Job;
         Permissions = new HashSet<>();

@@ -23,11 +23,11 @@ public class dashboardController implements Initializable {
     private Button btn_boss;    
     @FXML
     private void handleButtonAction(ActionEvent event) {
-       /* Alert copyright=new Alert(Alert.AlertType.INFORMATION);
+        Alert copyright=new Alert(Alert.AlertType.INFORMATION);
         copyright.setTitle("");
         copyright.setHeaderText("Készítették");
-        copyright.setContentText("Kecskeméty Zoltán \nMészáros Szandra");
-        copyright.show();*/
+        copyright.setContentText("Kecskeméthy Zoltán \nMészáros Szandra");
+        copyright.show();
     }
     
     @Override

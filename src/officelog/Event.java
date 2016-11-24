@@ -8,15 +8,39 @@ import java.util.Date;
 
 
 public class Event {
-    private String Type;
-    private Date EventDate;
-    private Person Who;
-    private Room Where;
+    final private String Type;
+    final private Date EventDate;
+    final private Person Who;
+    final private Room Where;
 
-    public Event(String Type, Person who, Room Where) {
+    public Event(String Type, Person Who, Room Where) {
         this.Type = Type;
-        this.Who = who;
+        this.Who = Who;
         this.Where = Where;
+        EventDate = new Date();
+    }
+    
+    public Event(String Type) {
+        // For system events.
+        this.Type = Type;
+        this.Who = null;
+        this.Where = null;
+        EventDate = new Date();
+    }
+
+    public Event(String Type, Person Who) {
+        //For Person specific events (if needed).
+        this.Type = Type;        
+        this.Who = Who;
+        this.Where = null;
+        EventDate = new Date();
+    }
+
+    public Event(String Type, Room Where) {
+        //For Room specific events (if needed).
+        this.Type = Type;
+        this.Where = Where;
+        this.Who = null;
         EventDate = new Date();
     }
 
@@ -38,7 +62,17 @@ public class Event {
     
     @Override
     public String toString(){
+        //DOES NOT HANDLE ROOM AND PERSON SPECIFIC EVENTS YET!
+        String msg="Something went wrong. This event isn't defined.";
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        return dateFormat.format(EventDate)+": "+Type+": "+Where+": "+Who;
+        if(Who == null && Where == null)
+            msg = dateFormat.format(EventDate)+": "+Type;
+        if(Who == null && Where != null)
+            ;//TODO Room specific event
+        if(Who != null && Where == null)
+            ;//TODO Person specific event
+        if(Who != null && Where != null)
+            msg = dateFormat.format(EventDate)+": "+Type+": "+Where+": "+Who;
+        return msg;
     }
 }

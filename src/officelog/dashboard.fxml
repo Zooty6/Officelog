@@ -22,7 +22,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+              <MenuItem mnemonicParsing="false" onAction="#handleButtonAction" text="Delete" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Súgó">
@@ -86,7 +86,7 @@
             <RowConstraints maxHeight="165.0" minHeight="0.0" prefHeight="37.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <GridPane GridPane.rowIndex="1" GridPane.rowSpan="4" GridPane.valignment="TOP">
+            <GridPane GridPane.rowIndex="1" GridPane.rowSpan="3" GridPane.valignment="TOP">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                </columnConstraints>
@@ -94,23 +94,23 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button alignment="TOP_LEFT" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="319.0" prefWidth="111.0" text="Tárgyaló" />
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="4">
+                  <Button alignment="TOP_LEFT" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyReleased="#handleButtonAction" text="R1" />
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="r1c">
                      <GridPane.margin>
                         <Insets left="15.0" top="30.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="Button">
+                  <Button contentDisplay="CENTER" mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="r1a">
                      <GridPane.margin>
                         <Insets bottom="80.0" left="15.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="21.0" prefWidth="6.0" text="Button">
+                  <Button contentDisplay="CENTER" mnemonicParsing="false" prefHeight="21.0" prefWidth="6.0" text="r1b">
                      <GridPane.margin>
                         <Insets bottom="80.0" left="65.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="r1d">
                      <GridPane.margin>
                         <Insets left="65.0" top="30.0" />
                      </GridPane.margin>
@@ -125,23 +125,23 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="131.0" prefWidth="58.0" text="Boss" />
-                  <Button mnemonicParsing="false" prefHeight="6.0" prefWidth="0.0" text="Button">
+                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="131.0" prefWidth="58.0" text="R2" />
+                  <Button mnemonicParsing="false" prefHeight="6.0" prefWidth="0.0" text="r2a">
                      <GridPane.margin>
                         <Insets bottom="30.0" left="2.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="4.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="4.0" prefWidth="0.0" text="r2b">
                      <GridPane.margin>
                         <Insets bottom="30.0" left="40.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="1.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="1.0" prefWidth="0.0" text="b2c">
                      <GridPane.margin>
                         <Insets left="2.0" top="50.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="6.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="6.0" prefWidth="0.0" text="r2d">
                      <GridPane.margin>
                         <Insets left="40.0" top="50.0" />
                      </GridPane.margin>
@@ -156,23 +156,23 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="124.0" prefWidth="68.0" text="Button" />
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="Button">
+                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="124.0" prefWidth="68.0" text="R3" />
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="r3a">
                      <GridPane.margin>
                         <Insets bottom="30.0" left="2.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="r3c">
                      <GridPane.margin>
                         <Insets left="2.0" top="50.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="13.0" prefWidth="12.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="13.0" prefWidth="12.0" text="r3b">
                      <GridPane.margin>
                         <Insets bottom="30.0" left="40.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="r3d">
                      <GridPane.margin>
                         <Insets left="40.0" top="50.0" />
                      </GridPane.margin>
@@ -187,23 +187,23 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="132.0" prefWidth="68.0" text="Button" />
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="Button">
+                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="132.0" prefWidth="68.0" text="R4" />
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="r4a">
                      <GridPane.margin>
                         <Insets bottom="30.0" left="2.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="r4c">
                      <GridPane.margin>
                         <Insets left="2.0" top="50.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="13.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="13.0" prefWidth="0.0" text="r4b">
                      <GridPane.margin>
                         <Insets bottom="30.0" left="35.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="r4d">
                      <GridPane.margin>
                         <Insets left="35.0" top="50.0" />
                      </GridPane.margin>
@@ -218,23 +218,23 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="135.0" prefWidth="95.0" text="Button" />
-                  <Button mnemonicParsing="false" prefHeight="20.0" prefWidth="9.0" text="Button">
+                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="135.0" prefWidth="95.0" text="R5" />
+                  <Button mnemonicParsing="false" prefHeight="20.0" prefWidth="9.0" text="r5a">
                      <GridPane.margin>
                         <Insets bottom="30.0" left="10.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="r5c">
                      <GridPane.margin>
                         <Insets left="10.0" top="50.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="16.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="16.0" prefWidth="0.0" text="r5b">
                      <GridPane.margin>
                         <Insets bottom="30.0" left="55.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="2.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="2.0" text="r5d">
                      <GridPane.margin>
                         <Insets left="55.0" top="50.0" />
                      </GridPane.margin>
@@ -249,18 +249,18 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="57.0" prefWidth="142.0" text="Button" />
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="2.0" text="Button">
+                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="57.0" prefWidth="142.0" text="R9" />
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="2.0" text="r9a">
                      <GridPane.margin>
                         <Insets left="10.0" top="20.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="1.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="1.0" prefWidth="0.0" text="r9b">
                      <GridPane.margin>
                         <Insets left="40.0" top="20.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="4.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="4.0" prefWidth="0.0" text="r9c">
                      <GridPane.margin>
                         <Insets left="70.0" top="20.0" />
                      </GridPane.margin>
@@ -275,23 +275,23 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="186.0" prefWidth="100.0" text="Button" />
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="Button">
+                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="186.0" prefWidth="100.0" text="R6" />
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="r6a">
                      <GridPane.margin>
                         <Insets bottom="30.0" left="10.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="7.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="7.0" text="r6c">
                      <GridPane.margin>
                         <Insets left="10.0" top="50.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="r6b">
                      <GridPane.margin>
                         <Insets bottom="30.0" left="60.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="r6d">
                      <GridPane.margin>
                         <Insets left="60.0" top="50.0" />
                      </GridPane.margin>
@@ -306,23 +306,23 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="243.0" prefWidth="100.0" text="Button" />
-                  <Button mnemonicParsing="false" prefHeight="10.0" prefWidth="9.0" text="Button">
+                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="243.0" prefWidth="100.0" text="R8" />
+                  <Button mnemonicParsing="false" prefHeight="10.0" prefWidth="9.0" text="r8a">
                      <GridPane.margin>
                         <Insets bottom="80.0" left="15.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="6.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="6.0" text="r8b">
                      <GridPane.margin>
                         <Insets bottom="80.0" left="60.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="r8c">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="r8d">
                      <GridPane.margin>
                         <Insets left="60.0" />
                      </GridPane.margin>
@@ -340,23 +340,23 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="411.0" prefWidth="72.0" text="folyosó" />
-                  <Button mnemonicParsing="false" prefHeight="13.0" prefWidth="14.0" text="Button">
+                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="411.0" prefWidth="72.0" text="R19" />
+                  <Button mnemonicParsing="false" prefHeight="13.0" prefWidth="14.0" text="r19a">
                      <GridPane.margin>
                         <Insets bottom="150.0" left="5.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="17.0" prefWidth="1.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="17.0" prefWidth="1.0" text="r19b">
                      <GridPane.margin>
                         <Insets bottom="150.0" left="45.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="8.0" prefWidth="7.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="8.0" prefWidth="7.0" text="r19c">
                      <GridPane.margin>
                         <Insets bottom="60.0" left="5.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="r19d">
                      <GridPane.margin>
                         <Insets bottom="60.0" left="45.0" />
                      </GridPane.margin>
@@ -372,18 +372,18 @@
                </rowConstraints>
                <children>
                   
-                        <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="67.0" prefWidth="130.0" text="Button" />
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="Button">
+                        <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="67.0" prefWidth="130.0" text="R7" />
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="r7a">
                      <GridPane.margin>
                         <Insets top="10.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="r7b">
                      <GridPane.margin>
                         <Insets left="30.0" top="10.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="13.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="13.0" text="r7c">
                      <GridPane.margin>
                         <Insets left="60.0" top="10.0" />
                      </GridPane.margin>
@@ -398,18 +398,18 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="121.0" prefWidth="111.0" text="Button" />
-                  <Button mnemonicParsing="false" prefHeight="19.0" prefWidth="6.0" text="Button">
+                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="121.0" prefWidth="111.0" text="R12" />
+                  <Button mnemonicParsing="false" prefHeight="19.0" prefWidth="6.0" text="r12a">
                      <GridPane.margin>
                         <Insets left="5.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="2.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="2.0" text="r12b">
                      <GridPane.margin>
                         <Insets left="40.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="7.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="7.0" prefWidth="0.0" text="r12c">
                      <GridPane.margin>
                         <Insets left="75.0" />
                      </GridPane.margin>
@@ -424,13 +424,13 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="107.0" prefWidth="91.0" text="Button" />
-                  <Button mnemonicParsing="false" prefHeight="19.0" prefWidth="5.0" text="Button">
+                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="107.0" prefWidth="91.0" text="R13" />
+                  <Button mnemonicParsing="false" prefHeight="19.0" prefWidth="5.0" text="r13a">
                      <GridPane.margin>
                         <Insets bottom="10.0" left="15.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="15.0" prefWidth="6.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="15.0" prefWidth="6.0" text="r13b">
                      <GridPane.margin>
                         <Insets left="15.0" top="50.0" />
                      </GridPane.margin>
@@ -445,13 +445,13 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="116.0" prefWidth="67.0" text="Button" />
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="4.0" text="Button">
+                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="116.0" prefWidth="67.0" text="R14" />
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="4.0" text="r14a">
                      <GridPane.margin>
                         <Insets bottom="20.0" left="20.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="3.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="3.0" text="r14b">
                      <GridPane.margin>
                         <Insets left="20.0" top="40.0" />
                      </GridPane.margin>
@@ -466,13 +466,13 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="127.0" prefWidth="68.0" text="Button" />
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="Button">
+                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="127.0" prefWidth="68.0" text="R15" />
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="r15a">
                      <GridPane.margin>
                         <Insets bottom="20.0" left="20.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="12.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="12.0" prefWidth="0.0" text="r15b">
                      <GridPane.margin>
                         <Insets left="20.0" top="40.0" />
                      </GridPane.margin>
@@ -487,30 +487,30 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="128.0" prefWidth="95.0" text="Button" />
-                  <Button mnemonicParsing="false" prefHeight="8.0" prefWidth="6.0" text="Button">
+                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="128.0" prefWidth="95.0" text="R16" />
+                  <Button mnemonicParsing="false" prefHeight="8.0" prefWidth="6.0" text="r16a">
                      <GridPane.margin>
                         <Insets bottom="20.0" left="10.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="r16b">
                      <GridPane.margin>
                         <Insets bottom="20.0" left="50.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="7.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="7.0" text="r16c">
                      <GridPane.margin>
                         <Insets left="10.0" top="50.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="r16d">
                      <GridPane.margin>
                         <Insets left="50.0" top="50.0" />
                      </GridPane.margin>
                   </Button>
                </children>
             </GridPane>
-            <GridPane GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="TOP">
+            <GridPane GridPane.columnSpan="5" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="TOP">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                </columnConstraints>
@@ -518,29 +518,29 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="48.0" prefWidth="296.0" text="folyosó" />
-                  <Button mnemonicParsing="false" prefHeight="4.0" prefWidth="2.0" text="Button">
+                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="48.0" prefWidth="296.0" text="R18" />
+                  <Button mnemonicParsing="false" prefHeight="4.0" prefWidth="2.0" text="r18b">
                      <GridPane.margin>
-                        <Insets left="190.0" top="15.0" />
+                        <Insets left="200.0" top="15.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="8.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="8.0" prefWidth="0.0" text="r18c">
                      <GridPane.margin>
-                        <Insets left="220.0" top="15.0" />
+                        <Insets left="240.0" top="15.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="3.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="3.0" prefWidth="0.0" text="r18d">
                      <GridPane.margin>
-                        <Insets left="250.0" top="15.0" />
+                        <Insets left="280.0" top="15.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="31.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="31.0" text="r18a">
                      <GridPane.margin>
                         <Insets left="160.0" top="15.0" />
                      </GridPane.margin></Button>
                </children>
             </GridPane>
-            <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="29.0" prefWidth="578.0" text="utca" GridPane.columnSpan="7" GridPane.rowIndex="6" GridPane.valignment="TOP" />
+            <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="29.0" prefWidth="578.0" text="R20" GridPane.columnSpan="7" GridPane.rowIndex="6" GridPane.valignment="TOP" />
             <GridPane GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="2" GridPane.valignment="TOP">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -549,25 +549,25 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="folyosó" />
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="2.0" text="Button">
+                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="R17" />
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="2.0" text="r17a">
                      <GridPane.margin>
-                        <Insets left="160.0" top="20.0" />
+                        <Insets left="100.0" top="20.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="r17b">
                      <GridPane.margin>
-                        <Insets left="190.0" top="20.0" />
+                        <Insets left="140.0" top="20.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="21.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="21.0" prefWidth="0.0" text="r17c">
+                     <GridPane.margin>
+                        <Insets left="180.0" top="20.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="r17d">
                      <GridPane.margin>
                         <Insets left="220.0" top="20.0" />
-                     </GridPane.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="Button">
-                     <GridPane.margin>
-                        <Insets left="250.0" top="20.0" />
                      </GridPane.margin>
                   </Button>
                </children>
@@ -580,15 +580,15 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Button" />
-                  <Button mnemonicParsing="false" prefHeight="14.0" prefWidth="0.0" text="Button">
+                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="R10" />
+                  <Button mnemonicParsing="false" prefHeight="14.0" prefWidth="0.0" text="r10a">
                      <GridPane.margin>
-                        <Insets left="5.0" top="10.0" />
+                        <Insets left="5.0" top="20.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="r10b">
                      <GridPane.margin>
-                        <Insets left="40.0" top="10.0" />
+                        <Insets left="40.0" top="20.0" />
                      </GridPane.margin>
                   </Button>
                </children>
@@ -601,13 +601,13 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Button" />
-                  <Button mnemonicParsing="false" prefHeight="2.0" prefWidth="0.0" text="Button">
+                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="R11" />
+                  <Button mnemonicParsing="false" prefHeight="2.0" prefWidth="0.0" text="r11a">
                      <GridPane.margin>
                         <Insets left="10.0" top="20.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="6.0" prefWidth="0.0" text="Button">
+                  <Button mnemonicParsing="false" prefHeight="6.0" prefWidth="0.0" text="r11b">
                      <GridPane.margin>
                         <Insets left="50.0" top="20.0" />
                      </GridPane.margin>
@@ -615,6 +615,7 @@
                </children>
             </GridPane>
             <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="215.0" text="Emberek az irodában:" GridPane.columnSpan="2" />
+            <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="10.0" text="r20a" GridPane.columnIndex="1" GridPane.rowIndex="6" />
          </children>
          <BorderPane.margin>
             <Insets bottom="20.0" left="20.0" top="20.0" />
