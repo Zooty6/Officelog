@@ -15,12 +15,12 @@ public class Person {
     final private String Name;
     
     /**
-     * The current location of the Person
+     * The current location of the Person.
      */
     private Room Location;
     
     /**
-     * The current picture of the Person
+     * The current picture of the Person.
      */
     private Image Pic;
     
@@ -32,7 +32,7 @@ public class Person {
     /**
      * Creates a Person with default picture.
      * 
-     * @param Name The name of the Person
+     * @param Name The name of the Person.
      * @param ID The unique Id of the person. Serves as a primary key.
      */
     public Person(String Name, int ID) {
@@ -45,17 +45,19 @@ public class Person {
      * Creates a Person.
      * 
      * @param Name The name of the Person
-     * @param Pic The picture assigned to this Person.
+     * @param Pic The picture assigned to this Person. Must be NxN
      * @param ID The unique Id of the person. Serves as a primary key.
+     * 
+     * @throws IllegalMonitorStateException if picture is not NxN.
      */
     public Person(String Name, Image Pic, int ID) {
         this.Name = Name;
         if(Pic.getWidth()!=50 && Pic.getHeight()!=50)
-            throw new IllegalArgumentException("Icon is not 50x50");
+            throw new IllegalArgumentException("Icon is not nxn");
         this.Pic = Pic;
         this.ID = ID;
         this.Location=null;
-        System.out.println("done");
+        //System.out.println("done");
     }
 
     /**
@@ -117,11 +119,11 @@ public class Person {
         return false;
     }
 }
-/**
- * Exception for wrong pictures. 
- */
-class WrongDimensionException extends Exception {
-   public WrongDimensionException(String msg){
-      super(msg);
-   }
-}
+///**
+// * Exception for wrong pictures. 
+// */
+//class WrongDimensionException extends Exception {
+//   public WrongDimensionException(String msg){
+//      super(msg);
+//   }
+//}

@@ -1,7 +1,5 @@
 package officelog;
-/**
- * @author Zooty
- */
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,9 +11,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
+/**
+ * Collection of the events happens in the office. TODO: javadoc
+ * 
+ * @author Zooty
+ */
 public class EventList {
-    private List<Event> Elist;
+    /**
+     * collection for the events
+     */
+    private final List<Event> Elist;   
     private int Cicle;
     private final String[] wgat = {"What's a pupper?","A little doggo.","What's a doggo?","A good ol' pupper."};
 

@@ -58,6 +58,22 @@ public class People {
             throw new NullPointerException("No person with such ID");
         return Fox;
     }
+
+    /**
+     * 
+     * @return the number of people in the building.
+     */
+    public int getNumberOfPplInOffice() {
+        return NumberOfPplInOffice;
+    }
+
+    /**
+     * 
+     * @return the number of people in the collection.
+     */
+    public int getNumberOfPpl() {
+        return NumberOfPpl;
+    }
     
     /**
      * Adds a new Person to the collection

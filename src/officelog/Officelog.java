@@ -46,8 +46,8 @@ public class Officelog extends Application {
         
         primaryStage.setScene(scene);
         primaryStage.setTitle("Officelog");
-        primaryStage.setResizable(false);//gombok szétesnek
-        primaryStage.sizeToScene();
+        //primaryStage.setResizable(false);//gombok szétesnek
+        //primaryStage.sizeToScene();
         primaryStage.show();
         
     }
