@@ -1,15 +1,18 @@
 package officelog;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 
 /**
+ * This class isn't used anymore. Delete this!
+ * 
  * @author Zooty
  */
 public class ButtonPersonPlus extends ButtonPerson{
     private boolean Plus = false;
-    private ArrayList<Person> PlusList = new ArrayList<>();
+    private Set<Person> PlusList = new HashSet<>();
     
     public ButtonPersonPlus() {
         super();
@@ -35,7 +38,7 @@ public class ButtonPersonPlus extends ButtonPerson{
         return Plus;
     }
 
-    public ArrayList<Person> getPlusList() {
+    public Set<Person> getPersonList() {
         return PlusList;
     }
     

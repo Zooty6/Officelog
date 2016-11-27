@@ -30,6 +30,11 @@ public class Room implements Serializable{
      * without permission.
      */
     final private Boolean Open;
+    
+    /**
+     * Refers to the button this room is represented on the GUI.
+     */
+    private ButtonRoom btnRoom;
 
     /**
      * Creates a Room.
@@ -43,6 +48,7 @@ public class Room implements Serializable{
         this.MaxPeople = MaxPeople;
         this.Open = Open;
         Neighbors = new HashSet<>();
+        btnRoom = null;
     }
     
     /**
@@ -90,6 +96,22 @@ public class Room implements Serializable{
 
     /**
      * 
+     * @return the button this room is assigned to. 
+     */
+    public ButtonRoom getBtnRoom() {
+        return btnRoom;
+    }
+
+    /**
+     * 
+     * @param btnRoom assigns this room to parameter button.
+     */
+    public void setBtnRoom(ButtonRoom btnRoom) {
+        this.btnRoom = btnRoom;
+    }
+
+    /**
+     * 
      * @param MaxPeople Sets the maximum number of people that can be in the Room.
      */
      public void setMaxPeople(int MaxPeople) {
@@ -113,5 +135,14 @@ public class Room implements Serializable{
      */
     public boolean isNeighbor(Room room){
         return Neighbors.contains(room);
+    }
+    
+    @Override
+    public String toString(){
+        String r = Name+", Neighbors:";
+        for (Room Neighbor : Neighbors) {
+            r+=" "+Neighbor.Name;
+        }        
+        return r;
     }
 }

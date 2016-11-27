@@ -1,5 +1,6 @@
 package officelog;
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import java.util.HashSet;
 import java.util.Set;
 import javafx.scene.image.Image;
@@ -12,7 +13,7 @@ import javafx.scene.image.Image;
 public class People {
     
     /**
-     * Collection of the people
+     * Collection of the people.
      */
     private final Set<Person> IPeople;
     
@@ -41,7 +42,7 @@ public class People {
     }
     
     /**
-     * Gets a specific Person from the collection with the given ID
+     * Gets a specific Person from the collection with the given ID.
      *      
      * @param ID The ID of the Person we want to get.
      * @return The Person with the ID we have given as parameter.
@@ -57,6 +58,27 @@ public class People {
         if (Fox == null)
             throw new NullPointerException("No person with such ID");
         return Fox;
+    }
+    
+    /**
+     * Returns the specific person from the collection who has the parameter name.
+     * If more people are found, the user must choose one from a dialog window.
+     * 
+     * @param name name of the person we want to get
+     * @return the person who has the given name
+     */
+    public Person GetPerson(String name){
+        Person r = null;
+        int count = 0;
+        for (Person person : IPeople) 
+            if (name.equals(person.getName())){
+                r=person;
+                count++;
+            }
+        if(count>1){
+            ;//TODO: Multiple people are found. Select the right one! Returns the last found rn.
+        }            
+        return r;
     }
 
     /**
@@ -95,9 +117,12 @@ public class People {
      * Adds a new Person with given name.
      * 
      * @param Name the name of the new Person.
+     * 
+     * @return the unique ID of the new Person.
      */
-    public void addPerson(String Name){
-        addPerson(new Person(Name, MaxID));                
+    public int addPerson(String Name){
+        addPerson(new Person(Name, MaxID));
+        return MaxID-1;
     }
     
     /**
@@ -105,13 +130,16 @@ public class People {
      * 
      * @param name the name of the new Person.
      * @param Pic the picture of the new Person.
+     * 
+     * @return the unique ID of the new Person.
      */
-    public void addPerson(String name, Image Pic){
-        addPerson(new Person(name, Pic, MaxID));       
+    public int addPerson(String name, Image Pic){
+        addPerson(new Person(name, Pic, MaxID)); 
+        return MaxID-1;
     }
     
     /**
-     * Removes a specific Person from the collection
+     * Removes a specific Person from the collection. Does not check if it was in the collection!
      * 
      * @param oldPerson the person we want to remove
      * 
@@ -131,7 +159,7 @@ public class People {
      * 
      * @param oldPersonID ID of the Person we want to remove
      * 
-     * @throws TODO
+     * @throws IllegalArgumentException If the person wasn't in the list.
      */
     public void removePerson(int oldPersonID){
         Person otter = null; //otters are cute as well! http://i.imgur.com/TvhgtOs.mp4
@@ -147,7 +175,7 @@ public class People {
             }            
         }
         if(otter==null)
-            ;//TODO: throw exception if no such person is found
+            throw new IllegalArgumentException("This person isn't in the list!");
     }
           
     /**
@@ -167,6 +195,7 @@ public class People {
      /**
      * Moves a specific person with given ID to the parameter Room. May not need to use
      * this method.
+     * 
      * @param ID The ID of the Person.
      * @param dRoom The destination Room we move the Person.
      */

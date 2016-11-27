@@ -14,7 +14,7 @@ public class Officelog extends Application {
     
     @Override
     public void start(Stage primaryStage) throws Exception{        
-        //<editor-fold defaultstate="collapsed" desc="comment">
+        //<editor-fold defaultstate="collapsed" desc="old, generated code">
         /*       
         Button btn = new Button();
         btn.setText("Do the thing");
@@ -52,8 +52,7 @@ public class Officelog extends Application {
         
     }
 
-    public static void main(String[] args) {
-        //Model model = new Model();        
+    public static void main(String[] args) {              
         launch(args);
     }
     

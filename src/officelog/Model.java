@@ -6,18 +6,181 @@ import java.util.ArrayList;
  * @author Zooty
  */
 public class Model {
-    private People people = new People();
-    private EventList eventList = new EventList();
-    private ArrayList<Room> office = new ArrayList<>();
+    private final People people = new People();
+    private final EventList eventList = new EventList();
+    private final ArrayList<Room> office = new ArrayList<>();
     
     public Model(){
         eventList.addEvent(new Event("Officelog has started"));
         BuildOffice();
+        //TEST 
+        ;
+        //\TEST
         
+    }
+    
+    private void BuildOffice() {        
+        office.add(new Room("R1", 0, true));
+        office.add(new Room("R2", 2));
+        office.add(new Room("R3", 6));
+        office.add(new Room("R4", 6));
+        office.add(new Room("R5", 4));
+        office.add(new Room("R6", 0, true));
+        office.add(new Room("R7", 3));
+        office.add(new Room("R8"));
+        office.add(new Room("R9", 10));
+        office.add(new Room("R10", 2));
+        office.add(new Room("R11", 2));
+        office.add(new Room("R12", 8));
+        office.add(new Room("R13", 8));
+        office.add(new Room("R14", 8));
+        office.add(new Room("R15", 6));
+        office.add(new Room("R16", 2));
+        office.add(new Room("R17", 0, true));
+        office.add(new Room("R18", 0, true));
+        office.add(new Room("R19", 0, true));
+        office.add(new Room("Outside", 0, true));        
         
+        for (Room room : office) {
+            switch(room.getName()){
+                case "R1": 
+                    for (Room nroom : office) 
+                        if("R18".equals(nroom.getName()))
+                            room.addNeighbor(nroom);
+                    break;
+                case "R2":
+                    for (Room nroom : office) 
+                        if("R17".equals(nroom.getName()))
+                            room.addNeighbor(nroom);
+                    break;
+                case "R3":
+                    for (Room nroom : office) 
+                        if("R17".equals(nroom.getName()))
+                            room.addNeighbor(nroom);
+                    break;
+                case "R4":
+                    for (Room nroom : office) 
+                        if("R17".equals(nroom.getName()))
+                            room.addNeighbor(nroom);
+                    break;
+                case "R5":
+                    for (Room nroom : office) 
+                        if("R17".equals(nroom.getName()))
+                            room.addNeighbor(nroom);
+                    break;
+                case "R6":
+                    for (Room nroom : office) 
+                        if("R19".equals(nroom.getName()))
+                            room.addNeighbor(nroom);
+                    break;
+                case "R7":
+                    for (Room nroom : office) 
+                        if("R19".equals(nroom.getName()))
+                            room.addNeighbor(nroom);
+                    break;
+                case "R8":
+                    for (Room nroom : office) 
+                        if("R19".equals(nroom.getName()))
+                            room.addNeighbor(nroom);
+                    break;
+                case "R9":
+                    for (Room nroom : office) 
+                        if("R18".equals(nroom.getName()))
+                            room.addNeighbor(nroom);
+                    break;
+                case "R10":
+                    for (Room nroom : office) 
+                        if("R18".equals(nroom.getName()))
+                            room.addNeighbor(nroom);
+                    break;
+                case "R11":
+                    for (Room nroom : office) 
+                        if("R18".equals(nroom.getName()))
+                            room.addNeighbor(nroom);
+                    break;
+                case "R12":
+                    for (Room nroom : office) 
+                        if("R18".equals(nroom.getName()))
+                            room.addNeighbor(nroom);
+                    break;
+                case "R13":
+                    for (Room nroom : office) 
+                        if("R18".equals(nroom.getName()))
+                            room.addNeighbor(nroom);
+                    break;
+                case "R14":
+                    for (Room nroom : office) 
+                        if("R18".equals(nroom.getName()))
+                            room.addNeighbor(nroom);
+                    break;
+                case "R15":
+                    for (Room nroom : office) 
+                        if("R18".equals(nroom.getName()))
+                            room.addNeighbor(nroom);
+                    break;
+                case "R16":
+                    for (Room nroom : office) 
+                        if("R18".equals(nroom.getName()))
+                            room.addNeighbor(nroom);
+                    break;
+                case "R17":
+                    for (Room nroom : office) 
+                        if("R19".equals(nroom.getName()) ||
+                           "R2".equals(nroom.getName()) ||
+                           "R3".equals(nroom.getName()) ||
+                           "R4".equals(nroom.getName()) ||
+                           "R5".equals(nroom.getName()))
+                            room.addNeighbor(nroom);
+                    break;
+                case "R18":
+                    for (Room nroom : office) 
+                        if("R19".equals(nroom.getName()) ||
+                           "R9".equals(nroom.getName()) ||
+                           "R10".equals(nroom.getName()) ||
+                           "R11".equals(nroom.getName()) ||
+                           "R12".equals(nroom.getName()) ||
+                           "R13".equals(nroom.getName()) ||
+                           "R14".equals(nroom.getName()) ||
+                           "R15".equals(nroom.getName()) ||
+                           "R16".equals(nroom.getName()))
+                            room.addNeighbor(nroom);
+                    break;
+                case "R19":
+                    for (Room nroom : office) 
+                        if("R6".equals(nroom.getName()) ||
+                           "R7".equals(nroom.getName()) ||
+                           "R8".equals(nroom.getName()) ||
+                           "R17".equals(nroom.getName()) ||
+                           "R18".equals(nroom.getName()) ||
+                           "Outside".equals(nroom.getName()))
+                            room.addNeighbor(nroom);
+                    break;
+                case "Outside":
+                    for (Room nroom : office) 
+                        if("R19".equals(nroom.getName()))
+                            room.addNeighbor(nroom);
+            }           
+        }        
     }
 
-    private void BuildOffice() {
-        ; //TODO: Build up the model of the Office (add specific Rooms to office)
+    public Room getRoom(String name){
+        Room r=null;
+        for (Room room : office) 
+            if(room.getName().equals(name))
+                r=room;
+        return r;        
     }
+            
+    public People getPeople() {
+        return people;
+    }
+
+    public EventList getEventList() {
+        return eventList;
+    }
+
+    public ArrayList<Room> getOffice() {
+        return office;
+    }      
+    
 }
