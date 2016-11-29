@@ -1,9 +1,8 @@
 package officelog;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
+import java.awt.image.BufferedImage;
 import java.util.HashSet;
 import java.util.Set;
-import javafx.scene.image.Image;
 
 /**
  * A collection class for all the people in the office.
@@ -133,7 +132,7 @@ public class People {
      * 
      * @return the unique ID of the new Person.
      */
-    public int addPerson(String name, Image Pic){
+    public int addPerson(String name, BufferedImage Pic){
         addPerson(new Person(name, Pic, MaxID)); 
         return MaxID-1;
     }

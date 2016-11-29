@@ -30,7 +30,7 @@ public class ButtonPersonPlus extends ButtonPerson{
         if(Plus)
             this.setText("+");
         else
-            this.setGraphic(new ImageView(this.getPerson().getPic()));     //TODO: Test            
+            //this.setGraphic(new ImageView(this.getPerson().getPic()));     //TODO: Test            
         this.Plus = Plus;
     }
 

@@ -6,10 +6,24 @@ import java.util.ArrayList;
  * @author Zooty
  */
 public class Model {
+    /**
+     * Creates an empty collection for the people
+     */
     private final People people = new People();
+    
+    /**
+     * Creates a collection for events
+     */
     private final EventList eventList = new EventList();
+    
+    /**
+     * Creates a collection for all the rooms in the office
+     */
     private final ArrayList<Room> office = new ArrayList<>();
     
+    /**
+     * Builds up the model of the office.
+     */
     public Model(){
         eventList.addEvent(new Event("Officelog has started"));
         BuildOffice();
@@ -19,6 +33,9 @@ public class Model {
         
     }
     
+    /**
+     * Builds up the logical structure of the office.
+     */
     private void BuildOffice() {        
         office.add(new Room("R1", 0, true));
         office.add(new Room("R2", 2));
@@ -163,6 +180,12 @@ public class Model {
         }        
     }
 
+    /**
+     * Gets the Room that has the parameter name.
+     * 
+     * @param name name of the room we want to get.
+     * @return the Room we want to get.
+     */
     public Room getRoom(String name){
         Room r=null;
         for (Room room : office) 
@@ -171,14 +194,29 @@ public class Model {
         return r;        
     }
             
+    /**
+     * Returns the list of existing people.
+     * 
+     * @return the list of existing people.
+     */
     public People getPeople() {
         return people;
     }
 
+    /**
+     * Returns the list of existing events.
+     * 
+     * @return the list of existing events. 
+     */
     public EventList getEventList() {
         return eventList;
     }
 
+    /**
+     * Returns the list of existing Rooms in the office.
+     * 
+     * @return the list of existing Rooms in the office.
+     */
     public ArrayList<Room> getOffice() {
         return office;
     }      

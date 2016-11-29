@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 
 /**
  *
@@ -13,7 +12,7 @@ import javafx.scene.control.Alert;
  */
 public class dashboardController implements Initializable {
     
-    private Model model = new Model();
+    private final Model model = new Model();
     private Person selectedPerson = null;
    
     //<editor-fold defaultstate="collapsed" desc="linking buttons">
@@ -190,10 +189,10 @@ public class dashboardController implements Initializable {
     @FXML
     private void handleButtonAction(ActionEvent event) {        
         if (event.getSource() instanceof ButtonRoom){
-            System.out.println(((ButtonRoom)(event.getSource())).getRoom().toString());            
+            System.out.println(((ButtonRoom)(event.getSource())).getRoom().toString()+" "+((ButtonRoom)(event.getSource())));            
                 }
         if (event.getSource() instanceof ButtonPerson){
-            System.out.println(((ButtonPerson)(event.getSource())).toString());
+            System.out.println(((ButtonPerson)(event.getSource())).getPerson());
         }
         /*
         Alert copyright=new Alert(Alert.AlertType.INFORMATION);
@@ -206,7 +205,7 @@ public class dashboardController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //<editor-fold defaultstate="collapsed" desc="linking buttons to Rooms">
+        //<editor-fold defaultstate="collapsed" desc="linking buttons and Rooms">
         R1.setRoom(model.getRoom("R1"));
         model.getRoom("R1").setBtnRoom(R1);
         R2.setRoom(model.getRoom("R2"));
@@ -270,7 +269,11 @@ public class dashboardController implements Initializable {
         R20.setSubRooms(new ButtonPerson[]{r20a});
         //</editor-fold>
         //TEST
-        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek")).setLocation(model.getRoom("Outside"));
+        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek")).setLocation(model.getRoom("Outside")); //*.*
+        
+
+        
+        
         //\TEST
         
         // TODO

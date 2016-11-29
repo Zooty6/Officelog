@@ -1,5 +1,6 @@
 package officelog;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -80,8 +81,14 @@ public class ButtonRoom extends Button{
         PplHere--;        
         redraw();
         }
+    
+    public void addPerson(Person newPerson){
+        pplList.add(newPerson);
+        PplHere++;
+        redraw();
+    }
 
-    public void redraw() {
+    public void redraw(){
         if (PplHere<=MaxSubBtn){
             SubRooms[MaxSubBtn-1].setPlus(false);
             int i;
@@ -105,4 +112,10 @@ public class ButtonRoom extends Button{
             }*/
         }                 
     }
+
+    @Override
+    public String toString() {
+        return "ButtonRoom{" + "pplList=" + pplList + '}';
+    }
+    
 }

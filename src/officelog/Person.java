@@ -1,6 +1,9 @@
 package officelog;
 
-import javafx.scene.image.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 /**
  * This class represents a person in the model.
@@ -22,7 +25,7 @@ public class Person {
     /**
      * The current picture of the Person.
      */
-    private Image Pic;
+    private BufferedImage Pic;
     
     /**
      * The unique ID of the Person. Used as a primary key in the collection.
@@ -39,6 +42,11 @@ public class Person {
         this.Name = Name;
         this.ID = ID;
         this.Location=null;
+        try {
+            Pic = ImageIO.read(new File("icons\\Default.png"));
+        } catch (IOException e) {
+            System.out.println("failed to load "+Name+"'s icon");
+        }
         //TODO: Set This.Pic to default
     }
     /**
@@ -48,12 +56,12 @@ public class Person {
      * @param Pic The picture assigned to this Person. Must be NxN
      * @param ID The unique Id of the person. Serves as a primary key.
      * 
-     * @throws IllegalMonitorStateException if picture is not NxN.
+     * @throws IllegalArgumentException if picture is not NxN.
      */
-    public Person(String Name, Image Pic, int ID) {
+    public Person(String Name, BufferedImage Pic, int ID) {
         this.Name = Name;
-        if(Pic.getWidth()!=50 && Pic.getHeight()!=50)
-            throw new IllegalArgumentException("Icon is not nxn");
+        if(Pic.getWidth()!=Pic.getHeight())
+            throw new IllegalArgumentException("Icon is not NxN");
         this.Pic = Pic;
         this.ID = ID;
         this.Location=null;
@@ -65,27 +73,31 @@ public class Person {
      * 
      * @param pic the new picture of the person.
      */
-    public void setPic(Image pic) {
+    public void setPic(BufferedImage pic) {
         this.Pic = pic;
     }
     
     /**
-     * Sets the current location of the specific person.
+     * Sets the current location of the specific person. Also adds the Person to the button's list
+     * assigned to this location.
      * 
      * @param newLoc The new location this person will be at.
      */
     public void setLocation(Room newLoc){
         this.Location = newLoc;
+        newLoc.getBtnRoom().addPerson(this);
     }
 
     /**     
+     * Returns the picture of the person.
      * 
      * @return the picture of the person.
      */
-    public Image getPic() {
+    public BufferedImage getPic() {
         return Pic;
     }
     /**
+     * Returns the current location of the person.
      * 
      * @return the current location of the person.
      */
@@ -94,6 +106,7 @@ public class Person {
     }
 
     /**
+     * Returns the name of the person.
      * 
      * @return the name of the person.
      */
@@ -102,6 +115,7 @@ public class Person {
     }
 
     /**
+     * Returns the unique ID of the person.
      * 
      * @return the unique ID of the person.
      */
@@ -118,6 +132,17 @@ public class Person {
     public boolean isAllowed(Room room) {
         return false;
     }
+
+    /**
+     * Returns a String of the ID and name of the Person.
+     * 
+     * @return a String of the ID and name of the Person.
+     */
+    @Override
+    public String toString() {
+        return "Person{" + "ID=" + ID + ", Name=" + Name + '}';
+    }
+    
 }
 ///**
 // * Exception for wrong pictures. 

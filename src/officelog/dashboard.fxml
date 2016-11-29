@@ -100,7 +100,7 @@
                         <Insets left="15.0" top="30.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson contentDisplay="CENTER" mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="r1a" fx:id="r1a" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson contentDisplay="CENTER" mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" fx:id="r1a" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets bottom="80.0" left="15.0" />
                      </GridPane.margin>
@@ -616,7 +616,7 @@
                </children>
             </GridPane>
             <Label alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="215.0" text="Emberek az irodában:" GridPane.columnSpan="2" />
-            <officelog.ButtonPerson mnemonicParsing="false" prefHeight="31.0" prefWidth="10.0" text="r20a" GridPane.columnIndex="1" GridPane.rowIndex="6" fx:id="r20a" onAction="#handleButtonAction" />
+            <officelog.ButtonPerson mnemonicParsing="false" prefHeight="31.0" prefWidth="10.0" GridPane.columnIndex="1" GridPane.rowIndex="6" fx:id="r20a" onAction="#handleButtonAction" />
          </children>
          <BorderPane.margin>
             <Insets bottom="20.0" left="20.0" right="20.0" top="5.0" />

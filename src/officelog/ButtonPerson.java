@@ -1,10 +1,10 @@
 package officelog;
 
-import java.util.HashSet;
-import java.util.Set;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+
 
 /**
  * @author Zooty
@@ -20,8 +20,8 @@ public class ButtonPerson extends Button{
 
     public ButtonPerson(String text) {
         super(text);
-    }
-
+    }   
+    
     public ButtonPerson(String text, Node graphic) {
         super(text, graphic);
     }
@@ -30,12 +30,18 @@ public class ButtonPerson extends Button{
         return person;
     }
 
-    public void setPerson(Person person) {
+    public void setPerson(Person person){
         if(person == null)
             this.setVisible(false);
         else{
             this.setVisible(true);
-            this.setGraphic(new ImageView(this.getPerson().getPic())); //TODO: Test
+            /*
+            Image a = null;
+            BufferedImage b = a;
+            Image whydontyouwork = ImageIO.read(new File("icons\\Default.png"));
+            Image image = SwingFXUtils.toFXImage(ImageIO.read(new File("icons\\Default.png")), null ); //WTF
+            */
+            this.setGraphic(new ImageView(SwingFXUtils.toFXImage(person.getPic(), null ))); //TODO: Test
         }
         this.person = person;
     }    
@@ -44,7 +50,7 @@ public class ButtonPerson extends Button{
         if(Plus)
             this.setText("+");
         else
-            this.setGraphic(new ImageView(this.getPerson().getPic())); //TODO: Test
+            //this.setIcon(new ImageIcon(this.getPerson().getPic())); //TODO: Test
         this.Plus = Plus;
     }
 
@@ -64,4 +70,7 @@ public class ButtonPerson extends Button{
     public void removePerson(Person oldPerson){
         PersonList.remove(oldPerson);
     }*/
+    public static void main(String[] args) {
+        System.out.println("afwe");
+    }
 }

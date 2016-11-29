@@ -1,8 +1,8 @@
 package officelog;
 
+import java.awt.image.BufferedImage;
 import java.util.HashSet;
 import java.util.Set;
-import javafx.scene.image.Image;
 
 /**
  * Represents an employee in the office. Extends from Person. 
@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
  * @author Zooty
  */
 public class Employee extends Person{
+    
     /**
      * Name of the job.
      */
@@ -18,7 +19,7 @@ public class Employee extends Person{
     /**
      * This collection contains all the Rooms this person can enter.
      */
-    final private Set<Room> Permissions;
+    final private Set<Room> Permissions = new HashSet<>();
             
     /**
      * Creates and Employee with default picture.
@@ -30,7 +31,6 @@ public class Employee extends Person{
     public Employee(String Name, int ID, String Job) { 
         super(Name, ID);
         this.Job = Job;
-        Permissions = new HashSet<>();
     }
      
     /**
@@ -41,13 +41,13 @@ public class Employee extends Person{
      * @param ID unique ID of the person.
      * @param Job Job of the person.
      */
-    public Employee(String Name, Image Pic, int ID, String Job) {
+    public Employee(String Name, BufferedImage Pic, int ID, String Job) {
         super(Name, Pic, ID);
         this.Job = Job;
-        Permissions = new HashSet<>();
     }
     
     /**
+     * Returns the job of the person.
      * 
      * @return the job of the person.
      */
@@ -85,12 +85,12 @@ public class Employee extends Person{
      /**
      * Removes a Room from the list of Rooms where this person can enter.
      * 
-     * @param roomname the name of the Room this person can not enter anymore.
+     * @param roomName the name of the Room this person can not enter anymore.
      */
-    public void removePermission(String roomname){
+    public void removePermission(String roomName){
         //does not check if the Room is actually found or not
         for (Room p : Permissions) {
-            if(p.getName().equals(roomname))
+            if(p.getName().equals(roomName))
                 Permissions.remove(p);
         }        
     }
