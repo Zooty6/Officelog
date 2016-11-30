@@ -138,6 +138,33 @@ public class People {
     }
     
     /**
+     * Adds a new Employee with given parameters.
+     * 
+     * @param name the name of the new Employee.
+     * @param Job the Job of the new Employee.
+     * 
+     * @return the unique ID of the new Employee.
+     */
+    public int addEmployee(String name, String Job){
+        addPerson(new Employee(name, MaxID, Job));
+        return MaxID-1;
+    }
+    
+    /**
+     * Adds a new Employee with given parameters.
+     * 
+     * @param name the name of the new Employee.
+     * @param pic the picture of the new Employee.
+     * @param Job the Job of the new Employee.
+     * 
+     * @return the unique ID of the new Employee.
+     */
+    public int addEmployee(String name, BufferedImage pic, String Job){
+        addPerson(new Employee(name, pic, MaxID, Job)); 
+        return MaxID-1;
+    }
+    
+    /**
      * Removes a specific Person from the collection. Does not check if it was in the collection!
      * 
      * @param oldPerson the person we want to remove

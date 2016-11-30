@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 
 /**
  *
@@ -55,7 +56,8 @@ public class dashboardController implements Initializable {
     @FXML
     private ButtonRoom R19;
     @FXML
-    private ButtonRoom R20;    
+    private ButtonRoom R20;  
+    private ButtonRoom[] allRooms = new ButtonRoom[20];
     @FXML
     private ButtonPerson r1a;    
     @FXML
@@ -187,12 +189,31 @@ public class dashboardController implements Initializable {
     //</editor-fold>
     
     @FXML
+    Label lbSelected;
+    @FXML
     private void handleButtonAction(ActionEvent event) {        
         if (event.getSource() instanceof ButtonRoom){
-            System.out.println(((ButtonRoom)(event.getSource())).getRoom().toString()+" "+((ButtonRoom)(event.getSource())));            
-                }
+            if(((ButtonRoom)(event.getSource())).getRoom().isOpen() || 
+                    selectedPerson.isAllowed(((ButtonRoom)(event.getSource())).getRoom())){           
+                ((ButtonRoom)(event.getSource())).Enter(selectedPerson);
+                model.getEventList().addEvent(
+                    new Event("Entered", selectedPerson, ((ButtonRoom)(event.getSource())).getRoom()));
+            EnableNeighburs();
+            }else{
+                model.getEventList().addEvent(
+                    new Event("Acces denied", selectedPerson, ((ButtonRoom)(event.getSource())).getRoom()));
+                System.out.println("GTFO");
+            }
+            
+            System.out.println(((ButtonRoom)(event.getSource())));
+        }
+        
         if (event.getSource() instanceof ButtonPerson){
             System.out.println(((ButtonPerson)(event.getSource())).getPerson());
+            selectedPerson = ((ButtonPerson)(event.getSource())).getPerson();
+            lbSelected.setText("TODO: " + selectedPerson.getName());
+            EnableNeighburs();
+            }
         }
         /*
         Alert copyright=new Alert(Alert.AlertType.INFORMATION);
@@ -201,6 +222,14 @@ public class dashboardController implements Initializable {
         copyright.setContentText("Kecskeméthy Zoltán \nMészáros Szandra");
         copyright.show();
         */
+
+    private void EnableNeighburs() {
+        for (ButtonRoom allRoom : allRooms) 
+                if (allRoom.getRoom().isNeighbor(selectedPerson.getLocation()))
+                    allRoom.setDisable(false);
+                else
+                    allRoom.setDisable(true);
+    
     }
     
     @Override
@@ -248,30 +277,118 @@ public class dashboardController implements Initializable {
         model.getRoom("Outside").setBtnRoom(R20);
         
         R1.setSubRooms(new ButtonPerson[]{r1a,r1b,r1c,r1d});
+        for (ButtonPerson BP : R1.getSubRooms()) {
+            BP.setPerson(null);
+        }
         R2.setSubRooms(new ButtonPerson[]{r2a,r2b,r2c,r2d});
+        for (ButtonPerson BP : R2.getSubRooms()) {
+            BP.setPerson(null);
+        }
         R3.setSubRooms(new ButtonPerson[]{r3a,r3b,r3c,r3d});
+        for (ButtonPerson BP : R3.getSubRooms()) {
+            BP.setPerson(null);
+        }
         R4.setSubRooms(new ButtonPerson[]{r4a,r4b,r4c,r4d});
+        for (ButtonPerson BP : R4.getSubRooms()) {
+            BP.setPerson(null);
+        }
         R5.setSubRooms(new ButtonPerson[]{r5a,r5b,r5c,r5d});
+        for (ButtonPerson BP : R5.getSubRooms()) {
+            BP.setPerson(null);
+        }
         R6.setSubRooms(new ButtonPerson[]{r6a,r6b,r6c,r6d});
+        for (ButtonPerson BP : R6.getSubRooms()) {
+            BP.setPerson(null);
+        }
         R7.setSubRooms(new ButtonPerson[]{r7a,r7b,r7c});
+        for (ButtonPerson BP : R7.getSubRooms()) {
+            BP.setPerson(null);
+        }
         R8.setSubRooms(new ButtonPerson[]{r8a,r8b,r8c,r8d});
+        for (ButtonPerson BP : R8.getSubRooms()) {
+            BP.setPerson(null);
+        }
         R9.setSubRooms(new ButtonPerson[]{r9a,r9b,r9c});
+        for (ButtonPerson BP : R9.getSubRooms()) {
+            BP.setPerson(null);
+        }
         R10.setSubRooms(new ButtonPerson[]{r10a,r10b});
+        for (ButtonPerson BP : R10.getSubRooms()) {
+            BP.setPerson(null);
+        }
         R11.setSubRooms(new ButtonPerson[]{r11a,r11b});
+        for (ButtonPerson BP : R11.getSubRooms()) {
+            BP.setPerson(null);
+        }
         R12.setSubRooms(new ButtonPerson[]{r12a,r12b,r12c});
+        for (ButtonPerson BP : R12.getSubRooms()) {
+            BP.setPerson(null);
+        }
         R13.setSubRooms(new ButtonPerson[]{r13a,r13b});
+        for (ButtonPerson BP : R13.getSubRooms()) {
+            BP.setPerson(null);
+        }
         R14.setSubRooms(new ButtonPerson[]{r14a,r14b});
+        for (ButtonPerson BP : R14.getSubRooms()) {
+            BP.setPerson(null);
+        }
         R15.setSubRooms(new ButtonPerson[]{r15a,r15b});
+        for (ButtonPerson BP : R15.getSubRooms()) {
+            BP.setPerson(null);
+        }
         R16.setSubRooms(new ButtonPerson[]{r16a,r16b,r16c,r16d});
+        for (ButtonPerson BP : R16.getSubRooms()) {
+            BP.setPerson(null);
+        }
         R17.setSubRooms(new ButtonPerson[]{r17a,r17b,r17c,r17d});
+        for (ButtonPerson BP : R17.getSubRooms()) {
+            BP.setPerson(null);
+        }
         R18.setSubRooms(new ButtonPerson[]{r18a,r18b,r18c,r18d});
+        for (ButtonPerson BP : R18.getSubRooms()) {
+            BP.setPerson(null);
+        }
         R19.setSubRooms(new ButtonPerson[]{r19a,r19b,r19c,r19d});
+        for (ButtonPerson BP : R19.getSubRooms()) {
+            BP.setPerson(null);
+        }
         R20.setSubRooms(new ButtonPerson[]{r20a});
+        for (ButtonPerson BP : R20.getSubRooms()) {
+            BP.setPerson(null);
+        }
+        allRooms[0] = R1;
+        allRooms[1] = R2;
+        allRooms[2] = R3;
+        allRooms[3] = R4;
+        allRooms[4] = R5;
+        allRooms[5] = R6;
+        allRooms[6] = R7;
+        allRooms[7] = R8;
+        allRooms[8] = R9;
+        allRooms[9] = R10;
+        allRooms[10] = R11;
+        allRooms[11] = R12;
+        allRooms[12] = R13;
+        allRooms[13] = R14;
+        allRooms[14] = R15;
+        allRooms[15] = R16;
+        allRooms[16] = R17;
+        allRooms[17] = R18;
+        allRooms[18] = R19;
+        allRooms[19] = R20;
+               
         //</editor-fold>
+        
+        lbSelected.setText("TODO:"); //TODO: set tet based of selected language
+        for (ButtonRoom allRoom : allRooms) {
+            allRoom.setDisable(true);
+        }
         //TEST
         model.getPeople().getPerson(model.getPeople().addPerson("Test Elek")).setLocation(model.getRoom("Outside")); //*.*
-        
-
+        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek1")).setLocation(model.getRoom("R6"));
+        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek2")).setLocation(model.getRoom("R6"));
+        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek3")).setLocation(model.getRoom("R19"));
+        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek4")).setLocation(model.getRoom("R19"));
         
         
         //\TEST

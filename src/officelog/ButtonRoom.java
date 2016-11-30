@@ -1,6 +1,5 @@
 package officelog;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -9,7 +8,6 @@ import javafx.scene.control.Button;
  * @author Zooty
  */
 public class ButtonRoom extends Button{
-    private int MaxSubBtn;
     private int PplHere; 
     private ButtonPerson[] SubRooms;
     private final ArrayList<Person> pplList = new ArrayList<>();
@@ -17,24 +15,24 @@ public class ButtonRoom extends Button{
 
     public ButtonRoom() {
         super();
-        SubRooms = new ButtonPerson[MaxSubBtn];
+        SubRooms = null;
         PplHere = 0;
     }
 
     public ButtonRoom(String text) {
         super(text);
-        SubRooms = new ButtonPerson[MaxSubBtn];
+        SubRooms = new ButtonPerson[SubRooms.length];
         PplHere = 0;
     }
 
     public ButtonRoom(String text, Node graphic) {
         super(text, graphic);
-        SubRooms = new ButtonPerson[MaxSubBtn];
+        SubRooms = new ButtonPerson[SubRooms.length];
         PplHere = 0;
     }
 
     public int getMaxSubBtn() {
-        return MaxSubBtn;
+        return SubRooms.length;
     }
 
     public int getPplHere() {
@@ -53,24 +51,15 @@ public class ButtonRoom extends Button{
         this.room = room;
     }
 
-    public void setSubRooms(ButtonPerson[] SubRooms) {
-        MaxSubBtn = SubRooms.length;
+    public void setSubRooms(ButtonPerson[] SubRooms) {        
         this.SubRooms = SubRooms;
-    }
-    
-    public void setMaxSubBtn(int MaxSubBtn) {
-        this.MaxSubBtn = MaxSubBtn;
-        SubRooms = new ButtonPerson[MaxSubBtn];
-    }
+    }   
 
     public void setPpplHere(int PpplHere) {
         this.PplHere = PpplHere;
     }    
     
     public void Enter (Person person){
-        pplList.add(person);
-        if(PplHere<MaxSubBtn)
-            SubRooms[PplHere++].setPerson(person);
         person.getLocation().getBtnRoom().leave(person);
         person.setLocation(room);
         redraw();
@@ -78,9 +67,9 @@ public class ButtonRoom extends Button{
      
     public void leave (Person person){
         pplList.remove(person);
-        PplHere--;        
+        PplHere--;
         redraw();
-        }
+    }
     
     public void addPerson(Person newPerson){
         pplList.add(newPerson);
@@ -89,19 +78,18 @@ public class ButtonRoom extends Button{
     }
 
     public void redraw(){
-        if (PplHere<=MaxSubBtn){
-            SubRooms[MaxSubBtn-1].setPlus(false);
+        if (PplHere<=SubRooms.length){
+            SubRooms[SubRooms.length-1].setPlus(false);
             int i;
             for (i = 0; i < PplHere; i++) 
                 SubRooms[i].setPerson(pplList.get(i));            
-            while(i<MaxSubBtn)
+            while(i<SubRooms.length)
                 SubRooms[i++].setPerson(null);
         }
         else{ //PplHere>MaxSubBtn
-            for (int i = 0; i < SubRooms.length; i++) {
-                SubRooms[i].setPerson(pplList.get(i));               
-            }
-            SubRooms[MaxSubBtn-1].setPlus(true);            
+            for (int i = 0; i < SubRooms.length; i++) 
+                SubRooms[i].setPerson(pplList.get(i));            
+            SubRooms[SubRooms.length-1].setPlus(true);            
             /*
             int i=0;
             for (Person nextperson : pplList) {
@@ -115,7 +103,7 @@ public class ButtonRoom extends Button{
 
     @Override
     public String toString() {
-        return "ButtonRoom{" + "pplList=" + pplList + '}';
+        return "Room " + room.getName() + "; pplList=" + pplList;
     }
     
 }

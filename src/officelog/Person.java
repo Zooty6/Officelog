@@ -3,6 +3,7 @@ package officelog;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import javax.imageio.ImageIO;
 
 /**
@@ -10,7 +11,7 @@ import javax.imageio.ImageIO;
  * 
  * @author Zooty
  */
-public class Person {
+public class Person implements Serializable{
 
     /**
      * This String stores the name of the Person.
@@ -43,7 +44,7 @@ public class Person {
         this.ID = ID;
         this.Location=null;
         try {
-            Pic = ImageIO.read(new File("icons\\Default.png"));
+            setPic(ImageIO.read(new File("icons\\Default.png")));
         } catch (IOException e) {
             System.out.println("failed to load "+Name+"'s icon");
         }
@@ -53,19 +54,18 @@ public class Person {
      * Creates a Person.
      * 
      * @param Name The name of the Person
-     * @param Pic The picture assigned to this Person. Must be NxN
+     * @param pic The picture assigned to this Person. Must be NxN
      * @param ID The unique Id of the person. Serves as a primary key.
      * 
      * @throws IllegalArgumentException if picture is not NxN.
      */
-    public Person(String Name, BufferedImage Pic, int ID) {
+    public Person(String Name, BufferedImage pic, int ID) {
         this.Name = Name;
-        if(Pic.getWidth()!=Pic.getHeight())
+        if(pic.getWidth()!=pic.getHeight())
             throw new IllegalArgumentException("Icon is not NxN");
-        this.Pic = Pic;
+        this.Pic = pic;
         this.ID = ID;
         this.Location=null;
-        //System.out.println("done");
     }
 
     /**
@@ -74,6 +74,8 @@ public class Person {
      * @param pic the new picture of the person.
      */
     public void setPic(BufferedImage pic) {
+        if(pic.getWidth()!=pic.getHeight())
+            throw new IllegalArgumentException("Icon is not NxN");
         this.Pic = pic;
     }
     
@@ -140,7 +142,7 @@ public class Person {
      */
     @Override
     public String toString() {
-        return "Person{" + "ID=" + ID + ", Name=" + Name + '}';
+        return "Guest{" + "ID=" + ID + ", Name=" + Name + '}';
     }
     
 }

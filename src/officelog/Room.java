@@ -10,6 +10,7 @@ import java.util.Set;
  * @author Zooty
  */
 public class Room implements Serializable{
+    
     /**
      * The unique name of the Room. Serves as primary key.
      */
@@ -71,38 +72,47 @@ public class Room implements Serializable{
     }
 
     /**
+     * Return the name of the Room.
      * 
-     * @return the name of the Room
+     * @return the name of the Room.
      */
     public String getName() {
         return Name;
     }
 
     /**
+     * Tells how many people can fit into this Room.
      * 
-     * @return the maximum number of people can be in that room.
+     * @return the maximum number of people can be in that Room.
      */
     public int getMaxPeople() {
         return MaxPeople;
     }
 
     /**
+     * Tells if this Room is open for guests.
      * 
      * @return true if the room needs no authorization to enter.
      */
-    public Boolean getOpen() {
+    public Boolean isOpen() {
         return Open;
     }
 
     /**
+     * returns the button this room is assigned to. 
      * 
      * @return the button this room is assigned to. 
+     * 
+     * @throws NullPointerException if there is no button assigned to this Room.
      */
     public ButtonRoom getBtnRoom() {
+        if(btnRoom == null)
+            throw new NullPointerException("No button assigned to this Room");
         return btnRoom;
     }
 
     /**
+     * Assigns a button to this Room.
      * 
      * @param btnRoom assigns this room to parameter button.
      */
@@ -111,10 +121,11 @@ public class Room implements Serializable{
     }
 
     /**
+     * Sets the maximum number of people that can be in the Room. (Change public if needed.)
      * 
-     * @param MaxPeople Sets the maximum number of people that can be in the Room.
+     * @param MaxPeople the maximum number of people that can be in the Room.
      */
-     public void setMaxPeople(int MaxPeople) {
+     private void setMaxPeople(int MaxPeople) {
         this.MaxPeople = MaxPeople;
     }
      

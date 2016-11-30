@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.NotSerializableException;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,7 +17,8 @@ import java.util.List;
  * 
  * @author Zooty
  */
-public class EventList {
+public class EventList implements Serializable{
+    
     /**
      * collection for the events
      */
@@ -33,11 +35,10 @@ public class EventList {
         Elist.add(event);
     }
     
-    public void Save(){        
+    public void Save(){        //TODO: CREATE FOLDER FOR EVERY DAY
         DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
         Date d = new Date();
-        System.out.println(dateFormat.format(d));
-        File f = new File("./EventLog/"+d.toString()+"("+Cicle%2+").dat"); 
+        File f = new File("EventLog\\"+dateFormat.format(d)+"("+Cicle%2+").dat"); 
         System.out.println(wgat[Cicle++]);
         Cicle = Cicle == 4 ? 0 : Cicle;
         ObjectOutputStream oos = null;
@@ -65,7 +66,7 @@ public class EventList {
                 }
             }
         }        
-        Clear();
+        //Clear();
     }
 
     private void Clear() {

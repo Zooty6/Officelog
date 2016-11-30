@@ -9,7 +9,7 @@ import java.util.Set;
  * 
  * @author Zooty
  */
-public class Employee extends Person{
+public class Employee extends Person {
     
     /**
      * Name of the job.
@@ -104,4 +104,15 @@ public class Employee extends Person{
     public boolean isAllowed(Room room){
         return Permissions.contains(room);
     }
+
+    /**
+     * Returns a String of the ID, name and the Job of the Employee.
+     * 
+     * @return the ID, name and the Job of the Employee.
+     */
+    @Override
+    public String toString() {
+        return "Employee{" + "ID=" + getID() + ", Name=" + getName() + "Job=" + Job + '}';
+    }   
+    
 }

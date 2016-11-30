@@ -6,6 +6,7 @@ import java.util.ArrayList;
  * @author Zooty
  */
 public class Model {
+    
     /**
      * Creates an empty collection for the people
      */
@@ -142,16 +143,16 @@ public class Model {
                     break;
                 case "R17":
                     for (Room nroom : office) 
-                        if("R19".equals(nroom.getName()) ||
-                           "R2".equals(nroom.getName()) ||
+                        if("R2".equals(nroom.getName()) ||
                            "R3".equals(nroom.getName()) ||
                            "R4".equals(nroom.getName()) ||
-                           "R5".equals(nroom.getName()))
+                           "R5".equals(nroom.getName()) ||
+                           "R19".equals(nroom.getName()))
                             room.addNeighbor(nroom);
                     break;
                 case "R18":
                     for (Room nroom : office) 
-                        if("R19".equals(nroom.getName()) ||
+                        if("R1".equals(nroom.getName()) ||
                            "R9".equals(nroom.getName()) ||
                            "R10".equals(nroom.getName()) ||
                            "R11".equals(nroom.getName()) ||
@@ -159,7 +160,8 @@ public class Model {
                            "R13".equals(nroom.getName()) ||
                            "R14".equals(nroom.getName()) ||
                            "R15".equals(nroom.getName()) ||
-                           "R16".equals(nroom.getName()))
+                           "R16".equals(nroom.getName()) ||
+                           "R19".equals(nroom.getName()))
                             room.addNeighbor(nroom);
                     break;
                 case "R19":

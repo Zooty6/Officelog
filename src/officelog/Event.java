@@ -1,5 +1,6 @@
 package officelog;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -9,7 +10,7 @@ import java.util.Date;
  * 
  * @author Zooty
  */
-public class Event {
+public class Event implements Serializable{
     /**
      * A description of this specific event.
      */

@@ -10,7 +10,7 @@ import javafx.scene.image.ImageView;
  * @author Zooty
  */
 public class ButtonPerson extends Button{
-    private Person person; //redundant data, I'm too lazy to rethink and fix.
+    private Person person;
     private boolean Plus = false;
     //private final Set<Person> PersonList = new HashSet<>();
     
@@ -31,13 +31,15 @@ public class ButtonPerson extends Button{
     }
 
     public void setPerson(Person person){
-        if(person == null)
+        if(person == null){
             this.setVisible(false);
+            
+                    }
         else{
             this.setVisible(true);
             /*
-            Image a = null;
-            BufferedImage b = a;
+            BufferedImage a = null;
+            Image b = a;           
             Image whydontyouwork = ImageIO.read(new File("icons\\Default.png"));
             Image image = SwingFXUtils.toFXImage(ImageIO.read(new File("icons\\Default.png")), null ); //WTF
             */
@@ -47,9 +49,12 @@ public class ButtonPerson extends Button{
     }    
 
     public void setPlus(boolean Plus) {
-        if(Plus)
+        if(Plus){
             this.setText("+");
+            this.setGraphic(null);
+        }
         else
+            this.setText("");
             //this.setIcon(new ImageIcon(this.getPerson().getPic())); //TODO: Test
         this.Plus = Plus;
     }
@@ -69,8 +74,5 @@ public class ButtonPerson extends Button{
     
     public void removePerson(Person oldPerson){
         PersonList.remove(oldPerson);
-    }*/
-    public static void main(String[] args) {
-        System.out.println("afwe");
-    }
+    }*/    
 }

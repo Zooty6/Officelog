@@ -1,7 +1,5 @@
 package officelog;
-/**
- * @author Szandi, Zooty
- */
+
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +7,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
+/**
+ * @author Szandi, Zooty
+ */
 public class Officelog extends Application {
     
     @Override
@@ -46,8 +46,10 @@ public class Officelog extends Application {
         
         primaryStage.setScene(scene);
         primaryStage.setTitle("Officelog");
-        //primaryStage.setResizable(false);//gombok szétesnek
-        //primaryStage.sizeToScene();
+        //primaryStage.setResizable(false);
+        primaryStage.setMinWidth(700);
+        primaryStage.setMaxWidth(900);
+        primaryStage.setMinHeight(700);
         primaryStage.show();
         
     }
