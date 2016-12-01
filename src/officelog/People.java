@@ -154,6 +154,20 @@ public class People {
      * Adds a new Employee with given parameters.
      * 
      * @param name the name of the new Employee.
+     * @param Job the Job of the new Employee.
+     * @param per list of permissions this employee can enter.
+     * 
+     * @return the unique ID of the new Employee.
+     */
+    public int addEmployee(String name, String Job, Room[] per){
+        addPerson(new Employee(name, MaxID, Job, per));
+        return MaxID-1;
+    }
+    
+    /**
+     * Adds a new Employee with given parameters.
+     * 
+     * @param name the name of the new Employee.
      * @param pic the picture of the new Employee.
      * @param Job the Job of the new Employee.
      * 
@@ -161,6 +175,21 @@ public class People {
      */
     public int addEmployee(String name, BufferedImage pic, String Job){
         addPerson(new Employee(name, pic, MaxID, Job)); 
+        return MaxID-1;
+    }
+    
+    /**
+     * Adds a new Employee with given parameters.
+     * 
+     * @param name the name of the new Employee.
+     * @param pic the picture of the new Employee.
+     * @param Job the Job of the new Employee.
+     * @param per list of permissions this employee can enter.
+     * 
+     * @return the unique ID of the new Employee.
+     */
+    public int addEmployee(String name, BufferedImage pic, String Job, Room[] per){
+        addPerson(new Employee(name, pic, MaxID, Job, per)); 
         return MaxID-1;
     }
     

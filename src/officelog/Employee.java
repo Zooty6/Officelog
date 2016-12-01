@@ -47,6 +47,38 @@ public class Employee extends Person {
     }
     
     /**
+     * Creates and Employee.
+     * 
+     * @param Name name of the person.
+     * @param Pic picture of the person.
+     * @param ID unique ID of the person.
+     * @param Job Job of the person.
+     * @param per  list of permissions this employee can enter.
+     */
+    public Employee(String Name, BufferedImage Pic, int ID, String Job, Room[] per) {
+        super(Name, Pic, ID);
+        this.Job = Job;
+        for (Room room : per) {
+            Permissions.add(room);
+        }
+    }
+    
+    /**
+     * Creates and Employee with default picture.
+     * 
+     * @param Name name of the person.
+     * @param ID unique ID of the person.
+     * @param Job Job of the person.
+     * @param per  list of permissions this employee can enter.
+     */
+    public Employee(String Name, int ID, String Job, Room[] per) {
+        super(Name, ID);
+        this.Job = Job;
+        for (Room room : per) {
+            Permissions.add(room);
+        }
+    }
+    /**
      * Returns the job of the person.
      * 
      * @return the job of the person.

@@ -48,8 +48,8 @@ public class Person implements Serializable{
         } catch (IOException e) {
             System.out.println("failed to load "+Name+"'s icon");
         }
-        //TODO: Set This.Pic to default
     }
+    
     /**
      * Creates a Person.
      * 

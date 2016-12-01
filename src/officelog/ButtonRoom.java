@@ -47,6 +47,10 @@ public class ButtonRoom extends Button{
         return room;
     }
 
+    public ArrayList<Person> getPplList() {
+        return pplList;
+    }
+
     public void setRoom(Room room) {
         this.room = room;
     }

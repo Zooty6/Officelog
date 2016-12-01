@@ -18,7 +18,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Logok">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Megnyitás" />
+                  <MenuItem mnemonicParsing="false" text="Open" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
@@ -26,7 +26,7 @@
               <MenuItem mnemonicParsing="false" onAction="#handleButtonAction" text="Delete" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Súgó">
+          <Menu mnemonicParsing="false" text="help">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#handleButtonAction" text="CopyRight" />
             </items>
@@ -96,22 +96,22 @@
                </rowConstraints>
                <children>
                   <officelog.ButtonRoom alignment="TOP_LEFT" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyReleased="#handleButtonAction" text="R1" fx:id="R1" onAction="#handleButtonAction"/>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0"  fx:id="r1c" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r1c" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="15.0" top="30.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson contentDisplay="CENTER" mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" fx:id="r1a" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson contentDisplay="CENTER" mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r1a" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets bottom="80.0" left="15.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson contentDisplay="CENTER" mnemonicParsing="false" prefHeight="21.0" prefWidth="6.0"  fx:id="r1b" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson contentDisplay="CENTER" mnemonicParsing="false" prefHeight="21.0" prefWidth="6.0" minWidth="30" maxWidth="35" fx:id="r1b" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets bottom="80.0" left="65.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0"  fx:id="r1d" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r1d" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="65.0" top="30.0" />
                      </GridPane.margin>
@@ -127,22 +127,22 @@
                </rowConstraints>
                <children>
                   <officelog.ButtonRoom alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="131.0" prefWidth="58.0" text="R2" fx:id="R2" onAction="#handleButtonAction"/>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="6.0" prefWidth="0.0"  fx:id="r2a" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="6.0" prefWidth="0.0" fx:id="r2a" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets bottom="30.0" left="2.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="4.0" prefWidth="0.0"  fx:id="r2b" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="4.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r2b" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets bottom="30.0" left="40.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="1.0" prefWidth="0.0"  fx:id="r2c" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="1.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r2c" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="2.0" top="50.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="6.0" prefWidth="0.0"  fx:id="r2d" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="6.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r2d" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="40.0" top="50.0" />
                      </GridPane.margin>
@@ -158,22 +158,22 @@
                </rowConstraints>
                <children>
                   <officelog.ButtonRoom alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="124.0" prefWidth="68.0" text="R3" fx:id="R3" onAction="#handleButtonAction"/>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0"  fx:id="r3a" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r3a" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets bottom="30.0" left="2.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0"  fx:id="r3c" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r3c" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="2.0" top="50.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="13.0" prefWidth="12.0"  fx:id="r3b" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="13.0" prefWidth="12.0" minWidth="30" maxWidth="35" fx:id="r3b" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets bottom="30.0" left="40.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0"  fx:id="r3d" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r3d" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="40.0" top="50.0" />
                      </GridPane.margin>
@@ -189,22 +189,22 @@
                </rowConstraints>
                <children>
                   <officelog.ButtonRoom alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="132.0" prefWidth="68.0" text="R4" fx:id="R4" onAction="#handleButtonAction"/>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0"  fx:id="r4a" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r4a" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets bottom="30.0" left="2.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0"  fx:id="r4c" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r4c" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="2.0" top="50.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="13.0" prefWidth="0.0"  fx:id="r4b" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="13.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r4b" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets bottom="30.0" left="35.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0"  fx:id="r4d" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r4d" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="35.0" top="50.0" />
                      </GridPane.margin>
@@ -220,22 +220,22 @@
                </rowConstraints>
                <children>
                   <officelog.ButtonRoom alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="135.0" prefWidth="95.0" text="R5" fx:id="R5" onAction="#handleButtonAction"/>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="20.0" prefWidth="9.0" fx:id="r5a" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="20.0" prefWidth="9.0" minWidth="30" maxWidth="35" fx:id="r5a" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets bottom="30.0" left="10.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" fx:id="r5c" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r5c" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="10.0" top="50.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="16.0" prefWidth="0.0"  fx:id="r5b" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="16.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r5b" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets bottom="30.0" left="55.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="2.0" fx:id="r5d" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="2.0" minWidth="30" maxWidth="35" fx:id="r5d" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="55.0" top="50.0" />
                      </GridPane.margin>
@@ -251,17 +251,17 @@
                </rowConstraints>
                <children>
                   <officelog.ButtonRoom alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="57.0" prefWidth="142.0" text="R9" fx:id="R9" onAction="#handleButtonAction"/>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="2.0"  fx:id="r9a" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="2.0" minWidth="30" maxWidth="35" fx:id="r9a" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="10.0" top="20.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="1.0" prefWidth="0.0"  fx:id="r9b" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="1.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r9b" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="40.0" top="20.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="4.0" prefWidth="0.0" fx:id="r9c" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="4.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r9c" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="70.0" top="20.0" />
                      </GridPane.margin>
@@ -277,7 +277,7 @@
                </rowConstraints>
                <children>
                   <officelog.ButtonRoom alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="186.0" prefWidth="100.0" text="R6" fx:id="R6" onAction="#handleButtonAction"/>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0"  fx:id="r6a" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r6a" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets bottom="30.0" left="10.0" />
                      </GridPane.margin>
@@ -287,12 +287,12 @@
                         <Insets left="10.0" top="50.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0"  fx:id="r6b" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r6b" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets bottom="30.0" left="60.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" minWidth="30" maxWidth="35"  fx:id="r6d" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r6d" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="60.0" top="50.0" />
                      </GridPane.margin>
@@ -308,22 +308,22 @@
                </rowConstraints>
                <children>
                   <officelog.ButtonRoom alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="243.0" prefWidth="100.0" text="R8" fx:id="R8" onAction="#handleButtonAction"/>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="10.0" prefWidth="9.0"  fx:id="r8a" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="10.0" prefWidth="9.0" minWidth="30" maxWidth="35" fx:id="r8a" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets bottom="80.0" left="15.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="6.0"  fx:id="r8b" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="6.0" minWidth="30" maxWidth="35" fx:id="r8b" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets bottom="80.0" left="60.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0"  fx:id="r8c" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r8c" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0"  fx:id="r8d" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r8d" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="60.0" />
                      </GridPane.margin>
@@ -342,22 +342,22 @@
                </rowConstraints>
                <children>
                   <officelog.ButtonRoom alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="411.0" prefWidth="72.0" text="R19" fx:id="R19" onAction="#handleButtonAction"/>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="13.0" prefWidth="14.0"  fx:id="r19a" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="13.0" prefWidth="14.0" minWidth="30" maxWidth="35" fx:id="r19a" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets bottom="150.0" left="5.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="17.0" prefWidth="1.0"  fx:id="r19b" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="17.0" prefWidth="1.0" minWidth="30" maxWidth="35" fx:id="r19b" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets bottom="150.0" left="45.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="8.0" prefWidth="7.0"  fx:id="r19c" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="8.0" prefWidth="7.0" minWidth="30" maxWidth="35" fx:id="r19c" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets bottom="60.0" left="5.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0"  fx:id="r19d" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r19d" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets bottom="60.0" left="45.0" />
                      </GridPane.margin>
@@ -374,17 +374,17 @@
                <children>
                   
                   <officelog.ButtonRoom alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="67.0" prefWidth="130.0" text="R7" fx:id="R7" onAction="#handleButtonAction" />
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0"  fx:id="r7a" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r7a" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets top="10.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0"  fx:id="r7b" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r7b" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="30.0" top="10.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="13.0"  fx:id="r7c" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="13.0" minWidth="30" maxWidth="35" fx:id="r7c" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="60.0" top="10.0" />
                      </GridPane.margin>
@@ -400,17 +400,17 @@
                </rowConstraints>
                <children>
                   <officelog.ButtonRoom alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="121.0" prefWidth="111.0" text="R12" fx:id="R12" onAction="#handleButtonAction"/>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="19.0" prefWidth="6.0"  fx:id="r12a" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="19.0" prefWidth="6.0" minWidth="30" maxWidth="35" fx:id="r12a" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="5.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="2.0"  fx:id="r12b" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="2.0" minWidth="30" maxWidth="35" fx:id="r12b" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="40.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="7.0" prefWidth="0.0"  fx:id="r12c" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="7.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r12c" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="75.0" />
                      </GridPane.margin>
@@ -426,12 +426,12 @@
                </rowConstraints>
                <children>
                   <officelog.ButtonRoom alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="107.0" prefWidth="91.0" text="R13" fx:id="R13" onAction="#handleButtonAction"/>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="19.0" prefWidth="5.0"  fx:id="r13a" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="19.0" prefWidth="5.0" minWidth="30" maxWidth="35" fx:id="r13a" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets bottom="10.0" left="15.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="15.0" prefWidth="6.0"  fx:id="r13b" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="15.0" prefWidth="6.0" fx:id="r13b" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="15.0" top="50.0" />
                      </GridPane.margin>
@@ -447,12 +447,12 @@
                </rowConstraints>
                <children>
                   <officelog.ButtonRoom alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="116.0" prefWidth="67.0" text="R14" fx:id="R14" onAction="#handleButtonAction"/>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="4.0" fx:id="r14a" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="4.0" minWidth="30" maxWidth="35" fx:id="r14a" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets bottom="20.0" left="20.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="3.0" fx:id="r14b" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="3.0" minWidth="30" maxWidth="35" fx:id="r14b" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="20.0" top="40.0" />
                      </GridPane.margin>
@@ -468,12 +468,12 @@
                </rowConstraints>
                <children>
                   <officelog.ButtonRoom alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="127.0" prefWidth="68.0" text="R15" fx:id="R15" onAction="#handleButtonAction"/>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" fx:id="r15a" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r15a" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets bottom="20.0" left="20.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="12.0" prefWidth="0.0" fx:id="r15b" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="12.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r15b" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="20.0" top="40.0" />
                      </GridPane.margin>
@@ -489,22 +489,22 @@
                </rowConstraints>
                <children>
                   <officelog.ButtonRoom alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="128.0" prefWidth="95.0" text="R16" fx:id="R16" onAction="#handleButtonAction"/>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="8.0" prefWidth="6.0" fx:id="r16a" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="8.0" prefWidth="6.0" minWidth="30" maxWidth="35" fx:id="r16a" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets bottom="20.0" left="10.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" fx:id="r16b" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r16b" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets bottom="20.0" left="50.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="7.0" fx:id="r16c" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="7.0" minWidth="30" maxWidth="35" fx:id="r16c" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="10.0" top="50.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" fx:id="r16d" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r16d" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="50.0" top="50.0" />
                      </GridPane.margin>
@@ -520,29 +520,29 @@
                </rowConstraints>
                <children>
                   <officelog.ButtonRoom alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="48.0" prefWidth="296.0" text="R18" fx:id="R18" onAction="#handleButtonAction" />
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="4.0" prefWidth="2.0" fx:id="r18b" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="4.0" prefWidth="2.0" minWidth="30" maxWidth="35" fx:id="r18b" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="200.0" top="15.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="8.0" prefWidth="0.0"  fx:id="r18c" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="8.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r18c" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="240.0" top="15.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="3.0" prefWidth="0.0" fx:id="r18d" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="3.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r18d" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="280.0" top="15.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="31.0" prefWidth="31.0" fx:id="r18a" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="31.0" prefWidth="31.0" minWidth="30" maxWidth="35" fx:id="r18a" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="160.0" top="15.0" />
                      </GridPane.margin>
                  </officelog.ButtonPerson>
                </children>
             </GridPane>
-            <officelog.ButtonRoom alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="29.0" prefWidth="578.0" text="R20" fx:id="R20" onAction="#handleButtonAction"  GridPane.columnSpan="7" GridPane.rowIndex="6" GridPane.valignment="TOP" />
+            <officelog.ButtonRoom alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="29.0" prefWidth="578.0" text="R20" fx:id="R20" onAction="#handleButtonAction" GridPane.columnSpan="7" GridPane.rowIndex="6" GridPane.valignment="TOP" />
             <GridPane GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="2" GridPane.valignment="TOP">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -552,22 +552,22 @@
                </rowConstraints>
                <children>
                   <officelog.ButtonRoom alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="R17" fx:id="R17" onAction="#handleButtonAction" />
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="2.0" fx:id="r17a" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="2.0" minWidth="30" maxWidth="35" fx:id="r17a" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="100.0" top="20.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0"  fx:id="r17b" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r17b" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="140.0" top="20.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="21.0" prefWidth="0.0" fx:id="r17c" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="21.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r17c" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="180.0" top="20.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" fx:id="r17d" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r17d" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="220.0" top="20.0" />
                      </GridPane.margin>
@@ -583,12 +583,12 @@
                </rowConstraints>
                <children>
                   <officelog.ButtonRoom alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="R10" fx:id="R10" onAction="#handleButtonAction"/>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="14.0" prefWidth="0.0" fx:id="r10a" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="14.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r10a" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="5.0" top="20.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" fx:id="r10b" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r10b" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="40.0" top="20.0" />
                      </GridPane.margin>
@@ -604,12 +604,12 @@
                </rowConstraints>
                <children>
                   <officelog.ButtonRoom alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="R11" fx:id="R11" onAction="#handleButtonAction"/>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="2.0" prefWidth="0.0" fx:id="r11a" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="2.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r11a" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="10.0" top="20.0" />
                      </GridPane.margin>
                   </officelog.ButtonPerson>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="6.0" prefWidth="0.0" fx:id="r11b" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="6.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r11b" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets left="50.0" top="20.0" />
                      </GridPane.margin>
@@ -617,7 +617,7 @@
                </children>
             </GridPane>
             <Label alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="215.0" fx:id="lbSelected" GridPane.columnSpan="2" />
-            <officelog.ButtonPerson mnemonicParsing="false" prefHeight="31.0" prefWidth="10.0" GridPane.columnIndex="1" GridPane.rowIndex="6" fx:id="r20a" onAction="#handleButtonAction" />
+            <officelog.ButtonPerson mnemonicParsing="false" prefHeight="31.0" prefWidth="10.0" GridPane.columnIndex="1" GridPane.rowIndex="6" minWidth="30" maxWidth="35" fx:id="r20a" onAction="#handleButtonAction" />
          </children>
          <BorderPane.margin>
             <Insets bottom="20.0" left="20.0" right="20.0" top="5.0" />
