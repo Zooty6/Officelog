@@ -17,6 +17,11 @@ public class Room implements Serializable{
     final private String Name;
     
     /**
+     * The name of the Room in the selected Language.
+     */
+    private String LanguageName;
+    
+    /**
      * The number of people can be in this room. Set 0 if unlimited. 
      */
     private int MaxPeople;
@@ -46,6 +51,7 @@ public class Room implements Serializable{
      */
     public Room(String Name, int MaxPeople, Boolean Open) {
         this.Name = Name;
+        this.LanguageName = Name;
         this.MaxPeople = MaxPeople;
         this.Open = Open;
         Neighbors = new HashSet<>();
@@ -128,6 +134,15 @@ public class Room implements Serializable{
      private void setMaxPeople(int MaxPeople) {
         this.MaxPeople = MaxPeople;
     }
+
+     /**
+      * Set the name of the Room in the selected Language.
+      * 
+      * @param LanguageName the name of the Room in the selected Language.
+      */
+    public void setLanguageName(String LanguageName) {
+        this.LanguageName = LanguageName;
+    }     
      
      /**
       * Adds a new Room that can be reached directly from this Room.
@@ -150,10 +165,13 @@ public class Room implements Serializable{
     
     @Override
     public String toString(){
+        /*
         String r = Name+", Neighbors:";
         for (Room Neighbor : Neighbors) {
             r+=" "+Neighbor.Name;
         }        
         return r;
+        */
+        return LanguageName;
     }
 }

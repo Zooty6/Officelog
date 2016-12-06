@@ -16,14 +16,30 @@
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
+           
           <Menu mnemonicParsing="false" text="Logok">
             <items>
                   <MenuItem mnemonicParsing="false" text="Open" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
+             <items>
+              <MenuItem mnemonicParsing="false" onAction="#handleButtonAction" fx:id="miAddPerson" text="TODO:Add person" />
+            </items>
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#handleButtonAction" text="Delete" />
+              <MenuItem mnemonicParsing="false" onAction="#handleButtonAction" fx:id="miModifyPerson" text="TODO:Modify person" />
+            </items>
+             <items>
+              <MenuItem mnemonicParsing="false" onAction="#handleButtonAction" fx:id="miDeletePerson" text="TODO:Delete person" />
+            </items>
+            <items>
+                <javafx.scene.control.SeparatorMenuItem />
+            </items>
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#handleButtonAction" fx:id="miOpenPerson" text="TODO:Open person files" />
+            </items>
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#handleButtonAction" fx:id="miSavePerson" text="TODO:Save person files" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="help">

@@ -12,12 +12,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 
 /**
- *
+ * Controller for the main window.
+ * 
  * @author Szandi, Zooty
  */
 public class dashboardController implements Initializable {
@@ -198,8 +200,15 @@ public class dashboardController implements Initializable {
     //</editor-fold>
 
     @FXML
+    MenuItem miAddPerson;
+    @FXML
     Label lbSelected;
 
+    /**
+     * Handles all actions on the main form.
+     * 
+     * @param event the event that called this action.
+     */
     @FXML
     private void handleButtonAction(ActionEvent event) {
         if (event.getSource() instanceof ButtonRoom) {
@@ -214,7 +223,7 @@ public class dashboardController implements Initializable {
                         new Event("Acces denied", selectedPerson, ((ButtonRoom) (event.getSource())).getRoom()));
                 System.out.println("GTFO");
             }
-            lbSelected.setText("TODO: " + selectedPerson.getName());
+            //lbSelected.setText("TODO: " + selectedPerson.getName());
             System.out.println(((ButtonRoom) (event.getSource())));
         }
 
@@ -223,6 +232,7 @@ public class dashboardController implements Initializable {
             if (((ButtonPerson) (event.getSource())).isPlus()) {
                 selectedPerson = ((ButtonPerson)(event.getSource())).getPerson();
                 PersonSelecter(event);
+                //Thread.currentThread().suspend();
                 lbSelected.setText("TODO: " + selectedPerson.getName());              
                 EnableNeighburs();
             } else {
@@ -231,6 +241,22 @@ public class dashboardController implements Initializable {
                 EnableNeighburs();
             }
         }
+        
+        if (event.getSource() == miAddPerson) {
+            try {
+                FXMLLoader LoadAddPerson = new FXMLLoader(getClass().getResource("AddPerson.fxml"));
+                Parent AddPersonWindow = (Parent) LoadAddPerson.load();
+                Stage stageAP = new Stage();
+                stageAP.initModality(Modality.WINDOW_MODAL);
+                stageAP.initOwner(((Node)R1).getScene().getWindow());
+                stageAP.setScene(new Scene(AddPersonWindow));
+                stageAP.setResizable(false);
+                stageAP.show();
+            } catch (IOException ex) {
+                System.out.println("Could not load AddPerson.fxml");
+            }
+        }
+            
     }
 
     /*
@@ -241,6 +267,10 @@ public class dashboardController implements Initializable {
         copyright.show();
      */
 
+    /**
+     * Enables all ButtonRooms that the selectedPerson can attend to enter. Call this method after
+     * a Person moved or a new Person is selected.
+     */
     private void EnableNeighburs() {
         for (ButtonRoom allRoom : allRooms) {
             if (allRoom.getRoom().isNeighbor(selectedPerson.getLocation())) {
@@ -404,6 +434,8 @@ public class dashboardController implements Initializable {
 
         //</editor-fold>
         lbSelected.setText("TODO:"); //TODO: set tet based of selected language
+        PersonSelecterController.LinkToSelectedPerson(lbSelected);
+        AddPersonController.setModel(model);
         for (ButtonRoom allRoom : allRooms) {
             allRoom.setDisable(true);
         }
@@ -432,13 +464,13 @@ public class dashboardController implements Initializable {
     private void PersonSelecter(ActionEvent event){        
         try {
             FXMLLoader load = new FXMLLoader(getClass().getResource("PersonSelecter.fxml"));
-            PersonSelecterController.setSelectedList(((ButtonPerson)(event.getSource())).getPerson().getLocation().getBtnRoom().getPplList());
+            PersonSelecterController.setSelectedList(((ButtonPerson)(event.getSource())).getPerson().getLocation().getBtnRoom().getPplList());            
             Parent Window = (Parent) load.load();            
             Stage stage = new Stage();
             stage.setResizable(false);
             stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(((Node)(event.getSource())).getScene().getWindow());
-            stage.setScene(new Scene(Window));
+            stage.initOwner(((Node)(event.getSource())).getScene().getWindow());            
+            stage.setScene(new Scene(Window));            
             stage.show();
         } catch (IOException ex) {
             System.out.println("Can't load PersonSelecter.fxml");           

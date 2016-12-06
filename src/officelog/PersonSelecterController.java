@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
@@ -19,7 +20,7 @@ import javafx.stage.Stage;
  */
 public class PersonSelecterController implements Initializable {
     
-
+    private static Label LinkToSelectedPerson;
     private static String idString = "id: ";
     private static String nameString = "name: ";            
     private static ArrayList<Person> SelectedList = new ArrayList<>();
@@ -40,11 +41,14 @@ public class PersonSelecterController implements Initializable {
         if(event.getSource().equals(btOk)){
             for (Person person : SelectedList)
                 if ((idString + person.getID() + " " + nameString + person.getName()).equals(
-                        lvPlus.getSelectionModel().getSelectedItem()))
-                    dashboardController.setSelectedPerson(person);            
-            ((Stage)(btCancel.getScene().getWindow())).close();
+                        lvPlus.getSelectionModel().getSelectedItem())){
+                    dashboardController.setSelectedPerson(person);    
+                    LinkToSelectedPerson.setText("TODO: " + person.getName());
+                }
+            ((Stage)(btCancel.getScene().getWindow())).close();            
         }
-        if(event.getSource().equals(btCancel)){            
+        if(event.getSource().equals(btCancel)){
+           //ParentThread.run();
            ((Stage)(btCancel.getScene().getWindow())).close();
         }
     }
@@ -55,15 +59,19 @@ public class PersonSelecterController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //selectedPerson = null;
-        int i=0;
         ObservableList<String> lvStrings = FXCollections.observableArrayList();
+        lvPlus.setItems(lvStrings);
         for (Person person : SelectedList) {
-            System.out.println(i++ +": " + person);
             lvStrings.add(idString + person.getID() + " " + nameString + person.getName());
-            lvPlus.setItems(lvStrings);            
+                        
         }
         lvPlus.getSelectionModel().select(0);        
     }    
+
+    public static void LinkToSelectedPerson(Label selectedlbl) {
+        PersonSelecterController.LinkToSelectedPerson = selectedlbl;
+    }
+    
     
     public static void setSelectedList(ArrayList<Person> List) {
         SelectedList = List;
