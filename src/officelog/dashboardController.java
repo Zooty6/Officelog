@@ -214,10 +214,18 @@ public class dashboardController implements Initializable {
         if (event.getSource() instanceof ButtonRoom) {
             if (((ButtonRoom) (event.getSource())).getRoom().isOpen()
                     || selectedPerson.isAllowed(((ButtonRoom) (event.getSource())).getRoom())) {
-                ((ButtonRoom) (event.getSource())).Enter(selectedPerson);
-                model.getEventList().addEvent(
-                        new Event("Entered", selectedPerson, ((ButtonRoom) (event.getSource())).getRoom()));
-                EnableNeighburs();
+                if (((ButtonRoom)(event.getSource())).getRoom().getMaxPeople() == 0 ||
+                        (((ButtonRoom) (event.getSource())).getRoom().getMaxPeople() > 
+                        ((ButtonRoom) (event.getSource())).getRoom().getBtnRoom().getPplHere())) {
+                    ((ButtonRoom) (event.getSource())).Enter(selectedPerson);
+                    model.getEventList().addEvent(
+                            new Event("Entered", selectedPerson, ((ButtonRoom) (event.getSource())).getRoom()));
+                    EnableNeighburs();
+                } else {
+                    model.getEventList().addEvent(
+                            new Event("No more place", selectedPerson, ((ButtonRoom) (event.getSource())).getRoom()));
+                    System.out.println("Sorry, we are full :(");
+                }
             } else {
                 model.getEventList().addEvent(
                         new Event("Acces denied", selectedPerson, ((ButtonRoom) (event.getSource())).getRoom()));

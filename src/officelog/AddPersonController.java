@@ -1,10 +1,15 @@
 package officelog;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,8 +21,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
 
 /**
  * FXML Controller class
@@ -59,6 +67,8 @@ public class AddPersonController implements Initializable {
     private TextField tfJob;
     @FXML
     private Label lbJob;
+    @FXML
+    private ImageView ivIcon;
     private BufferedImage NewImg = null;
     
     @FXML
@@ -82,21 +92,45 @@ public class AddPersonController implements Initializable {
             lvRightItems.removeAll(lvRight.getSelectionModel().getSelectedItems());
         }
         if (event.getSource() == btnSelPic){
-            NewImg = null; //TODO: set image
+            FileChooser fileChooser = new FileChooser();
+            FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+            FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
+            fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
+            File selectedFile = fileChooser.showOpenDialog(null);
+            if (selectedFile != null)
+                try {
+                    if(ImageIO.read(selectedFile).getWidth() == ImageIO.read(selectedFile).getHeight()){
+                        NewImg = ImageIO.read(selectedFile);
+                        ivIcon.setImage(SwingFXUtils.toFXImage(NewImg, null));
+                    }
+                    else{
+                        Alert alert = new Alert(AlertType.ERROR);
+                        alert.setTitle("Error Dialog");
+                        alert.setHeaderText("Look, an Error Dialog");
+                        alert.setContentText("Icon is not NxN!");
+                        alert.showAndWait();
+                    }                    
+            } catch (IOException ex) {
+                Alert alert = new Alert(AlertType.WARNING);
+                alert.setTitle("Error Dialog");
+                alert.setHeaderText("Look, an Error Dialog");
+                alert.setContentText("Ooops, there was an error!");
+                alert.showAndWait();
+            }
         }
         if (event.getSource() == btnCancel){
             ((Stage)(btnCancel.getScene().getWindow())).close();
         }
         if (event.getSource() == btnSubmit) {
             if ("".equals(tfName.getText())) {
-                Alert alert = new Alert(AlertType.ERROR);
+                Alert alert = new Alert(AlertType.WARNING);
                 alert.setTitle("Error Dialog");
                 alert.setHeaderText("Look, an Error Dialog");
                 alert.setContentText("Ooops, there was an error!");
                 alert.showAndWait();
             } else if (cbEmp.selectedProperty().get()) {
                 if (tfJob.getText().equals("")) {
-                    Alert alert = new Alert(AlertType.ERROR);
+                    Alert alert = new Alert(AlertType.WARNING);
                     alert.setTitle("Error Dialog");
                     alert.setHeaderText("Look, an Error Dialog");
                     alert.setContentText("Ooops, there was an error!");
@@ -104,9 +138,8 @@ public class AddPersonController implements Initializable {
                 } else {
                     Room[] per = new Room[lvRightItems.size()];
                     int i = 0;
-                    for (Room room : per) {
-                        per[i] = lvRightItems.get(i);
-                        i++;
+                    for (Room room : lvRightItems) {
+                        per[i++] = room;                        
                     }
                     if (NewImg == null) {
                         model.getPeople().getPerson(model.getPeople().addEmployee(tfName.getText(), tfJob.getText(), per)).setLocation(model.getRoom("Outside"));

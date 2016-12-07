@@ -43,7 +43,10 @@ public class ButtonPerson extends Button{
             Image whydontyouwork = ImageIO.read(new File("icons\\Default.png"));
             Image image = SwingFXUtils.toFXImage(ImageIO.read(new File("icons\\Default.png")), null ); //WTF
             */
-            this.setGraphic(new ImageView(SwingFXUtils.toFXImage(person.getPic(), null ))); //TODO: Test
+            ImageView btnImage = new ImageView(SwingFXUtils.toFXImage(person.getPic(), null ));
+            btnImage.setFitHeight(22);
+            btnImage.setFitWidth(22);
+            this.setGraphic(btnImage); //TODO: Test
         }
         this.person = person;
     }    

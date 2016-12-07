@@ -143,7 +143,7 @@
                </rowConstraints>
                <children>
                   <officelog.ButtonRoom alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="131.0" prefWidth="58.0" text="R2" fx:id="R2" onAction="#handleButtonAction"/>
-                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="6.0" prefWidth="0.0" fx:id="r2a" onAction="#handleButtonAction">
+                  <officelog.ButtonPerson mnemonicParsing="false" prefHeight="6.0" prefWidth="0.0" minWidth="30" maxWidth="35" fx:id="r2a" onAction="#handleButtonAction">
                      <GridPane.margin>
                         <Insets bottom="30.0" left="2.0" />
                      </GridPane.margin>
