@@ -88,6 +88,15 @@ public class Employee extends Person {
     }
 
     /**
+     * Returns the set of Rooms this Employee can enter.
+     * 
+     * @return the set of Rooms this Employee can enter.
+     */
+    public Set<Room> getPermissions() {
+        return Permissions;
+    }
+    
+    /**
      * Modifies the job of the person.
      * 
      * @param Job the new job of this person 
@@ -144,7 +153,7 @@ public class Employee extends Person {
      */
     @Override
     public String toString() {
-        return "Employee{" + "ID=" + getID() + ", Name=" + getName() + ", Job=" + Job + '}';
+        return "ID: " + this.getID() + ", " + NameString + ": "+ this.getName(); //"Employee{" + "ID=" + getID() + ", Name=" + getName() + ", Job=" + Job + '}';
     }   
     
 }

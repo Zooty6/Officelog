@@ -12,6 +12,11 @@ import javax.imageio.ImageIO;
  * @author Zooty
  */
 public class Person implements Serializable{
+    
+    /**
+     * Language specific string for "Name"
+     */
+    protected String NameString="Name";
 
     /**
      * This String stores the name of the Person.
@@ -67,6 +72,15 @@ public class Person implements Serializable{
         this.ID = ID;
         this.Location=null;
     }
+
+    /**
+     * Set the "Name" string according to the selected language.
+     * 
+     * @param NameString "Name" in the selected language.
+     */
+    public void setNameString(String NameString) {
+        this.NameString = NameString;
+    }    
 
     /**
      * Sets the picture of the Person.
@@ -142,7 +156,7 @@ public class Person implements Serializable{
      */
     @Override
     public String toString() {
-        return "Guest{" + "ID=" + ID + ", Name=" + Name + '}';
+        return "ID: " + ID + ", " + NameString + ": "+ Name;
     }
     
 }

@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -203,6 +205,10 @@ public class dashboardController implements Initializable {
     MenuItem miAddPerson;
     @FXML
     Label lbSelected;
+    @FXML
+    MenuItem miModifyPerson;
+    @FXML
+    MenuItem miDeletePerson;
 
     /**
      * Handles all actions on the main form.
@@ -264,7 +270,36 @@ public class dashboardController implements Initializable {
                 System.out.println("Could not load AddPerson.fxml");
             }
         }
-            
+        
+        if (event.getSource() == miModifyPerson){
+            FXMLLoader LoadModPerson = new FXMLLoader(getClass().getResource("ModifyPerson.fxml"));             
+            try {
+                Parent ModPersonWindow = (Parent) LoadModPerson.load();
+                Stage stageMP = new Stage();
+                stageMP.initModality(Modality.WINDOW_MODAL);
+                stageMP.initOwner(((Node) R1).getScene().getWindow());
+                stageMP.setMinHeight(666);
+                stageMP.setScene(new Scene(ModPersonWindow));
+                stageMP.show();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }            
+        }
+        
+        if (event.getSource() == miDeletePerson){
+               FXMLLoader LoadDelPerson = new FXMLLoader(getClass().getResource("PersonDeleter.fxml"));             
+            try {
+                Parent DelPersonWindow=  (Parent) LoadDelPerson.load();
+                Stage stageDP = new Stage();
+                stageDP.initModality(Modality.WINDOW_MODAL);
+                stageDP.initOwner(((Node) R1).getScene().getWindow());
+                stageDP.setResizable(false);
+                stageDP.setScene(new Scene(DelPersonWindow));
+                stageDP.show();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     /*
@@ -444,6 +479,8 @@ public class dashboardController implements Initializable {
         lbSelected.setText("TODO:"); //TODO: set tet based of selected language
         PersonSelecterController.LinkToSelectedPerson(lbSelected);
         AddPersonController.setModel(model);
+        ModifyPersonController.setModel(model);
+        PersonDeleterController.setModel(model);
         for (ButtonRoom allRoom : allRooms) {
             allRoom.setDisable(true);
         }
@@ -459,7 +496,7 @@ public class dashboardController implements Initializable {
             model.getRoom("R15"), model.getRoom("R16")};
         try {
             model.getPeople().getPerson(model.getPeople().addEmployee("Boss Olok", ImageIO.read(new File("icons\\Boss.png")), "Boss", tmpPerm
-            )).setLocation(model.getRoom("R2"));
+                )).setLocation(model.getRoom("R2"));
         } catch (IOException e) {
             System.out.println("failed to load an icon");
         }

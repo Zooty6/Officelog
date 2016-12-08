@@ -3,7 +3,6 @@ package officelog;
 import java.util.HashSet;
 import java.util.Set;
 import javafx.scene.Node;
-import javafx.scene.image.ImageView;
 
 /**
  * This class isn't used anymore. Delete this!
@@ -29,9 +28,8 @@ public class ButtonPersonPlus extends ButtonPerson{
     public void setPlus(boolean Plus) {
         if(Plus)
             this.setText("+");
-        else
-            //this.setGraphic(new ImageView(this.getPerson().getPic()));     //TODO: Test            
-        this.Plus = Plus;
+        else                      
+            this.Plus = Plus;
     }
 
     public boolean isPlus() {

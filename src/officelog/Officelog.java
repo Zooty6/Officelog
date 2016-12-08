@@ -39,19 +39,16 @@ public class Officelog extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         */
-        //</editor-fold>
-        
+        //</editor-fold>        
         Parent root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
-        Scene scene = new Scene(root);
-        
+        Scene scene = new Scene(root);        
         primaryStage.setScene(scene);
         primaryStage.setTitle("Officelog");
         //primaryStage.setResizable(false);
         primaryStage.setMinWidth(700);
         primaryStage.setMaxWidth(900);
         primaryStage.setMinHeight(700);
-        primaryStage.show();
-        
+        primaryStage.show();        
     }
 
     public static void main(String[] args) {              

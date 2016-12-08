@@ -95,6 +95,15 @@ public class People {
     public int getNumberOfPpl() {
         return NumberOfPpl;
     }
+
+    /**
+     * Returns the list of People.
+     * 
+     * @return the list of People.
+     */
+    public Set<Person> getIPeople() {
+        return IPeople;
+    }    
     
     /**
      * Adds a new Person to the collection
@@ -110,6 +119,7 @@ public class People {
         
         IPeople.add(newPerson);
         MaxID=newPerson.getID()+1;
+        NumberOfPpl = IPeople.size();                
     }
     
     /**

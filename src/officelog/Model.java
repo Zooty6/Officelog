@@ -27,11 +27,7 @@ public class Model {
      */
     public Model(){
         eventList.addEvent(new Event("Officelog has started"));
-        BuildOffice();
-        //TEST 
-        ;
-        //\TEST
-        
+        BuildOffice();        
     }
     
     /**
@@ -186,7 +182,7 @@ public class Model {
      * Gets the Room that has the parameter name.
      * 
      * @param name name of the room we want to get.
-     * @return the Room we want to get.
+     * @return the Room we want to get. Returns null if no Room was found with that name.
      */
     public Room getRoom(String name){
         Room r=null;
