@@ -143,7 +143,11 @@ public class Employee extends Person {
      */
     @Override
     public boolean isAllowed(Room room){
-        return Permissions.contains(room);
+        boolean r = false;
+        for (Room Permission : Permissions)
+            if (Permission.getName().equals(room.getName()))
+                r = true;        
+        return r;
     }
 
     /**
@@ -153,7 +157,6 @@ public class Employee extends Person {
      */
     @Override
     public String toString() {
-        return "ID: " + this.getID() + ", " + NameString + ": "+ this.getName(); //"Employee{" + "ID=" + getID() + ", Name=" + getName() + ", Job=" + Job + '}';
-    }   
-    
+        return "ID: " + this.getID() + ", " + NameString + ": "+ this.getName();
+    }    
 }

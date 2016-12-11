@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.AnchorPane?>
 
 <!-- By Szandi -->
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="officelog.dashboardController">
@@ -44,7 +45,10 @@
           </Menu>
           <Menu mnemonicParsing="false" text="help">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#handleButtonAction" text="CopyRight" />
+              <MenuItem mnemonicParsing="false" onAction="#handleButtonAction" fx:id="miFeedback" text="Feedback" />
+            </items>
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#handleButtonAction" fx:id="miCopyRight" text="CopyRight" />
             </items>
           </Menu>
         </menus>
@@ -632,7 +636,8 @@
                   </officelog.ButtonPerson>
                </children>
             </GridPane>
-            <Label alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="215.0" fx:id="lbSelected" GridPane.columnSpan="2" />
+            <Label alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="500.0" minWidth="500.0" prefHeight="17.0" prefWidth="500.0" fx:id="lbSelected" GridPane.columnSpan="2" />
+            <!--<Label alignment="TOP_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="500.0" minWidth="600.0" prefHeight="17.0" prefWidth="500.0" fx:id="lbPplCount" GridPane.columnSpan="2" AnchorPane.rightAnchor="15.0" / -->
             <officelog.ButtonPerson mnemonicParsing="false" prefHeight="31.0" prefWidth="10.0" GridPane.columnIndex="1" GridPane.rowIndex="6" minWidth="30" maxWidth="35" fx:id="r20a" onAction="#handleButtonAction" />
          </children>
          <BorderPane.margin>

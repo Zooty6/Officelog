@@ -1,5 +1,6 @@
 package officelog;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -7,7 +8,7 @@ import javafx.scene.control.Button;
 /**
  * @author Zooty
  */
-public class ButtonRoom extends Button{
+public class ButtonRoom extends Button implements Serializable{
     private int PplHere; 
     private ButtonPerson[] SubRooms;
     private final ArrayList<Person> pplList = new ArrayList<>();
@@ -62,6 +63,12 @@ public class ButtonRoom extends Button{
     public void setPpplHere(int PpplHere) {
         this.PplHere = PpplHere;
     }    
+    
+    public void clear(){
+        pplList.clear();
+        PplHere = 0;
+        redraw();
+    }
     
     public void Enter (Person person){
         person.getLocation().getBtnRoom().leave(person);

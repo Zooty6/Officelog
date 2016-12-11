@@ -10,7 +10,7 @@ public class Model {
     /**
      * Creates an empty collection for the people
      */
-    private final People people = new People();
+    private People people = new People();
     
     /**
      * Creates a collection for events
@@ -20,7 +20,7 @@ public class Model {
     /**
      * Creates a collection for all the rooms in the office
      */
-    private final ArrayList<Room> office = new ArrayList<>();
+    private ArrayList<Room> office = new ArrayList<>();
     
     /**
      * Builds up the model of the office.
@@ -217,6 +217,13 @@ public class Model {
      */
     public ArrayList<Room> getOffice() {
         return office;
-    }      
-    
+    }
+
+    public void setPeople(People people) {
+        this.people = people;
+    }
+
+    public void setOffice(ArrayList<Room> office) {
+        this.office = office;
+    }    
 }

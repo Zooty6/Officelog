@@ -174,6 +174,12 @@ public class AddPersonController implements Initializable {
             lvLeftItems.add(room); // TODO language            
         }
         lvLeftItems.remove(model.getRoom("Outside"));
+        try {
+            NewImg = ImageIO.read(new File("icons\\Default.png"));
+            ivIcon.setImage(SwingFXUtils.toFXImage(NewImg,null));
+        } catch (IOException e) {
+            System.out.println("failed to load default icon");
+        }        
         // TODO language
     }  
 

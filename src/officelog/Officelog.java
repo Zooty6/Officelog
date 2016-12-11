@@ -10,8 +10,7 @@ import javafx.stage.Stage;
 /**
  * @author Szandi, Zooty
  */
-public class Officelog extends Application {
-    
+public class Officelog extends Application {    
     @Override
     public void start(Stage primaryStage) throws Exception{        
         //<editor-fold defaultstate="collapsed" desc="old, generated code">
@@ -44,7 +43,7 @@ public class Officelog extends Application {
         Scene scene = new Scene(root);        
         primaryStage.setScene(scene);
         primaryStage.setTitle("Officelog");
-        //primaryStage.setResizable(false);
+        primaryStage.setResizable(false);
         primaryStage.setMinWidth(700);
         primaryStage.setMaxWidth(900);
         primaryStage.setMinHeight(700);
@@ -53,6 +52,5 @@ public class Officelog extends Application {
 
     public static void main(String[] args) {              
         launch(args);
-    }
-    
+    }    
 }

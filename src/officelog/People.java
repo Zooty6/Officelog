@@ -1,6 +1,7 @@
 package officelog;
 
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,7 +10,7 @@ import java.util.Set;
  * 
  * @author Zooty
  */
-public class People {
+public class People implements Serializable{
     
     /**
      * Collection of the people.
@@ -18,6 +19,7 @@ public class People {
     
     /**
      * Number of the people who are currently in the building (and not outside).
+     * Not used, can be deleted from the project!
      */
     private int NumberOfPplInOffice;
     
@@ -62,6 +64,7 @@ public class People {
     /**
      * Returns the specific person from the collection who has the parameter name.
      * If more people are found, the user must choose one from a dialog window.
+     * (Not used)
      * 
      * @param name name of the person we want to get
      * @return the person who has the given name
@@ -115,8 +118,7 @@ public class People {
     private void addPerson(Person newPerson){
         for (Person person : IPeople) 
             if(person.getID() == newPerson.getID())
-                throw new IllegalArgumentException("Person with this ID already exist");
-        
+                throw new IllegalArgumentException("Person with this ID already exist");        
         IPeople.add(newPerson);
         MaxID=newPerson.getID()+1;
         NumberOfPpl = IPeople.size();                
@@ -212,11 +214,10 @@ public class People {
      * @throws NullPointerException if the specified element is null and this set does not permit null elements (optional)
      * @throws UnsupportedOperationException if the remove operation is not supported by this set
      */
-    public void removePerson(Person oldPerson){
-        if(!"Outside".equals(oldPerson.getLocation().getName())) 
-            NumberOfPplInOffice--;        
+    public void removePerson(Person oldPerson){                
         IPeople.remove(oldPerson);
         NumberOfPpl--;
+        UpdateNumberOfPplInOffice();
     }
     
     /**
@@ -232,11 +233,8 @@ public class People {
             if(person.getID() == oldPersonID){
                 IPeople.remove(person);
                 otter=person;
-                if(!"outside".equals(otter.getLocation().getName())){
-                    NumberOfPplInOffice--;
-                    NumberOfPpl--;
-                }else
-                    NumberOfPpl--;
+                UpdateNumberOfPplInOffice();
+                NumberOfPpl--;
             }            
         }
         if(otter==null)
@@ -244,7 +242,7 @@ public class People {
     }
           
     /**
-     * Moves a specific person to the parameter Room.
+     * Moves a specific person to the parameter Room. (This method is not used and can be deleted.)
      * 
      * @param person The Person we want to move.
      * @param dRoom The destination Room we move the Person.
@@ -255,6 +253,14 @@ public class People {
         person.setLocation(dRoom);
         if("Outside".equals(dRoom.getName()))
             NumberOfPplInOffice--;            
+    }
+    
+    public void UpdateNumberOfPplInOffice(){
+        NumberOfPplInOffice = 0;
+        for (Person person : IPeople) {
+            if(!person.getLocation().getName().equals("Outside"))
+                NumberOfPplInOffice++;
+        }
     }
     
      /**

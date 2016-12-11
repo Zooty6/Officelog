@@ -1,5 +1,6 @@
 package officelog;
 
+import java.io.Serializable;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -9,7 +10,7 @@ import javafx.scene.image.ImageView;
 /**
  * @author Zooty
  */
-public class ButtonPerson extends Button{
+public class ButtonPerson extends Button implements Serializable{
     private Person person;
     private boolean Plus = false;
     //private final Set<Person> PersonList = new HashSet<>();

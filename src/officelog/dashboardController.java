@@ -1,11 +1,14 @@
 package officelog;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.NotSerializableException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,21 +16,25 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javax.imageio.ImageIO;
 
 /**
  * Controller for the main window.
- * 
+ *
  * @author Szandi, Zooty
  */
 public class dashboardController implements Initializable {
 
     private final Model model = new Model();
     private static Person selectedPerson;
+    private String SaveString = "Save People";
+    private String AllPplString = "Number of people";
+    private String InOfficeString = "in office";
 
     //<editor-fold defaultstate="collapsed" desc="linking buttons">
     @FXML
@@ -205,14 +212,24 @@ public class dashboardController implements Initializable {
     MenuItem miAddPerson;
     @FXML
     Label lbSelected;
+//    @FXML
+//    Label lbPplCount;
     @FXML
     MenuItem miModifyPerson;
     @FXML
     MenuItem miDeletePerson;
+    @FXML
+    MenuItem miSavePerson;
+    @FXML
+    MenuItem miOpenPerson;
+    @FXML
+    MenuItem miFeedback;
+    @FXML
+    MenuItem miCopyRight;
 
     /**
      * Handles all actions on the main form.
-     * 
+     *
      * @param event the event that called this action.
      */
     @FXML
@@ -220,9 +237,9 @@ public class dashboardController implements Initializable {
         if (event.getSource() instanceof ButtonRoom) {
             if (((ButtonRoom) (event.getSource())).getRoom().isOpen()
                     || selectedPerson.isAllowed(((ButtonRoom) (event.getSource())).getRoom())) {
-                if (((ButtonRoom)(event.getSource())).getRoom().getMaxPeople() == 0 ||
-                        (((ButtonRoom) (event.getSource())).getRoom().getMaxPeople() > 
-                        ((ButtonRoom) (event.getSource())).getRoom().getBtnRoom().getPplHere())) {
+                if (((ButtonRoom) (event.getSource())).getRoom().getMaxPeople() == 0
+                        || (((ButtonRoom) (event.getSource())).getRoom().getMaxPeople()
+                        > ((ButtonRoom) (event.getSource())).getRoom().getBtnRoom().getPplHere())) {
                     ((ButtonRoom) (event.getSource())).Enter(selectedPerson);
                     model.getEventList().addEvent(
                             new Event("Entered", selectedPerson, ((ButtonRoom) (event.getSource())).getRoom()));
@@ -244,10 +261,10 @@ public class dashboardController implements Initializable {
         if (event.getSource() instanceof ButtonPerson) {
             //System.out.println(((ButtonPerson)(event.getSource())).getPerson());
             if (((ButtonPerson) (event.getSource())).isPlus()) {
-                selectedPerson = ((ButtonPerson)(event.getSource())).getPerson();
+                selectedPerson = ((ButtonPerson) (event.getSource())).getPerson();
                 PersonSelecter(event);
                 //Thread.currentThread().suspend();
-                lbSelected.setText("TODO: " + selectedPerson.getName());              
+                lbSelected.setText("TODO: " + selectedPerson.getName());
                 EnableNeighburs();
             } else {
                 selectedPerson = ((ButtonPerson) (event.getSource())).getPerson();
@@ -255,14 +272,14 @@ public class dashboardController implements Initializable {
                 EnableNeighburs();
             }
         }
-        
+
         if (event.getSource() == miAddPerson) {
             try {
                 FXMLLoader LoadAddPerson = new FXMLLoader(getClass().getResource("AddPerson.fxml"));
                 Parent AddPersonWindow = (Parent) LoadAddPerson.load();
                 Stage stageAP = new Stage();
                 stageAP.initModality(Modality.WINDOW_MODAL);
-                stageAP.initOwner(((Node)R1).getScene().getWindow());
+                stageAP.initOwner(((Node) R1).getScene().getWindow());
                 stageAP.setScene(new Scene(AddPersonWindow));
                 stageAP.setResizable(false);
                 stageAP.show();
@@ -270,9 +287,9 @@ public class dashboardController implements Initializable {
                 System.out.println("Could not load AddPerson.fxml");
             }
         }
-        
-        if (event.getSource() == miModifyPerson){
-            FXMLLoader LoadModPerson = new FXMLLoader(getClass().getResource("ModifyPerson.fxml"));             
+
+        if (event.getSource() == miModifyPerson) {
+            FXMLLoader LoadModPerson = new FXMLLoader(getClass().getResource("ModifyPerson.fxml"));
             try {
                 Parent ModPersonWindow = (Parent) LoadModPerson.load();
                 Stage stageMP = new Stage();
@@ -283,13 +300,13 @@ public class dashboardController implements Initializable {
                 stageMP.show();
             } catch (IOException ex) {
                 ex.printStackTrace();
-            }            
+            }
         }
-        
-        if (event.getSource() == miDeletePerson){
-               FXMLLoader LoadDelPerson = new FXMLLoader(getClass().getResource("PersonDeleter.fxml"));             
+
+        if (event.getSource() == miDeletePerson) {
+            FXMLLoader LoadDelPerson = new FXMLLoader(getClass().getResource("PersonDeleter.fxml"));
             try {
-                Parent DelPersonWindow=  (Parent) LoadDelPerson.load();
+                Parent DelPersonWindow = (Parent) LoadDelPerson.load();
                 Stage stageDP = new Stage();
                 stageDP.initModality(Modality.WINDOW_MODAL);
                 stageDP.initOwner(((Node) R1).getScene().getWindow());
@@ -300,19 +317,84 @@ public class dashboardController implements Initializable {
                 ex.printStackTrace();
             }
         }
+
+        if (event.getSource() == miSavePerson) {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle(SaveString);
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("dat file (*.dat)", "*.dat"));
+            File file = fileChooser.showSaveDialog(R1.getScene().getWindow());
+            ObjectOutputStream oos = null;
+            if (file != null) {
+                try {
+                    oos = new ObjectOutputStream(new FileOutputStream(file));
+                    oos.writeObject(model.getPeople());
+                } catch (NotSerializableException e) {
+                    System.out.println("Something is not serializable");
+                    System.out.println(e.getMessage());
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                } finally {
+                    try {
+                        oos.close();
+                    } catch (IOException ex) {
+                        System.out.println("Can't close stuff! " + ex.getMessage());
+                    }
+                }
+            }
+        }
+
+        if (event.getSource() == miOpenPerson) {
+            FileChooser fileChooser = new FileChooser();
+            FileChooser.ExtensionFilter extFilterDAT = new FileChooser.ExtensionFilter("dat files (*.dat)", "*.DAT");
+            fileChooser.getExtensionFilters().add(extFilterDAT);
+            File file = fileChooser.showOpenDialog(R1.getScene().getWindow());
+            ObjectInputStream ois = null;
+            if (file != null) {
+                try {
+                    ois = new ObjectInputStream(new FileInputStream(file));
+                    model.setPeople((People) (ois.readObject()));
+                } catch (NotSerializableException e) {
+                    System.out.println("Something is not serializable");
+                    System.out.println(e.getMessage());
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                } catch (ClassNotFoundException ex) {
+                    System.out.println("wrong .dat file");
+                } finally {
+                    try {
+                        ois.close();
+                    } catch (IOException ex) {
+                        System.out.println("Can't close stuff! " + ex.getMessage());
+                    }
+                }
+            }
+            for (Person allPpl : model.getPeople().getIPeople()) {
+                System.out.println(allPpl);
+            }
+            FixNewModel();
+        }
+
+        if (event.getSource() == miCopyRight) {
+            Alert copyright = new Alert(Alert.AlertType.INFORMATION);
+            copyright.setTitle("Officelog");
+            copyright.setHeaderText("Made by:");
+            copyright.setContentText("Mészáros Szandra \nKecskeméthy Zoltán");
+            copyright.show();
+        }
+        
+        if (event.getSource() == miFeedback){
+            Alert copyright = new Alert(Alert.AlertType.INFORMATION);
+            copyright.setTitle("Officelog");
+            copyright.setHeaderText("Feedback");
+            String url= "zooty6@gmail.com";
+            copyright.setContentText(url);
+            copyright.show();
+        }
     }
-
-    /*
-        Alert copyright=new Alert(Alert.AlertType.INFORMATION);
-        copyright.setTitle("");
-        copyright.setHeaderText(R1.getText());
-        copyright.setContentText("Kecskeméthy Zoltán \nMészáros Szandra");
-        copyright.show();
-     */
-
+    
     /**
-     * Enables all ButtonRooms that the selectedPerson can attend to enter. Call this method after
-     * a Person moved or a new Person is selected.
+     * Enables all ButtonRooms that the selectedPerson can attend to enter. Call this method after a
+     * Person moved or a new Person is selected.
      */
     private void EnableNeighburs() {
         for (ButtonRoom allRoom : allRooms) {
@@ -327,8 +409,8 @@ public class dashboardController implements Initializable {
 
     public static void setSelectedPerson(Person selPerson) {
         selectedPerson = selPerson;
-        
-    }    
+
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -484,42 +566,52 @@ public class dashboardController implements Initializable {
         for (ButtonRoom allRoom : allRooms) {
             allRoom.setDisable(true);
         }
-        //TEST
-        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek")).setLocation(model.getRoom("Outside")); //*.*
-        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek1")).setLocation(model.getRoom("R6"));
-        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek2")).setLocation(model.getRoom("R6"));
-        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek3")).setLocation(model.getRoom("R19"));
-        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek4")).setLocation(model.getRoom("R19"));
-        Room[] tmpPerm = {model.getRoom("R2"), model.getRoom("R3"), model.getRoom("R4"), model.getRoom("R5"),
-            model.getRoom("R7"), model.getRoom("R8"), model.getRoom("R9"), model.getRoom("R10"),
-            model.getRoom("R12"), model.getRoom("R13"), model.getRoom("R14"),
-            model.getRoom("R15"), model.getRoom("R16")};
-        try {
-            model.getPeople().getPerson(model.getPeople().addEmployee("Boss Olok", ImageIO.read(new File("icons\\Boss.png")), "Boss", tmpPerm
-                )).setLocation(model.getRoom("R2"));
-        } catch (IOException e) {
-            System.out.println("failed to load an icon");
-        }
-        tmpPerm = null;
-
-        //\TEST
+//        //TEST
+//        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek")).setLocation(model.getRoom("Outside")); //*.*
+//        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek1")).setLocation(model.getRoom("R6"));
+//        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek2")).setLocation(model.getRoom("R6"));
+//        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek3")).setLocation(model.getRoom("R19"));
+//        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek4")).setLocation(model.getRoom("R19"));
+//        Room[] tmpPerm = {model.getRoom("R2"), model.getRoom("R3"), model.getRoom("R4"), model.getRoom("R5"),
+//            model.getRoom("R7"), model.getRoom("R8"), model.getRoom("R9"), model.getRoom("R10"),
+//            model.getRoom("R12"), model.getRoom("R13"), model.getRoom("R14"),
+//            model.getRoom("R15"), model.getRoom("R16")};
+//        try {
+//            model.getPeople().getPerson(model.getPeople().addEmployee("Boss Olok", ImageIO.read(new File("icons\\Boss.png")), "Boss", tmpPerm
+//            )).setLocation(model.getRoom("R2"));
+//        } catch (IOException e) {
+//            System.out.println("failed to load an icon");
+//        }
+//        tmpPerm = null;
+//        //\TEST
         // TODO Handle Language
     }
 
-    private void PersonSelecter(ActionEvent event){        
+    private void PersonSelecter(ActionEvent event) {
         try {
             FXMLLoader load = new FXMLLoader(getClass().getResource("PersonSelecter.fxml"));
-            PersonSelecterController.setSelectedList(((ButtonPerson)(event.getSource())).getPerson().getLocation().getBtnRoom().getPplList());            
-            Parent Window = (Parent) load.load();            
+            PersonSelecterController.setSelectedList(((ButtonPerson) (event.getSource())).getPerson().getLocation().getBtnRoom().getPplList());
+            Parent Window = (Parent) load.load();
             Stage stage = new Stage();
             stage.setResizable(false);
             stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(((Node)(event.getSource())).getScene().getWindow());            
-            stage.setScene(new Scene(Window));            
+            stage.initOwner(((Node) (event.getSource())).getScene().getWindow());
+            stage.setScene(new Scene(Window));
             stage.show();
         } catch (IOException ex) {
-            System.out.println("Can't load PersonSelecter.fxml");           
-        }       
+            System.out.println("Can't load PersonSelecter.fxml");
+        }
     }
-    
+
+    private void FixNewModel() {
+        for (ButtonRoom RoomButton : allRooms) {
+            RoomButton.clear();
+            for (Person person : model.getPeople().getIPeople()) {
+                if (person.getLocation().getName().equals(RoomButton.getRoom().getName())) //RoomButton.addPerson(person);
+                {
+                    person.setLocation(RoomButton.getRoom());
+                }
+            }
+        }
+    }
 }
