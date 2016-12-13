@@ -175,6 +175,7 @@ public class ModifyPersonController implements Initializable {
                     }
                 }
                 lvPeople.getSelectionModel().getSelectedItem().getLocation().getBtnRoom().redraw();
+                model.getEventList().addEvent(new Event("Person modified", lvPeople.getSelectionModel().getSelectedItem()));
                 ((Stage) (btnSubmit.getScene().getWindow())).close();
             }                
         }

@@ -9,6 +9,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +25,7 @@ import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  * Controller for the main window.
@@ -226,6 +230,9 @@ public class dashboardController implements Initializable {
     MenuItem miFeedback;
     @FXML
     MenuItem miCopyRight;
+    Timeline timeline = new Timeline(new KeyFrame(
+        Duration.millis(5000),
+        action -> model.getEventList().Save()));
 
     /**
      * Handles all actions on the main form.
@@ -252,10 +259,10 @@ public class dashboardController implements Initializable {
             } else {
                 model.getEventList().addEvent(
                         new Event("Acces denied", selectedPerson, ((ButtonRoom) (event.getSource())).getRoom()));
-                System.out.println("GTFO");
+                //System.out.println("GTFO");
             }
             //lbSelected.setText("TODO: " + selectedPerson.getName());
-            System.out.println(((ButtonRoom) (event.getSource())));
+            //System.out.println(((ButtonRoom) (event.getSource())));
         }
 
         if (event.getSource() instanceof ButtonPerson) {
@@ -368,9 +375,9 @@ public class dashboardController implements Initializable {
                     }
                 }
             }
-            for (Person allPpl : model.getPeople().getIPeople()) {
-                System.out.println(allPpl);
-            }
+//            for (Person allPpl : model.getPeople().getIPeople()) {
+//                System.out.println(allPpl);
+//            }
             FixNewModel();
         }
 
@@ -386,7 +393,7 @@ public class dashboardController implements Initializable {
             Alert copyright = new Alert(Alert.AlertType.INFORMATION);
             copyright.setTitle("Officelog");
             copyright.setHeaderText("Feedback");
-            String url= "zooty6@gmail.com";
+            String url= "szandra.meszaros@codevision.hu";
             copyright.setContentText(url);
             copyright.show();
         }
@@ -558,6 +565,8 @@ public class dashboardController implements Initializable {
         allRooms[19] = R20;
 
         //</editor-fold>
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
         lbSelected.setText("TODO:"); //TODO: set tet based of selected language
         PersonSelecterController.LinkToSelectedPerson(lbSelected);
         AddPersonController.setModel(model);
@@ -567,10 +576,10 @@ public class dashboardController implements Initializable {
             allRoom.setDisable(true);
         }
 //        //TEST
-//        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek")).setLocation(model.getRoom("Outside")); //*.*
+        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek")).setLocation(model.getRoom("Outside")); //*.*
 //        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek1")).setLocation(model.getRoom("R6"));
 //        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek2")).setLocation(model.getRoom("R6"));
-//        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek3")).setLocation(model.getRoom("R19"));
+//        moderl.getPeople().getPerson(model.getPeople().addPerson("Test Elek3")).setLocation(model.getRoom("R19"));
 //        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek4")).setLocation(model.getRoom("R19"));
 //        Room[] tmpPerm = {model.getRoom("R2"), model.getRoom("R3"), model.getRoom("R4"), model.getRoom("R5"),
 //            model.getRoom("R7"), model.getRoom("R8"), model.getRoom("R9"), model.getRoom("R10"),

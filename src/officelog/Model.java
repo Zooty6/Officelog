@@ -219,11 +219,12 @@ public class Model {
         return office;
     }
 
+    /**
+     * Replaces the list of the People in the model. Used when loading from files.
+     * 
+     * @param people new list we want to load into the model
+     */
     public void setPeople(People people) {
         this.people = people;
-    }
-
-    public void setOffice(ArrayList<Room> office) {
-        this.office = office;
-    }    
+    }   
 }

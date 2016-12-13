@@ -126,7 +126,7 @@ public class Event implements Serializable{
      */
     @Override
     public String toString(){
-        //DOES NOT HANDLE ROOM AND PERSON SPECIFIC EVENTS YET!
+        //DOES NOT HANDLE ROOM SPECIFIC EVENTS YET!
         String msg="Something went wrong. This event isn't defined.";
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         if(Who == null && Where == null)
@@ -134,7 +134,7 @@ public class Event implements Serializable{
         if(Who == null && Where != null)
             ;//TODO Room specific event
         if(Who != null && Where == null)
-            ;//TODO Person specific event
+            msg = dateFormat.format(EventDate)+": "+Type+": "+Who;
         if(Who != null && Where != null)
             msg = dateFormat.format(EventDate)+": "+Type+": "+Where+": "+Who;
         return msg;
