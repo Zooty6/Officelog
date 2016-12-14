@@ -74,6 +74,11 @@ public class ModifyPersonController implements Initializable {
     private static Model model;
     private BufferedImage NewImg;
 
+    /**
+     * Handles actions on the GUI.
+     * 
+     * @param event 
+     */
     @FXML
     private void handleClickAction(MouseEvent arg0) {
         arg0 = null; //Please don't use arg0

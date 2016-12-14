@@ -25,6 +25,15 @@
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#handleButtonAction" fx:id="miLogDel" text="Delete" />
             </items>
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#handleButtonAction" fx:id="miMostSusp" text="MostSuspicious" />
+            </items>
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#handleButtonAction" fx:id="miAvgMove" text="AvgMove" />
+            </items>
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#handleButtonAction" fx:id="miSetSave" text="setSaveFrq" />
+            </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
              <items>

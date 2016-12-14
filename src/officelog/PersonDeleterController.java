@@ -48,6 +48,11 @@ public class PersonDeleterController implements Initializable {
         lvPpl.getSelectionModel().select(0);
     }
 
+    /**
+     * Handles actions on the GUI.
+     * 
+     * @param event 
+     */
     @FXML
     private void handleButtonAction(ActionEvent event) {
         if (event.getSource() == btCancel) {

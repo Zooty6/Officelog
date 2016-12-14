@@ -71,6 +71,11 @@ public class AddPersonController implements Initializable {
     private ImageView ivIcon;
     private BufferedImage NewImg = null;
     
+    /**
+     * Handles actions on the GUI.
+     * 
+     * @param event 
+     */
     @FXML
     private void handleAction(ActionEvent event) {
         if (event.getSource() == cbEmp){

@@ -8,6 +8,7 @@ import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.animation.Animation;
@@ -25,6 +26,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -237,6 +239,12 @@ public class dashboardController implements Initializable {
     MenuItem miLogOpen;
     @FXML
     MenuItem miLogDel;
+    @FXML
+    MenuItem miSetSave;
+    @FXML
+    MenuItem miMostSusp;
+    @FXML
+    MenuItem miAvgMove;
     Timeline timeline = new Timeline(new KeyFrame(
             Duration.millis(5000),
             action -> model.getEventList().Save()));
@@ -400,11 +408,10 @@ public class dashboardController implements Initializable {
             Alert copyright = new Alert(Alert.AlertType.INFORMATION);
             copyright.setTitle("Officelog");
             copyright.setHeaderText("Feedback");
-            String url = "szandra.meszaros@codevision.hu";
-            copyright.setContentText(url);
+            copyright.setContentText("szandra.meszaros@codevision.hu");
             copyright.show();
         }
-        
+
         if (event.getSource() == miLogOpen) {
             try {
                 FXMLLoader OpenLog = new FXMLLoader(getClass().getResource("LogViewer.fxml"));
@@ -416,7 +423,7 @@ public class dashboardController implements Initializable {
                 ex.printStackTrace();
             }
         }
-        
+
         if (event.getSource() == miLogDel) {
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Confirmation Dialog");
@@ -426,6 +433,102 @@ public class dashboardController implements Initializable {
             if (result.get() == ButtonType.OK) {
                 model.getEventList().Clear();
             }
+        }
+
+        if (event.getSource() == miSetSave) {
+            TextInputDialog dialog = new TextInputDialog("5");
+            dialog.setTitle("Text Input Dialog");
+            dialog.setHeaderText("Look, a Text Input Dialog");
+            dialog.setContentText("Please enter your name:");
+            Optional<String> result = dialog.showAndWait();
+            if (result.isPresent()) {
+                try {
+                    int sec = Integer.parseInt(result.get());
+                    if (sec < 5 || sec > 60) {
+                        throw new IllegalArgumentException("out of [5,60]");
+                    }
+                    timeline.stop();
+                    timeline.getKeyFrames().setAll(new KeyFrame(Duration.seconds(sec), action -> model.getEventList().Save()));
+                    timeline.play();
+                } catch (Exception e) {
+                    Alert copyright = new Alert(Alert.AlertType.ERROR);
+                    copyright.setTitle("Officelog");
+                    copyright.setHeaderText("Feedback");
+                    copyright.setContentText("Must be a number between 5 and 60");
+                    copyright.show();
+                }
+            }
+        }
+        if (event.getSource() == miMostSusp) {
+            System.out.println("yayy");
+            class ferret {
+                //Ferrets are cute! http://i.imgur.com/JXUbIdk.mp4
+                int id;
+                int n;
+
+                public ferret(int id, int n) {
+                    this.id = id;
+                    this.n = n;
+                }
+
+                @Override
+                public String toString() {
+                    return "ferret{" + "id=" + id + ", n=" + n + '}';
+                }
+            }
+            ArrayList<ferret> foundlist = new ArrayList<>();
+            for (Event thisevent : model.getEventList().getElist()) {
+                boolean found = false;
+                if (thisevent.getType().equals("Acces denied")) {
+                    for (ferret catsnake : foundlist) {
+                        if (catsnake.id == thisevent.getWho().getID()) {
+                            found = true;
+                            catsnake.n++;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        foundlist.add(new ferret(thisevent.getWho().getID(), 1));
+                    }
+                }
+            }
+            String msg = "Evrbdy is gud";
+            int baddudemistakes;
+            int baddude;
+            if(!foundlist.isEmpty()){
+                baddudemistakes = 0;
+                baddude = 0;
+                for (ferret catsnake : foundlist) {
+                    if (baddudemistakes<catsnake.n){
+                        baddude = catsnake.id;
+                        baddudemistakes = catsnake.n;
+                    }
+                }
+                System.out.println(baddude);
+                msg="Most suspicious person is: " + model.getPeople().getPerson(baddude) +
+                        " (with: " + baddudemistakes + " failed attempt)"; 
+            }
+            Alert WPersonAlert = new Alert(Alert.AlertType.INFORMATION);
+            WPersonAlert.setTitle("Officelog");
+            WPersonAlert.setHeaderText("Worst Person");
+            WPersonAlert.setContentText(msg);
+            WPersonAlert.show();
+        }
+        
+        if(event.getSource() == miAvgMove){
+            int movenmbr = 0;
+            for (Event thisevent : model.getEventList().getElist()) {
+                if(thisevent.getType().equals("Entered")){
+                    movenmbr++;
+                }                
+            }
+            if(movenmbr >0 && model.getPeople().getNumberOfPpl()>0){
+                Alert AVGMoveAlert = new Alert(Alert.AlertType.INFORMATION);
+                AVGMoveAlert.setTitle("Officelog");
+                AVGMoveAlert.setHeaderText("avgmove:");
+                AVGMoveAlert.setContentText(Double.toString((double)movenmbr/model.getPeople().getNumberOfPpl()));
+                AVGMoveAlert.show();
+            }                
         }
     }
 
@@ -441,7 +544,6 @@ public class dashboardController implements Initializable {
                 allRoom.setDisable(true);
             }
         }
-
     }
 
     public static void setSelectedPerson(Person selPerson) {
@@ -656,3 +758,4 @@ public class dashboardController implements Initializable {
         }
     }
 }
+//↑ This is a slide. Weeeeeee!
