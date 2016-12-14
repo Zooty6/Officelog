@@ -95,6 +95,15 @@ public class EventList implements Serializable {
     }
 
     /**
+     * Returns the list of the events.
+     * 
+     * @return the list of the events.
+     */
+    public List<Event> getElist() {
+        return Elist;
+    }    
+
+    /**
      * Adds an event to the list.
      *
      * @param event the event that gets added.

@@ -8,6 +8,7 @@ import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -20,6 +21,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
@@ -230,9 +233,13 @@ public class dashboardController implements Initializable {
     MenuItem miFeedback;
     @FXML
     MenuItem miCopyRight;
+    @FXML
+    MenuItem miLogOpen;
+    @FXML
+    MenuItem miLogDel;
     Timeline timeline = new Timeline(new KeyFrame(
-        Duration.millis(5000),
-        action -> model.getEventList().Save()));
+            Duration.millis(5000),
+            action -> model.getEventList().Save()));
 
     /**
      * Handles all actions on the main form.
@@ -388,17 +395,40 @@ public class dashboardController implements Initializable {
             copyright.setContentText("Mészáros Szandra \nKecskeméthy Zoltán");
             copyright.show();
         }
-        
-        if (event.getSource() == miFeedback){
+
+        if (event.getSource() == miFeedback) {
             Alert copyright = new Alert(Alert.AlertType.INFORMATION);
             copyright.setTitle("Officelog");
             copyright.setHeaderText("Feedback");
-            String url= "szandra.meszaros@codevision.hu";
+            String url = "szandra.meszaros@codevision.hu";
             copyright.setContentText(url);
             copyright.show();
         }
+        
+        if (event.getSource() == miLogOpen) {
+            try {
+                FXMLLoader OpenLog = new FXMLLoader(getClass().getResource("LogViewer.fxml"));
+                Parent OpenLogWindow = (Parent) OpenLog.load();
+                Stage stageOL = new Stage();
+                stageOL.setScene(new Scene(OpenLogWindow));
+                stageOL.show();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        
+        if (event.getSource() == miLogDel) {
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Dialog");
+            alert.setHeaderText("Look, a Confirmation Dialog");
+            alert.setContentText("Are you ok with this?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                model.getEventList().Clear();
+            }
+        }
     }
-    
+
     /**
      * Enables all ButtonRooms that the selectedPerson can attend to enter. Call this method after a
      * Person moved or a new Person is selected.
@@ -463,84 +493,84 @@ public class dashboardController implements Initializable {
         R20.setRoom(model.getRoom("Outside"));
         model.getRoom("Outside").setBtnRoom(R20);
 
-        R1.setSubRooms(new ButtonPerson[]{r1a, r1b, r1c, r1d});
-        for (ButtonPerson BP : R1.getSubRooms()) {
+        R1.setSubButtons(new ButtonPerson[]{r1a, r1b, r1c, r1d});
+        for (ButtonPerson BP : R1.getSubButtons()) {
             BP.setPerson(null);
         }
-        R2.setSubRooms(new ButtonPerson[]{r2a, r2b, r2c, r2d});
-        for (ButtonPerson BP : R2.getSubRooms()) {
+        R2.setSubButtons(new ButtonPerson[]{r2a, r2b, r2c, r2d});
+        for (ButtonPerson BP : R2.getSubButtons()) {
             BP.setPerson(null);
         }
-        R3.setSubRooms(new ButtonPerson[]{r3a, r3b, r3c, r3d});
-        for (ButtonPerson BP : R3.getSubRooms()) {
+        R3.setSubButtons(new ButtonPerson[]{r3a, r3b, r3c, r3d});
+        for (ButtonPerson BP : R3.getSubButtons()) {
             BP.setPerson(null);
         }
-        R4.setSubRooms(new ButtonPerson[]{r4a, r4b, r4c, r4d});
-        for (ButtonPerson BP : R4.getSubRooms()) {
+        R4.setSubButtons(new ButtonPerson[]{r4a, r4b, r4c, r4d});
+        for (ButtonPerson BP : R4.getSubButtons()) {
             BP.setPerson(null);
         }
-        R5.setSubRooms(new ButtonPerson[]{r5a, r5b, r5c, r5d});
-        for (ButtonPerson BP : R5.getSubRooms()) {
+        R5.setSubButtons(new ButtonPerson[]{r5a, r5b, r5c, r5d});
+        for (ButtonPerson BP : R5.getSubButtons()) {
             BP.setPerson(null);
         }
-        R6.setSubRooms(new ButtonPerson[]{r6a, r6b, r6c, r6d});
-        for (ButtonPerson BP : R6.getSubRooms()) {
+        R6.setSubButtons(new ButtonPerson[]{r6a, r6b, r6c, r6d});
+        for (ButtonPerson BP : R6.getSubButtons()) {
             BP.setPerson(null);
         }
-        R7.setSubRooms(new ButtonPerson[]{r7a, r7b, r7c});
-        for (ButtonPerson BP : R7.getSubRooms()) {
+        R7.setSubButtons(new ButtonPerson[]{r7a, r7b, r7c});
+        for (ButtonPerson BP : R7.getSubButtons()) {
             BP.setPerson(null);
         }
-        R8.setSubRooms(new ButtonPerson[]{r8a, r8b, r8c, r8d});
-        for (ButtonPerson BP : R8.getSubRooms()) {
+        R8.setSubButtons(new ButtonPerson[]{r8a, r8b, r8c, r8d});
+        for (ButtonPerson BP : R8.getSubButtons()) {
             BP.setPerson(null);
         }
-        R9.setSubRooms(new ButtonPerson[]{r9a, r9b, r9c});
-        for (ButtonPerson BP : R9.getSubRooms()) {
+        R9.setSubButtons(new ButtonPerson[]{r9a, r9b, r9c});
+        for (ButtonPerson BP : R9.getSubButtons()) {
             BP.setPerson(null);
         }
-        R10.setSubRooms(new ButtonPerson[]{r10a, r10b});
-        for (ButtonPerson BP : R10.getSubRooms()) {
+        R10.setSubButtons(new ButtonPerson[]{r10a, r10b});
+        for (ButtonPerson BP : R10.getSubButtons()) {
             BP.setPerson(null);
         }
-        R11.setSubRooms(new ButtonPerson[]{r11a, r11b});
-        for (ButtonPerson BP : R11.getSubRooms()) {
+        R11.setSubButtons(new ButtonPerson[]{r11a, r11b});
+        for (ButtonPerson BP : R11.getSubButtons()) {
             BP.setPerson(null);
         }
-        R12.setSubRooms(new ButtonPerson[]{r12a, r12b, r12c});
-        for (ButtonPerson BP : R12.getSubRooms()) {
+        R12.setSubButtons(new ButtonPerson[]{r12a, r12b, r12c});
+        for (ButtonPerson BP : R12.getSubButtons()) {
             BP.setPerson(null);
         }
-        R13.setSubRooms(new ButtonPerson[]{r13a, r13b});
-        for (ButtonPerson BP : R13.getSubRooms()) {
+        R13.setSubButtons(new ButtonPerson[]{r13a, r13b});
+        for (ButtonPerson BP : R13.getSubButtons()) {
             BP.setPerson(null);
         }
-        R14.setSubRooms(new ButtonPerson[]{r14a, r14b});
-        for (ButtonPerson BP : R14.getSubRooms()) {
+        R14.setSubButtons(new ButtonPerson[]{r14a, r14b});
+        for (ButtonPerson BP : R14.getSubButtons()) {
             BP.setPerson(null);
         }
-        R15.setSubRooms(new ButtonPerson[]{r15a, r15b});
-        for (ButtonPerson BP : R15.getSubRooms()) {
+        R15.setSubButtons(new ButtonPerson[]{r15a, r15b});
+        for (ButtonPerson BP : R15.getSubButtons()) {
             BP.setPerson(null);
         }
-        R16.setSubRooms(new ButtonPerson[]{r16a, r16b, r16c, r16d});
-        for (ButtonPerson BP : R16.getSubRooms()) {
+        R16.setSubButtons(new ButtonPerson[]{r16a, r16b, r16c, r16d});
+        for (ButtonPerson BP : R16.getSubButtons()) {
             BP.setPerson(null);
         }
-        R17.setSubRooms(new ButtonPerson[]{r17a, r17b, r17c, r17d});
-        for (ButtonPerson BP : R17.getSubRooms()) {
+        R17.setSubButtons(new ButtonPerson[]{r17a, r17b, r17c, r17d});
+        for (ButtonPerson BP : R17.getSubButtons()) {
             BP.setPerson(null);
         }
-        R18.setSubRooms(new ButtonPerson[]{r18a, r18b, r18c, r18d});
-        for (ButtonPerson BP : R18.getSubRooms()) {
+        R18.setSubButtons(new ButtonPerson[]{r18a, r18b, r18c, r18d});
+        for (ButtonPerson BP : R18.getSubButtons()) {
             BP.setPerson(null);
         }
-        R19.setSubRooms(new ButtonPerson[]{r19a, r19b, r19c, r19d});
-        for (ButtonPerson BP : R19.getSubRooms()) {
+        R19.setSubButtons(new ButtonPerson[]{r19a, r19b, r19c, r19d});
+        for (ButtonPerson BP : R19.getSubButtons()) {
             BP.setPerson(null);
         }
-        R20.setSubRooms(new ButtonPerson[]{r20a});
-        for (ButtonPerson BP : R20.getSubRooms()) {
+        R20.setSubButtons(new ButtonPerson[]{r20a});
+        for (ButtonPerson BP : R20.getSubButtons()) {
             BP.setPerson(null);
         }
         allRooms[0] = R1;
@@ -572,14 +602,16 @@ public class dashboardController implements Initializable {
         AddPersonController.setModel(model);
         ModifyPersonController.setModel(model);
         PersonDeleterController.setModel(model);
+        LogViewerController.setElist(model.getEventList().getElist());
         for (ButtonRoom allRoom : allRooms) {
             allRoom.setDisable(true);
         }
+
 //        //TEST
-        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek")).setLocation(model.getRoom("Outside")); //*.*
+//        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek")).setLocation(model.getRoom("Outside")); //*.*
 //        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek1")).setLocation(model.getRoom("R6"));
 //        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek2")).setLocation(model.getRoom("R6"));
-//        moderl.getPeople().getPerson(model.getPeople().addPerson("Test Elek3")).setLocation(model.getRoom("R19"));
+//        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek3")).setLocation(model.getRoom("R19"));
 //        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek4")).setLocation(model.getRoom("R19"));
 //        Room[] tmpPerm = {model.getRoom("R2"), model.getRoom("R3"), model.getRoom("R4"), model.getRoom("R5"),
 //            model.getRoom("R7"), model.getRoom("R8"), model.getRoom("R9"), model.getRoom("R10"),

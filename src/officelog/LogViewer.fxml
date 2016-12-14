@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="377.0" prefWidth="527.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="officelog.LogViewerController">
+   <children>
+      <TableView fx:id="tvLogs" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columns>
+          <TableColumn fx:id="tc1" prefWidth="128.0" text="C1" />
+          <TableColumn fx:id="tc2" prefWidth="123.0" text="C2" />
+          <TableColumn fx:id="tc3" prefWidth="57.0" text="C3" />
+          <TableColumn fx:id="tc4" prefWidth="124.0" text="C4" />
+          <TableColumn fx:id="tc5" prefWidth="94.0" text="C5" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
