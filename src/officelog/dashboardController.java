@@ -505,8 +505,12 @@ public class dashboardController implements Initializable {
                     }
                 }
                 System.out.println(baddude);
+                try{
                 msg="Most suspicious person is: " + model.getPeople().getPerson(baddude) +
-                        " (with: " + baddudemistakes + " failed attempt)"; 
+                        " (with: " + baddudemistakes + " failed attempt)";
+                }catch(NullPointerException e){
+                    msg="the most suspicious person is not in the database anymore";
+                }
             }
             Alert WPersonAlert = new Alert(Alert.AlertType.INFORMATION);
             WPersonAlert.setTitle("Officelog");
