@@ -375,6 +375,11 @@ public class dashboardController implements Initializable {
                 try {
                     ois = new ObjectInputStream(new FileInputStream(file));
                     model.setPeople((People) (ois.readObject()));
+                    selectedPerson = null;
+                    lbSelected.setText("TODO: ");
+                    for (ButtonRoom allRoom : allRooms) {
+                        allRoom.setDisable(true);
+                    }
                 } catch (NotSerializableException e) {
                     System.out.println("Something is not serializable");
                     System.out.println(e.getMessage());
@@ -462,6 +467,7 @@ public class dashboardController implements Initializable {
         if (event.getSource() == miMostSusp) {
             System.out.println("yayy");
             class ferret {
+
                 //Ferrets are cute! http://i.imgur.com/JXUbIdk.mp4
                 int id;
                 int n;
@@ -495,44 +501,44 @@ public class dashboardController implements Initializable {
             String msg = "Evrbdy is gud";
             int baddudemistakes;
             int baddude;
-            if(!foundlist.isEmpty()){
+            if (!foundlist.isEmpty()) {
                 baddudemistakes = 0;
                 baddude = 0;
                 for (ferret catsnake : foundlist) {
-                    if (baddudemistakes<catsnake.n){
+                    if (baddudemistakes < catsnake.n) {
                         baddude = catsnake.id;
                         baddudemistakes = catsnake.n;
                     }
                 }
                 System.out.println(baddude);
-                try{
-                msg="Most suspicious person is: " + model.getPeople().getPerson(baddude) +
-                        " (with: " + baddudemistakes + " failed attempt)";
-                }catch(NullPointerException e){
-                    msg="the most suspicious person is not in the database anymore";
+                try {
+                    msg = "Most suspicious person is: " + model.getPeople().getPerson(baddude)
+                            + " (with: " + baddudemistakes + " failed attempt)";
+                } catch (NullPointerException e) {
+                    msg = "the most suspicious person is not in the database anymore";
                 }
             }
-            Alert WPersonAlert = new Alert(Alert.AlertType.INFORMATION);
-            WPersonAlert.setTitle("Officelog");
-            WPersonAlert.setHeaderText("Worst Person");
-            WPersonAlert.setContentText(msg);
-            WPersonAlert.show();
+            Alert MSPersonAlert = new Alert(Alert.AlertType.INFORMATION);
+            MSPersonAlert.setTitle("Officelog");
+            MSPersonAlert.setHeaderText("Worst Person");
+            MSPersonAlert.setContentText(msg);
+            MSPersonAlert.show();
         }
-        
-        if(event.getSource() == miAvgMove){
+
+        if (event.getSource() == miAvgMove) {
             int movenmbr = 0;
             for (Event thisevent : model.getEventList().getElist()) {
-                if(thisevent.getType().equals("Entered")){
+                if (thisevent.getType().equals("Entered")) {
                     movenmbr++;
-                }                
+                }
             }
-            if(movenmbr >0 && model.getPeople().getNumberOfPpl()>0){
+            if (movenmbr > 0 && model.getPeople().getNumberOfPpl() > 0) {
                 Alert AVGMoveAlert = new Alert(Alert.AlertType.INFORMATION);
                 AVGMoveAlert.setTitle("Officelog");
                 AVGMoveAlert.setHeaderText("avgmove:");
-                AVGMoveAlert.setContentText(Double.toString((double)movenmbr/model.getPeople().getNumberOfPpl()));
+                AVGMoveAlert.setContentText(Double.toString((double) movenmbr / model.getPeople().getNumberOfPpl()));
                 AVGMoveAlert.show();
-            }                
+            }
         }
     }
 
@@ -712,7 +718,7 @@ public class dashboardController implements Initializable {
         for (ButtonRoom allRoom : allRooms) {
             allRoom.setDisable(true);
         }
-
+// TODO Handle Language
 //        //TEST
 //        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek")).setLocation(model.getRoom("Outside")); //*.*
 //        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek1")).setLocation(model.getRoom("R6"));
@@ -730,8 +736,7 @@ public class dashboardController implements Initializable {
 //            System.out.println("failed to load an icon");
 //        }
 //        tmpPerm = null;
-//        //\TEST
-        // TODO Handle Language
+//        //\TEST        
     }
 
     private void PersonSelecter(ActionEvent event) {
