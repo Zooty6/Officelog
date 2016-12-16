@@ -335,6 +335,9 @@ public class dashboardController implements Initializable {
                 stageDP.setResizable(false);
                 stageDP.setScene(new Scene(DelPersonWindow));
                 stageDP.show();
+                for (ButtonRoom allRoom : allRooms) {
+                    allRoom.setDisable(true);
+                }
             } catch (IOException ex) {
                 ex.printStackTrace();
             }

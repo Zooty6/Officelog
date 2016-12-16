@@ -65,7 +65,8 @@ public class PersonDeleterController implements Initializable {
             alert.setContentText("TODO: U want to rekt " + lvPpl.getSelectionModel().getSelectedItem().getName() +
                     " (ID: "+ lvPpl.getSelectionModel().getSelectedItem().getID()+")?");
             if(alert.showAndWait().get() == ButtonType.OK){
-                ButtonRoom tmpBtr = lvPpl.getSelectionModel().getSelectedItem().getLocation().getBtnRoom();
+                ButtonRoom tmpBtr = lvPpl.getSelectionModel().getSelectedItem().getLocation().getBtnRoom();                
+                dashboardController.setSelectedPerson(null);
                 model.getPeople().removePerson(lvPpl.getSelectionModel().getSelectedItem());                
                 tmpBtr.leave(lvPpl.getSelectionModel().getSelectedItem());
                 ((Stage) (btCancel.getScene().getWindow())).close();
@@ -75,6 +76,6 @@ public class PersonDeleterController implements Initializable {
 
     public static void setModel(Model model) {
         PersonDeleterController.model = model;
-    }
-
+    }   
+    
 }
