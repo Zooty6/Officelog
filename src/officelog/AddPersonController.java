@@ -26,6 +26,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
+import org.w3c.dom.NodeList;
 
 /**
  * FXML Controller class
@@ -35,8 +36,6 @@ import javax.imageio.ImageIO;
 public class AddPersonController implements Initializable {
 
     private static Model model;
-    @FXML
-    private AnchorPane MainWindow;
     @FXML
     private Label lbName;
     @FXML
@@ -70,6 +69,11 @@ public class AddPersonController implements Initializable {
     @FXML
     private ImageView ivIcon;
     private BufferedImage NewImg = null;
+    private String ErrorTitle;
+    private String ErrorName;
+    private String ErrorJob;
+    private String ErrorPic;
+    private String ErrorOpen;
     
     /**
      * Handles actions on the GUI.
@@ -110,16 +114,16 @@ public class AddPersonController implements Initializable {
                     }
                     else{
                         Alert alert = new Alert(AlertType.ERROR);
-                        alert.setTitle("Error Dialog");
-                        alert.setHeaderText("Look, an Error Dialog");
-                        alert.setContentText("Icon is not NxN!");
+                        alert.setTitle("Officelog");
+                        alert.setHeaderText(ErrorTitle);
+                        alert.setContentText(ErrorPic);
                         alert.showAndWait();
                     }                    
             } catch (IOException ex) {
                 Alert alert = new Alert(AlertType.WARNING);
-                alert.setTitle("Error Dialog");
-                alert.setHeaderText("Look, an Error Dialog");
-                alert.setContentText("Ooops, there was an error!");
+                alert.setTitle("Officelog");
+                alert.setHeaderText(ErrorTitle);
+                alert.setContentText(ErrorOpen);
                 alert.showAndWait();
             }
         }
@@ -128,17 +132,17 @@ public class AddPersonController implements Initializable {
         }
         if (event.getSource() == btnSubmit) {
             if ("".equals(tfName.getText())) {
-                Alert alert = new Alert(AlertType.WARNING);
-                alert.setTitle("Error Dialog");
-                alert.setHeaderText("Look, an Error Dialog");
-                alert.setContentText("Ooops, there was an error!");
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Officelog");
+                alert.setHeaderText(ErrorTitle);
+                alert.setContentText(ErrorName);
                 alert.showAndWait();
             } else if (cbEmp.selectedProperty().get()) {
                 if (tfJob.getText().equals("")) {
-                    Alert alert = new Alert(AlertType.WARNING);
-                    alert.setTitle("Error Dialog");
-                    alert.setHeaderText("Look, an Error Dialog");
-                    alert.setContentText("Ooops, there was an error!");
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Officelog");
+                    alert.setHeaderText(ErrorTitle);
+                    alert.setContentText(ErrorJob);
                     alert.showAndWait();
                 } else {
                     Room[] per = new Room[lvRightItems.size()];
@@ -176,7 +180,7 @@ public class AddPersonController implements Initializable {
         lvRight.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         lvLeft.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         for (Room room : model.getOffice()) {
-            lvLeftItems.add(room); // TODO language            
+            lvLeftItems.add(room);
         }
         lvLeftItems.remove(model.getRoom("Outside"));
         try {
@@ -185,7 +189,62 @@ public class AddPersonController implements Initializable {
         } catch (IOException e) {
             System.out.println("failed to load default icon");
         }        
-        // TODO language
+        
+        try {
+            NodeList nList = Language.getLang().getElementsByTagName("newperson").item(0).getChildNodes();
+            for (int i = 0; i < nList.getLength(); i++) {
+                if (nList.item(i).hasAttributes()) {
+                    switch (nList.item(i).getAttributes().getNamedItem("name").getNodeValue()) {
+                        case "nameString":
+                            lbName.setText(nList.item(i).getTextContent() + ":");
+                            break;
+                        case "selimgString":
+                            btnSelPic.setText(nList.item(i).getTextContent());
+                            break;
+                        case "employeeString":
+                            cbEmp.setText(nList.item(i).getTextContent());
+                            break;
+                        case "leftString":
+                            lbLeft.setText(nList.item(i).getTextContent());
+                            break;
+                        case "rightString":
+                            lbRight.setText(nList.item(i).getTextContent());
+                            break;
+                        case "cancelString":
+                            btnCancel.setText(nList.item(i).getTextContent());
+                            break;
+                        case "submitString":
+                            btnSubmit.setText(nList.item(i).getTextContent());
+                            break;
+                        case "jobString":
+                            lbJob.setText(nList.item(i).getTextContent()+':');
+                            break;
+                        case "ErrorTitle":
+                            ErrorTitle = nList.item(i).getTextContent();
+                            break;
+                        case "ErrorName":
+                            ErrorName = nList.item(i).getTextContent();
+                            break;
+                        case "ErrorJob":
+                            ErrorJob = nList.item(i).getTextContent();
+                            break;
+                        case "ErrorPic":
+                            ErrorPic = nList.item(i).getTextContent();
+                            break;
+                        case "ErrorOpen":
+                            ErrorOpen = nList.item(i).getTextContent();
+                            break;
+                    }
+                }
+            }
+        }catch(Exception e){
+            Alert lalert = new Alert(Alert.AlertType.ERROR);        
+            lalert.setTitle("Officelog");
+            lalert.setHeaderText("Fatal Error");
+            lalert.setContentText("Could not load Language file");
+            lalert.showAndWait();
+            throw e;
+        }
     }  
 
     public static void setModel(Model model) {

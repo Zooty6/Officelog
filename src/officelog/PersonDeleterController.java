@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import org.w3c.dom.NodeList;
 
 /**
  * FXML Controller class
@@ -35,13 +36,43 @@ public class PersonDeleterController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        String ErrorTitle = null;
+        String ErrorString = null;
+        try {
+            NodeList nList = Language.getLang().getElementsByTagName("DelPerson").item(0).getChildNodes();
+            for (int i = 0; i < nList.getLength(); i++) {
+                if (nList.item(i).hasAttributes()) {
+                    switch (nList.item(i).getAttributes().getNamedItem("name").getNodeValue()) {
+                        case "ErrorTitle":
+                            ErrorTitle = nList.item(i).getTextContent();
+                            break;
+                        case "ErrorString":
+                            ErrorString = nList.item(i).getTextContent();
+                            break;                        
+                        case "cancelString":
+                            btCancel.setText(nList.item(i).getTextContent());
+                            break;
+                        case "submitDel":
+                            btDelete.setText(nList.item(i).getTextContent());
+                            break;
+                    }
+                }
+            }
+        }catch(Exception e){
+            Alert lalert = new Alert(Alert.AlertType.ERROR);        
+            lalert.setTitle("Officelog");
+            lalert.setHeaderText("Fatal Error");
+            lalert.setContentText("Could not load Language file");
+            lalert.showAndWait();
+            throw e;
+        }
         lvPplItems.addAll(model.getPeople().getIPeople());
         lvPpl.setItems(lvPplItems);
         if (model.getPeople().getIPeople().size() == 0) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error Dialog");
-            alert.setHeaderText("Look, an Error Dialog");
-            alert.setContentText("no person found");
+            alert.setTitle("Officelog");
+            alert.setHeaderText(ErrorTitle);
+            alert.setContentText(ErrorString);
             alert.showAndWait();
             ((Stage) (btCancel.getScene().getWindow())).close();
         }

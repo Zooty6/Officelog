@@ -23,6 +23,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
+import org.w3c.dom.NodeList;
 
 /**
  * FXML Controller class
@@ -191,11 +192,59 @@ public class ModifyPersonController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        String ErrorTitle = null;
+        String ErrorString = null;
+        try {
+            NodeList nList = Language.getLang().getElementsByTagName("Modifyperson").item(0).getChildNodes();
+            for (int i = 0; i < nList.getLength(); i++) {
+                if (nList.item(i).hasAttributes()) {
+                    switch (nList.item(i).getAttributes().getNamedItem("name").getNodeValue()) {
+                        case "ErrorTitle":
+                            ErrorTitle = nList.item(i).getTextContent();
+                            break;
+                        case "ErrorString":
+                            ErrorString = nList.item(i).getTextContent();
+                            break;
+                        case "idString":
+                            lbID.setText(nList.item(i).getTextContent()+':');
+                            break;
+                        case "nameString":
+                            lbName.setText(nList.item(i).getTextContent()+':');
+                            break;
+                        case "leftString":
+                            lbLeft.setText(nList.item(i).getTextContent());
+                            break;
+                        case "rightString":
+                            lbRight.setText(nList.item(i).getTextContent());
+                            break;
+                        case "cancelString":
+                            btnCancel.setText(nList.item(i).getTextContent());
+                            break;
+                        case "submitString":
+                            btnSubmit.setText(nList.item(i).getTextContent());
+                            break;
+                        case "jobString":
+                            lbJob.setText(nList.item(i).getTextContent()+':');
+                            break;
+                        case "selimgString":
+                            btnChangePic.setText(nList.item(i).getTextContent());
+                            break;
+                    }
+                }
+            }
+        }catch(Exception e){
+            Alert lalert = new Alert(Alert.AlertType.ERROR);        
+            lalert.setTitle("Officelog");
+            lalert.setHeaderText("Fatal Error");
+            lalert.setContentText("Could not load Language file");
+            lalert.showAndWait();
+            throw e;
+        }
         if (model.getPeople().getNumberOfPpl() == 0) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Error Dialog");
-            alert.setHeaderText("Look, an Error Dialog");
-            alert.setContentText("no people");
+            alert.setTitle("Officelog");
+            alert.setHeaderText(ErrorTitle);
+            alert.setContentText(ErrorString);
             alert.showAndWait();
             ((Stage) (btnCancel.getScene().getWindow())).close();
         } else {
@@ -210,6 +259,7 @@ public class ModifyPersonController implements Initializable {
             lvRight.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
             lvLeft.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         }
+        
     }
 
     public static void setModel(Model model) {

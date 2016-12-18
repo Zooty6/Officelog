@@ -119,6 +119,15 @@ public class Room implements Serializable{
     }
 
     /**
+     * Gets the name of the Room in the selected Language.
+     * 
+     * @return the name of the Room in the selected Language.
+     */
+    public String getLanguageName() {
+        return LanguageName;
+    }
+
+    /**
      * Assigns a button to this Room.
      * 
      * @param btnRoom assigns this room to parameter button.
@@ -136,20 +145,20 @@ public class Room implements Serializable{
         this.MaxPeople = MaxPeople;
     }
 
-     /**
-      * Set the name of the Room in the selected Language.
-      * 
-      * @param LanguageName the name of the Room in the selected Language.
-      */
+    /**
+     * Set the name of the Room in the selected Language.
+     * 
+     * @param LanguageName the name of the Room in the selected Language.
+     */
     public void setLanguageName(String LanguageName) {
         this.LanguageName = LanguageName;
     }     
      
-     /**
-      * Adds a new Room that can be reached directly from this Room.
-      * 
-      * @param room the new neighbor.
-      */
+    /**
+     * Adds a new Room that can be reached directly from this Room.
+     * 
+     * @param room the new neighbor.
+     */
     public void addNeighbor(Room room){
         Neighbors.add(room);
     } 

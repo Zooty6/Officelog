@@ -10,9 +10,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.w3c.dom.NodeList;
 
 /**
  * FXML Controller class
@@ -57,14 +59,45 @@ public class LogViewerController implements Initializable {
                     data.add(new LVEvent(dateFormat.format(event.getEventDate()), event.getType(), 
                             Integer.toString(event.getWho().getID()), event.getWho().getName(), event.getWhere().toString()));                    
                 }
-        }        
+        }
         tc1.setCellValueFactory(new PropertyValueFactory<>("date"));
         tc2.setCellValueFactory(new PropertyValueFactory<>("type"));
         tc3.setCellValueFactory(new PropertyValueFactory<>("id"));
         tc4.setCellValueFactory(new PropertyValueFactory<>("name"));
         tc5.setCellValueFactory(new PropertyValueFactory<>("room"));  
-        tvLogs.setItems(data);        
-    } 
+        tvLogs.setItems(data);  
+        try {
+            NodeList nList = Language.getLang().getElementsByTagName("logviewer").item(0).getChildNodes();
+            for (int i = 0; i < nList.getLength(); i++) {
+                if (nList.item(i).hasAttributes()) {
+                    switch (nList.item(i).getAttributes().getNamedItem("name").getNodeValue()) {
+                        case "tc1":
+                            tc1.setText(nList.item(i).getTextContent());
+                            break;
+                        case "tc2":
+                            tc2.setText(nList.item(i).getTextContent());
+                            break;
+                        case "tc3":
+                            tc3.setText(nList.item(i).getTextContent());
+                            break;
+                        case "tc4":
+                            tc4.setText(nList.item(i).getTextContent());
+                            break;
+                        case "tc5":
+                            tc5.setText(nList.item(i).getTextContent());
+                            break;
+                    }
+                }
+            }
+        }catch(Exception e){
+            Alert lalert = new Alert(Alert.AlertType.ERROR);        
+            lalert.setTitle("Officelog");
+            lalert.setHeaderText("Fatal Error");
+            lalert.setContentText("Could not load Language file");
+            lalert.showAndWait();
+            throw e;
+        }
+    }
 
     public static void setElist(List<Event> Elist) {
         LogViewerController.Elist = Elist;

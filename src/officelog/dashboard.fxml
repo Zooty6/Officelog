@@ -18,7 +18,7 @@
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
            
-          <Menu mnemonicParsing="false" text="Logok">
+          <Menu mnemonicParsing="false" fx:id="mLogs" text="Logs">
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#handleButtonAction" fx:id="miLogOpen" text="Open" />
             </items>
@@ -35,7 +35,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#handleButtonAction" fx:id="miSetSave" text="setSaveFrq" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+          <Menu mnemonicParsing="false" fx:id="mEdit" text="Edit">
              <items>
               <MenuItem mnemonicParsing="false" onAction="#handleButtonAction" fx:id="miAddPerson" text="TODO:Add person" />
             </items>
@@ -55,7 +55,10 @@
               <MenuItem mnemonicParsing="false" onAction="#handleButtonAction" fx:id="miSavePerson" text="TODO:Save person files" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="help">
+          <Menu mnemonicParsing="false" fx:id="mHelp" text="help">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#handleButtonAction" fx:id="miLanguage" text="Select Language" />
+            </items>
             <items>
               <MenuItem mnemonicParsing="false" onAction="#handleButtonAction" fx:id="miFeedback" text="Feedback" />
             </items>

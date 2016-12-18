@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root Lan="En">
+	<rooms>
+		<Room name="R1">Meeting room</Room>
+		<Room name="R2">Boss' office</Room>
+		<Room name="R3">Office 1</Room>
+		<Room name="R4">Office 2</Room>
+		<Room name="R5">Interview</Room>
+		<Room name="R6">Toilet</Room>
+		<Room name="R7">Kitchen</Room>
+		<Room name="R8">Dining room</Room>
+		<Room name="R9">Rest room</Room>
+		<Room name="R10">Storage</Room>
+		<Room name="R11">Server room</Room>
+		<Room name="R12">Dev room 1</Room>
+		<Room name="R13">Dev room 2</Room>
+		<Room name="R14">Dev room 3</Room>
+		<Room name="R15">Testing room</Room>
+		<Room name="R16">reception</Room>
+		<Room name="R17">corridor 1</Room>
+		<Room name="R18">corridor 2</Room>
+		<Room name="R19">corridor 3</Room>
+		<Room name="Outside">Outside</Room>
+	</rooms>	
+	<dashboard>
+		<label name="selected">Selected Person</label>
+		<MenuItems>
+			<MenuItem name="logs">Logs</MenuItem>
+			<MenuItem name="openlog">Open</MenuItem>
+			<MenuItem name="deletelog">Delete</MenuItem>
+			<MenuItem name="mostsusp">Most suspicious</MenuItem>
+			<MenuItem name="avgmov">Average movement</MenuItem>
+			<MenuItem name="setsavfrq">Set saving intervalls</MenuItem>
+			<MenuItem name="edit">Edit people</MenuItem>
+			<MenuItem name="add">New person</MenuItem>
+			<MenuItem name="modify">Modify person</MenuItem>
+			<MenuItem name="deleteperson">Delete person</MenuItem>
+			<MenuItem name="openperson">Open from file</MenuItem>
+			<MenuItem name="save">Save to file</MenuItem>
+			<MenuItem name="help">Help</MenuItem>
+			<MenuItem name="lang">Select language</MenuItem>
+			<MenuItem name="feedback">Feedback</MenuItem>
+			<MenuItem name="copy">Copyright</MenuItem>
+			<MenuItem name="madeby">Made by</MenuItem>
+		</MenuItems>
+		<Strings>
+			<String name="save">Save People</String>
+			<String name="avgmoveString">Average movement/person</String>
+			<String name="errorString">Error</String>
+			<String name="avgerrorString">Average value can't be displayed</String>
+			<String name="wipelogtitleString">Deleting logs</String>
+			<String name="wipelogString">You are about to wipe today's logfiles. Are you sure to continue?</String>
+			<String name="suspGood">No suspicious activity.</String>
+			<String name="suspPers">Most suspicious person is</String>
+			<String name="failString">failed attempt</String>
+			<String name="suspmissing">the most suspicious person is not in the database anymore</String>
+			<String name="mostsusptitleString">Most failed attempts:</String>
+			<String name="saveinttitleString">Saving intervall</String>
+			<String name="saveintString">Set the saving intervalls in seconds (5-60)</String>
+			<String name="saveinterrorString">Must be a number between 5 and 60</String>			
+		</Strings>
+	</dashboard>
+	<logviewer>
+		<Header name="tc1">Date</Header>
+		<Header name="tc2">Type</Header>
+		<Header name="tc3">ID</Header>
+		<Header name="tc4">Name</Header>
+		<Header name="tc5">Room</Header>
+	</logviewer>
+	<newperson>
+		<String name="nameString">Name</String>
+		<String name="selimgString">Select image</String>
+		<String name="employeeString">Employee</String>
+		<String name="leftString">Not granted permissions</String>
+		<String name="rightString">Granted permissions</String>
+		<String name="cancelString">Cancel</String>
+		<String name="submitString">Submit</String>
+		<String name="jobString">Job</String>
+		<String name="ErrorTitle">Error</String>
+		<String name="ErrorName">Name is required!</String>
+		<String name="ErrorJob">Job is required!</String>
+		<String name="ErrorPic">Icon must be NxN sized!</String>
+		<String name="ErrorOpen">Couldn't open the file!</String>
+	</newperson>
+	<Modifyperson>
+		<String name="ErrorTitle">Error</String>
+		<String name="ErrorString">There are no people in the database!</String>
+		<String name="idString">ID</String>
+		<String name="nameString">Name</String>
+		<String name="leftString">Not granted permissions</String>
+		<String name="rightString">Granted permissions</String>
+		<String name="cancelString">cancel</String>
+		<String name="submitString">Submit</String>
+		<String name="selimgString">Select image</String>
+	</Modifyperson>
+	<DelPerson>
+		<String name="ErrorTitle">Error</String>
+		<String name="ErrorString">There are no people in the database!</String>		
+		<String name="cancelString">cancel</String>
+		<String name="delString">Delete</String>
+	</DelPerson>
+</root>

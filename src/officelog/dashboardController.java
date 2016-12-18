@@ -25,12 +25,14 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.w3c.dom.NodeList;
 
 /**
  * Controller for the main window.
@@ -41,9 +43,22 @@ public class dashboardController implements Initializable {
 
     private final Model model = new Model();
     private static Person selectedPerson;
-    private String SaveString = "Save People";
-    private String AllPplString = "Number of people";
-    private String InOfficeString = "in office";
+    private String SaveString;
+    private String labelString;
+    private String avgmoveString;
+    private String errorString;
+    private String avgerrorString;
+    private String wipelogtitleString;
+    private String wipelogString;
+    private String suspGood;
+    private String suspPers;
+    private String failString;
+    private String suspmissing;
+    private String mostsusptitleString;
+    private String saveinttitleString;
+    private String saveintString;
+    private String saveinterrorString;
+    private String madeby;
 
     //<editor-fold defaultstate="collapsed" desc="linking buttons">
     @FXML
@@ -221,8 +236,12 @@ public class dashboardController implements Initializable {
     MenuItem miAddPerson;
     @FXML
     Label lbSelected;
-//    @FXML
-//    Label lbPplCount;
+    @FXML
+    Menu mLogs;
+    @FXML
+    Menu mEdit;
+    @FXML
+    Menu mHelp;
     @FXML
     MenuItem miModifyPerson;
     @FXML
@@ -231,6 +250,8 @@ public class dashboardController implements Initializable {
     MenuItem miSavePerson;
     @FXML
     MenuItem miOpenPerson;
+    @FXML
+    MenuItem miLanguage;
     @FXML
     MenuItem miFeedback;
     @FXML
@@ -286,11 +307,11 @@ public class dashboardController implements Initializable {
                 selectedPerson = ((ButtonPerson) (event.getSource())).getPerson();
                 PersonSelecter(event);
                 //Thread.currentThread().suspend();
-                lbSelected.setText("TODO: " + selectedPerson.getName());
+                lbSelected.setText(labelString + ": " + selectedPerson.getName());
                 EnableNeighburs();
             } else {
                 selectedPerson = ((ButtonPerson) (event.getSource())).getPerson();
-                lbSelected.setText("TODO: " + selectedPerson.getName());
+                lbSelected.setText(labelString + ": " + selectedPerson.getName());
                 EnableNeighburs();
             }
         }
@@ -303,6 +324,7 @@ public class dashboardController implements Initializable {
                 stageAP.initModality(Modality.WINDOW_MODAL);
                 stageAP.initOwner(((Node) R1).getScene().getWindow());
                 stageAP.setScene(new Scene(AddPersonWindow));
+                stageAP.setTitle("Officelog");
                 stageAP.setResizable(false);
                 stageAP.show();
             } catch (IOException ex) {
@@ -319,7 +341,7 @@ public class dashboardController implements Initializable {
                 stageMP.initOwner(((Node) R1).getScene().getWindow());
                 stageMP.setMinHeight(666);
                 stageMP.setScene(new Scene(ModPersonWindow));
-                stageMP.show();
+                stageMP.showAndWait();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -333,19 +355,19 @@ public class dashboardController implements Initializable {
                 stageDP.initModality(Modality.WINDOW_MODAL);
                 stageDP.initOwner(((Node) R1).getScene().getWindow());
                 stageDP.setResizable(false);
+                stageDP.setTitle("officelog");
                 stageDP.setScene(new Scene(DelPersonWindow));
                 stageDP.show();
                 for (ButtonRoom allRoom : allRooms) {
                     allRoom.setDisable(true);
                 }
             } catch (IOException ex) {
-                ex.printStackTrace();
+                ;
             }
         }
 
         if (event.getSource() == miSavePerson) {
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle(SaveString);
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("dat file (*.dat)", "*.dat"));
             File file = fileChooser.showSaveDialog(R1.getScene().getWindow());
             ObjectOutputStream oos = null;
@@ -379,7 +401,7 @@ public class dashboardController implements Initializable {
                     ois = new ObjectInputStream(new FileInputStream(file));
                     model.setPeople((People) (ois.readObject()));
                     selectedPerson = null;
-                    lbSelected.setText("TODO: ");
+                    lbSelected.setText(labelString + ": ");
                     for (ButtonRoom allRoom : allRooms) {
                         allRoom.setDisable(true);
                     }
@@ -404,10 +426,23 @@ public class dashboardController implements Initializable {
             FixNewModel();
         }
 
+        if (event.getSource() == miLanguage) {
+            FileChooser fileChooser = new FileChooser();
+            FileChooser.ExtensionFilter extFilterXML = new FileChooser.ExtensionFilter("xml files (*.dat)", "*.XML");
+            fileChooser.getExtensionFilters().add(extFilterXML);
+            fileChooser.setInitialDirectory(new File("lang"));
+            File f = fileChooser.showOpenDialog(R1.getScene().getWindow());
+            if (f != null) {
+                Language.load(f);
+                LoadLanguage();
+            }
+
+        }
+
         if (event.getSource() == miCopyRight) {
             Alert copyright = new Alert(Alert.AlertType.INFORMATION);
             copyright.setTitle("Officelog");
-            copyright.setHeaderText("Made by:");
+            copyright.setHeaderText(madeby + ':');
             copyright.setContentText("Mészáros Szandra \nKecskeméthy Zoltán");
             copyright.show();
         }
@@ -426,6 +461,7 @@ public class dashboardController implements Initializable {
                 Parent OpenLogWindow = (Parent) OpenLog.load();
                 Stage stageOL = new Stage();
                 stageOL.setScene(new Scene(OpenLogWindow));
+                stageOL.setTitle("Officelog");
                 stageOL.show();
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -434,9 +470,9 @@ public class dashboardController implements Initializable {
 
         if (event.getSource() == miLogDel) {
             Alert alert = new Alert(AlertType.CONFIRMATION);
-            alert.setTitle("Confirmation Dialog");
-            alert.setHeaderText("Look, a Confirmation Dialog");
-            alert.setContentText("Are you ok with this?");
+            alert.setTitle("Officelog");
+            alert.setHeaderText(wipelogtitleString);
+            alert.setContentText(wipelogString);
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 model.getEventList().Clear();
@@ -445,9 +481,9 @@ public class dashboardController implements Initializable {
 
         if (event.getSource() == miSetSave) {
             TextInputDialog dialog = new TextInputDialog("5");
-            dialog.setTitle("Text Input Dialog");
-            dialog.setHeaderText("Look, a Text Input Dialog");
-            dialog.setContentText("Please enter your name:");
+            dialog.setTitle("Officelog");
+            dialog.setHeaderText(saveinttitleString);
+            dialog.setContentText(saveintString + ":");
             Optional<String> result = dialog.showAndWait();
             if (result.isPresent()) {
                 try {
@@ -461,14 +497,13 @@ public class dashboardController implements Initializable {
                 } catch (Exception e) {
                     Alert copyright = new Alert(Alert.AlertType.ERROR);
                     copyright.setTitle("Officelog");
-                    copyright.setHeaderText("Feedback");
-                    copyright.setContentText("Must be a number between 5 and 60");
+                    copyright.setHeaderText(errorString);
+                    copyright.setContentText(saveinterrorString);
                     copyright.show();
                 }
             }
         }
         if (event.getSource() == miMostSusp) {
-            System.out.println("yayy");
             class ferret {
 
                 //Ferrets are cute! http://i.imgur.com/JXUbIdk.mp4
@@ -478,11 +513,6 @@ public class dashboardController implements Initializable {
                 public ferret(int id, int n) {
                     this.id = id;
                     this.n = n;
-                }
-
-                @Override
-                public String toString() {
-                    return "ferret{" + "id=" + id + ", n=" + n + '}';
                 }
             }
             ArrayList<ferret> foundlist = new ArrayList<>();
@@ -501,7 +531,7 @@ public class dashboardController implements Initializable {
                     }
                 }
             }
-            String msg = "Evrbdy is gud";
+            String msg = suspGood;
             int baddudemistakes;
             int baddude;
             if (!foundlist.isEmpty()) {
@@ -513,17 +543,16 @@ public class dashboardController implements Initializable {
                         baddudemistakes = catsnake.n;
                     }
                 }
-                System.out.println(baddude);
                 try {
-                    msg = "Most suspicious person is: " + model.getPeople().getPerson(baddude)
-                            + " (with: " + baddudemistakes + " failed attempt)";
+                    msg = suspPers + ":\n" + model.getPeople().getPerson(baddude)
+                            + " (" + baddudemistakes + failString + ")";
                 } catch (NullPointerException e) {
-                    msg = "the most suspicious person is not in the database anymore";
+                    msg = suspmissing;
                 }
             }
             Alert MSPersonAlert = new Alert(Alert.AlertType.INFORMATION);
             MSPersonAlert.setTitle("Officelog");
-            MSPersonAlert.setHeaderText("Worst Person");
+            MSPersonAlert.setHeaderText(mostsusptitleString);
             MSPersonAlert.setContentText(msg);
             MSPersonAlert.show();
         }
@@ -538,8 +567,14 @@ public class dashboardController implements Initializable {
             if (movenmbr > 0 && model.getPeople().getNumberOfPpl() > 0) {
                 Alert AVGMoveAlert = new Alert(Alert.AlertType.INFORMATION);
                 AVGMoveAlert.setTitle("Officelog");
-                AVGMoveAlert.setHeaderText("avgmove:");
+                AVGMoveAlert.setHeaderText(avgmoveString + ":");
                 AVGMoveAlert.setContentText(Double.toString((double) movenmbr / model.getPeople().getNumberOfPpl()));
+                AVGMoveAlert.show();
+            } else {
+                Alert AVGMoveAlert = new Alert(Alert.AlertType.ERROR);
+                AVGMoveAlert.setTitle("Officelog");
+                AVGMoveAlert.setHeaderText(errorString);
+                AVGMoveAlert.setContentText(avgerrorString);
                 AVGMoveAlert.show();
             }
         }
@@ -712,15 +747,14 @@ public class dashboardController implements Initializable {
         //</editor-fold>
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
-        lbSelected.setText("TODO:"); //TODO: set tet based of selected language
+        Language.load("lang\\En.xml");
         PersonSelecterController.LinkToSelectedPerson(lbSelected);
         AddPersonController.setModel(model);
         ModifyPersonController.setModel(model);
         PersonDeleterController.setModel(model);
         LogViewerController.setElist(model.getEventList().getElist());
-        for (ButtonRoom allRoom : allRooms) {
-            allRoom.setDisable(true);
-        }
+        LoadLanguage();
+        lbSelected.setText(labelString + ": ");
 // TODO Handle Language
 //        //TEST
 //        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek")).setLocation(model.getRoom("Outside")); //*.*
@@ -758,12 +792,167 @@ public class dashboardController implements Initializable {
         }
     }
 
+    /**
+     * Sets every component's text string according to the selected language on this window.
+     */
+    private void LoadLanguage() {
+        try {
+            NodeList nList = Language.getLang().getElementsByTagName("Room");
+            NodeList miList = null;
+            NodeList sList = null;
+            for (ButtonRoom allRoom : allRooms) {
+                allRoom.setDisable(true);
+                for (int i = 0; i < nList.getLength(); i++) {
+                    //System.out.println(rList.item(i).getAttributes().getNamedItem("name").getNodeValue());
+                    if (nList.item(i).getAttributes().getNamedItem("name").getNodeValue().equals(allRoom.getRoom().getName())) {
+                        allRoom.getRoom().setLanguageName(nList.item(i).getTextContent());
+                    }
+                }
+                if (allRoom.getRoom().getLanguageName().length() > 8) {
+                    allRoom.setText(allRoom.getRoom().getLanguageName().replaceFirst(" ", "\n"));
+                } else {
+                    allRoom.setText(allRoom.getRoom().getLanguageName());
+                }
+            }
+
+            nList = Language.getLang().getElementsByTagName("dashboard").item(0).getChildNodes();
+            for (int i = 0; i < nList.getLength(); i++) {
+                if (nList.item(i).getNodeName().equals("label")) {
+                    labelString = nList.item(i).getTextContent();
+                }
+                if (nList.item(i).getNodeName().equals("MenuItems")) {
+                    miList = nList.item(i).getChildNodes();
+                }
+                if (nList.item(i).getNodeName().equals("Strings")) {
+                    sList = nList.item(i).getChildNodes();
+                }
+            }
+            nList = null;
+            for (int i = 0; i < miList.getLength(); i++) {
+                if (miList.item(i).hasAttributes()) {
+                    switch (miList.item(i).getAttributes().getNamedItem("name").getNodeValue()) {
+                        case "logs":
+                            mLogs.setText(miList.item(i).getTextContent());
+                            break;
+                        case "openlog":
+                            miLogOpen.setText(miList.item(i).getTextContent());
+                            break;
+                        case "deletelog":
+                            miLogDel.setText(miList.item(i).getTextContent());
+                            break;
+                        case "mostsusp":
+                            miMostSusp.setText(miList.item(i).getTextContent());
+                            break;
+                        case "avgmov":
+                            miAvgMove.setText(miList.item(i).getTextContent());
+                            break;
+                        case "setsavfrq":
+                            miSetSave.setText(miList.item(i).getTextContent());
+                            break;
+                        case "edit":
+                            miModifyPerson.setText(miList.item(i).getTextContent());
+                            break;
+                        case "add":
+                            miAddPerson.setText(miList.item(i).getTextContent());
+                            break;
+                        case "modify":
+                            miModifyPerson.setText(miList.item(i).getTextContent());
+                            break;
+                        case "deleteperson":
+                            miDeletePerson.setText(miList.item(i).getTextContent());
+                            break;
+                        case "openperson":
+                            miOpenPerson.setText(miList.item(i).getTextContent());
+                            break;
+                        case "save":
+                            miSavePerson.setText(miList.item(i).getTextContent());
+                            break;
+                        case "help":
+                            mHelp.setText(miList.item(i).getTextContent());
+                            break;
+                        case "lang":
+                            miLanguage.setText(miList.item(i).getTextContent());
+                            break;
+                        case "feedback":
+                            miFeedback.setText(miList.item(i).getTextContent());
+                            break;
+                        case "copy":
+                            miCopyRight.setText(miList.item(i).getTextContent());
+                            break;
+                    }
+                }
+            }
+            for (int i = 0; i < sList.getLength(); i++) {
+                if (miList.item(i).hasAttributes()) {
+                    switch (sList.item(i).getAttributes().getNamedItem("name").getNodeValue()) {
+                        case "save":
+                            SaveString = sList.item(i).getTextContent();
+                            break;
+                        case "avgmoveString":
+                            avgmoveString = sList.item(i).getTextContent();
+                            break;
+                        case "errorString":
+                            errorString = sList.item(i).getTextContent();
+                            break;
+                        case "avgerrorString":
+                            avgerrorString = sList.item(i).getTextContent();
+                            break;
+                        case "wipelogtitleString":
+                            wipelogtitleString = sList.item(i).getTextContent();
+                            break;
+                        case "wipelogString":
+                            wipelogString = sList.item(i).getTextContent();
+                            break;
+                        case "suspGood":
+                            suspGood = sList.item(i).getTextContent();
+                            break;
+                        case "suspPers":
+                            suspPers = sList.item(i).getTextContent();
+                            break;
+                        case "failString":
+                            failString = sList.item(i).getTextContent();
+                            break;
+                        case "suspmissing":
+                            suspmissing = sList.item(i).getTextContent();
+                            break;
+                        case "mostsusptitleString":
+                            mostsusptitleString = sList.item(i).getTextContent();
+                            break;
+                        case "saveinttitleString":
+                            saveinttitleString = sList.item(i).getTextContent();
+                            break;
+                        case "saveintString":
+                            saveintString = sList.item(i).getTextContent();
+                            break;
+                        case "saveinterrorString":
+                            saveinterrorString = sList.item(i).getTextContent();
+                            break;
+                        case "madeby":
+                            madeby = sList.item(i).getTextContent();
+                            break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            if (Language.getSrc().equals("lang\\En.xml")) {
+                Alert lalert = new Alert(Alert.AlertType.ERROR);
+                lalert.setTitle("Officelog");
+                lalert.setHeaderText("Fatal Error");
+                lalert.setContentText("Could not load Language file");
+                lalert.showAndWait();
+                throw e;
+            }else{
+                Language.load("lang\\En.xml");
+                LoadLanguage();
+            }            
+        }
+    }
+
     private void FixNewModel() {
         for (ButtonRoom RoomButton : allRooms) {
             RoomButton.clear();
             for (Person person : model.getPeople().getIPeople()) {
-                if (person.getLocation().getName().equals(RoomButton.getRoom().getName())) //RoomButton.addPerson(person);
-                {
+                if (person.getLocation().getName().equals(RoomButton.getRoom().getName())) {
                     person.setLocation(RoomButton.getRoom());
                 }
             }
