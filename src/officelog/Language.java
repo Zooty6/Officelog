@@ -24,6 +24,7 @@ public class Language {
     }
 
     /**
+     * Loads an xml file with given path.
      * 
      * @param path The path of the xml file.
      */
@@ -33,8 +34,9 @@ public class Language {
     }
     
     /**
+     * Loads the xml file from the argument.
      * 
-     * @param XmlFile 
+     * @param XmlFile the file that needs to be loaded.
      */
     public static void load(File XmlFile){
         try {            
@@ -42,16 +44,25 @@ public class Language {
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Lang = dBuilder.parse(XmlFile);
             src = XmlFile.getPath();
-            System.out.println(src);
         } catch (Exception e) {
-	e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
+    /**
+     * Returns the path of the loaded file.
+     * 
+     * @return the path of the loaded file.
+     */
     public static String getSrc() {
         return src;
     }
     
+    /**
+     * Returns the DOM of the xml file.
+     * 
+     * @return the DOM of the xml file.
+     */
     public static Document getLang() {
         return Lang;
     }

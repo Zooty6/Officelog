@@ -11,6 +11,7 @@ import java.util.Date;
  * @author Zooty
  */
 public class Event implements Serializable{
+    
     /**
      * A description of this specific event.
      */

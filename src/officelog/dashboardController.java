@@ -32,6 +32,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javax.imageio.ImageIO;
 import org.w3c.dom.NodeList;
 
 /**
@@ -342,8 +343,8 @@ public class dashboardController implements Initializable {
                 stageMP.setMinHeight(666);
                 stageMP.setScene(new Scene(ModPersonWindow));
                 stageMP.showAndWait();
-            } catch (IOException ex) {
-                ex.printStackTrace();
+            } catch (Exception ex) {
+                ;
             }
         }
 
@@ -755,7 +756,6 @@ public class dashboardController implements Initializable {
         LogViewerController.setElist(model.getEventList().getElist());
         LoadLanguage();
         lbSelected.setText(labelString + ": ");
-// TODO Handle Language
 //        //TEST
 //        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek")).setLocation(model.getRoom("Outside")); //*.*
 //        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek1")).setLocation(model.getRoom("R6"));
