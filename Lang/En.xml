@@ -31,7 +31,7 @@
 			<MenuItem name="mostsusp">Most suspicious</MenuItem>
 			<MenuItem name="avgmov">Average movement</MenuItem>
 			<MenuItem name="setsavfrq">Set saving intervalls</MenuItem>
-			<MenuItem name="edit">Edit people</MenuItem>
+			<MenuItem name="edit">Edit</MenuItem>
 			<MenuItem name="add">New person</MenuItem>
 			<MenuItem name="modify">Modify person</MenuItem>
 			<MenuItem name="deleteperson">Delete person</MenuItem>

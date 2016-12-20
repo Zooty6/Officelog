@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root Lan="Hu">
+	<rooms>
+		<Room name="R1">Tárgyaló</Room>
+		<Room name="R2">Főnöki iroda</Room>
+		<Room name="R3">Iroda 1</Room>
+		<Room name="R4">Iroda 2</Room>
+		<Room name="R5">Interjú szoba</Room>
+		<Room name="R6">Mosdó</Room>
+		<Room name="R7">Konyha</Room>
+		<Room name="R8">Ebédlő</Room>
+		<Room name="R9">Pihenő</Room>
+		<Room name="R10">Raktár</Room>
+		<Room name="R11">Szerver szoba</Room>
+		<Room name="R12">Fejlesztő 1</Room>
+		<Room name="R13">Fejlesztő 2</Room>
+		<Room name="R14">Fejlesztő 3</Room>
+		<Room name="R15">Tesztelés</Room>
+		<Room name="R16">Recepció</Room>
+		<Room name="R17">Folyosó 1</Room>
+		<Room name="R18">Folyosó 2</Room>
+		<Room name="R19">Folyosó 3</Room>
+		<Room name="Outside">Utca</Room>
+	</rooms>	
+	<dashboard>
+		<label name="selected">Ember kiválasztás</label>
+		<MenuItems>
+			<MenuItem name="logs">Logok</MenuItem>
+			<MenuItem name="openlog">Megnyitás</MenuItem>
+			<MenuItem name="deletelog">Törlés</MenuItem>
+			<MenuItem name="mostsusp">Leggyanúsabb ember</MenuItem>
+			<MenuItem name="avgmov">Átlagos mozgás</MenuItem>
+			<MenuItem name="setsavfrq">Mentési intervallum</MenuItem>
+			<MenuItem name="edit">Szerkeztés</MenuItem>
+			<MenuItem name="add">Új ember</MenuItem>
+			<MenuItem name="modify">Ember módosítás</MenuItem>
+			<MenuItem name="deleteperson">Ember törlése</MenuItem>
+			<MenuItem name="openperson">File megnyitása</MenuItem>
+			<MenuItem name="save">Mentés fileba</MenuItem>
+			<MenuItem name="help">Segítség</MenuItem>
+			<MenuItem name="lang">Nyelv kiválasztás</MenuItem>
+			<MenuItem name="feedback">Visszajelzés</MenuItem>
+			<MenuItem name="copy">Copyright</MenuItem>
+			<MenuItem name="madeby">Készítették</MenuItem>
+		</MenuItems>
+		<Strings>
+			<String name="save">Mentett ember</String>
+			<String name="avgmoveString">Átlagos mozgás/ember</String>
+			<String name="errorString">Hiba</String>
+			<String name="avgerrorString">Átlagérték nem jeleníthető meg</String>
+			<String name="wipelogtitleString">Logok törlése</String>
+			<String name="wipelogString">Arra készül, hogy törölje a mai logfájlokat. Biztosan folytatja?</String>
+			<String name="suspGood">Nem gyanús a tevékenység.</String>
+			<String name="suspPers">A leggyanúsabb személy </String>
+			<String name="failString">sikertelen kísérlet</String>
+			<String name="suspmissing">A leginkább gyanús személy nincs az adatbázisban többé</String>
+			<String name="mostsusptitleString">A legtöbb sikertelen kísérletek:</String>
+			<String name="saveinttitleString">Mentési intervallum</String>
+			<String name="saveintString">Állítsa be a mentési idő intervallumot(5-60)</String>
+			<String name="saveinterrorString">Számoknak 5 és 60 közöt kell lenni</String>			
+		</Strings>
+	</dashboard>
+	<logviewer>
+		<Header name="tc1">Dátum</Header>
+		<Header name="tc2">Típus</Header>
+		<Header name="tc3">ID</Header>
+		<Header name="tc4">Név</Header>
+		<Header name="tc5">Szoba</Header>
+	</logviewer>
+	<newperson>
+		<String name="nameString">Név</String>
+		<String name="selimgString">Kép kiválasztása</String>
+		<String name="employeeString">Dolgozó</String>
+		<String name="leftString">Nincs egedély megadása</String>
+		<String name="rightString">Megadott engedélyek</String>
+		<String name="cancelString">Mégse</String>
+		<String name="submitString">Rendben</String>
+		<String name="jobString">Munka</String>
+		<String name="ErrorTitle">Hiba</String>
+		<String name="ErrorName">Nincs név!</String>
+		<String name="ErrorJob">Nincs munka!</String>
+		<String name="ErrorPic">Kép nem NxN méretű!</String>
+		<String name="ErrorOpen">Nem sikerült megnyitni a fájlt!</String>
+	</newperson>
+	<Modifyperson>
+		<String name="ErrorTitle">Hiba</String>
+		<String name="ErrorString">Nincsenek emberek az adatbázisban!</String>
+		<String name="idString">ID</String>
+		<String name="nameString">Név</String>
+		<String name="leftString">Nincs egedély megadása</String>
+		<String name="rightString">Megadott engedélyek</String>
+		<String name="cancelString">Mégse</String>
+		<String name="submitString">Rendben</String>
+		<String name="selimgString">Kép kiválasztása</String>
+	</Modifyperson>
+	<DelPerson>
+		<String name="ErrorTitle">Hiba</String>
+		<String name="ErrorString">Nincsenek emberek az adatbázisban!</String>		
+		<String name="cancelString">Mégse</String>
+		<String name="delString">Törlés</String>
+	</DelPerson>
+</root>

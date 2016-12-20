@@ -755,7 +755,6 @@ public class dashboardController implements Initializable {
         PersonDeleterController.setModel(model);
         LogViewerController.setElist(model.getEventList().getElist());
         LoadLanguage();
-        lbSelected.setText(labelString + ": ");
 //        //TEST
 //        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek")).setLocation(model.getRoom("Outside")); //*.*
 //        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek1")).setLocation(model.getRoom("R6"));
@@ -818,6 +817,7 @@ public class dashboardController implements Initializable {
             nList = Language.getLang().getElementsByTagName("dashboard").item(0).getChildNodes();
             for (int i = 0; i < nList.getLength(); i++) {
                 if (nList.item(i).getNodeName().equals("label")) {
+                    lbSelected.setText(nList.item(i).getTextContent()+':');
                     labelString = nList.item(i).getTextContent();
                 }
                 if (nList.item(i).getNodeName().equals("MenuItems")) {
@@ -850,7 +850,7 @@ public class dashboardController implements Initializable {
                             miSetSave.setText(miList.item(i).getTextContent());
                             break;
                         case "edit":
-                            miModifyPerson.setText(miList.item(i).getTextContent());
+                            mEdit.setText(miList.item(i).getTextContent());
                             break;
                         case "add":
                             miAddPerson.setText(miList.item(i).getTextContent());
@@ -934,7 +934,7 @@ public class dashboardController implements Initializable {
                 }
             }
         } catch (Exception e) {
-            if (Language.getSrc().equals("lang\\En.xml")) {
+            if (Language.getSrc().equals("lang\\En.xml")) {                
                 Alert lalert = new Alert(Alert.AlertType.ERROR);
                 lalert.setTitle("Officelog");
                 lalert.setHeaderText("Fatal Error");
@@ -942,6 +942,7 @@ public class dashboardController implements Initializable {
                 lalert.showAndWait();
                 throw e;
             }else{
+                e.printStackTrace();
                 Language.load("lang\\En.xml");
                 LoadLanguage();
             }            
