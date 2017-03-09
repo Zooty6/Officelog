@@ -1,5 +1,6 @@
-package officelog;
+package officelog.control;
 
+import officelog.model.Person;
 import java.io.Serializable;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Node;

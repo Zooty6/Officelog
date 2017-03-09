@@ -1,5 +1,7 @@
-package officelog;
+package officelog.control;
 
+import officelog.view.Language;
+import officelog.model.Event;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -129,7 +131,7 @@ public class LogViewerController implements Initializable {
 
         public String getId() {
             if(!id.isEmpty().get())
-                return "ID: " + id.get();
+                return id.get();
             else
                 return "";
         }

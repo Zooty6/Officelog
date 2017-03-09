@@ -1,5 +1,10 @@
-package officelog;
+package officelog.control;
 
+import officelog.view.Language;
+import officelog.model.People;
+import officelog.model.Person;
+import officelog.model.Event;
+import officelog.model.Model;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -54,6 +59,7 @@ public class dashboardController implements Initializable {
     private String suspGood;
     private String suspPers;
     private String failString;
+    private String failsString;
     private String suspmissing;
     private String mostsusptitleString;
     private String saveinttitleString;
@@ -319,7 +325,7 @@ public class dashboardController implements Initializable {
 
         if (event.getSource() == miAddPerson) {
             try {
-                FXMLLoader LoadAddPerson = new FXMLLoader(getClass().getResource("AddPerson.fxml"));
+                FXMLLoader LoadAddPerson = new FXMLLoader(getClass().getResource("/officelog/view/AddPerson.fxml"));
                 Parent AddPersonWindow = (Parent) LoadAddPerson.load();
                 Stage stageAP = new Stage();
                 stageAP.initModality(Modality.WINDOW_MODAL);
@@ -334,7 +340,7 @@ public class dashboardController implements Initializable {
         }
 
         if (event.getSource() == miModifyPerson) {
-            FXMLLoader LoadModPerson = new FXMLLoader(getClass().getResource("ModifyPerson.fxml"));
+            FXMLLoader LoadModPerson = new FXMLLoader(getClass().getResource("/officelog/view/ModifyPerson.fxml"));
             try {
                 Parent ModPersonWindow = (Parent) LoadModPerson.load();
                 Stage stageMP = new Stage();
@@ -349,7 +355,7 @@ public class dashboardController implements Initializable {
         }
 
         if (event.getSource() == miDeletePerson) {
-            FXMLLoader LoadDelPerson = new FXMLLoader(getClass().getResource("PersonDeleter.fxml"));
+            FXMLLoader LoadDelPerson = new FXMLLoader(getClass().getResource("/officelog/view/PersonDeleter.fxml"));
             try {
                 Parent DelPersonWindow = (Parent) LoadDelPerson.load();
                 Stage stageDP = new Stage();
@@ -443,7 +449,7 @@ public class dashboardController implements Initializable {
         if (event.getSource() == miCopyRight) {
             Alert copyright = new Alert(Alert.AlertType.INFORMATION);
             copyright.setTitle("Officelog");
-            copyright.setHeaderText(madeby + ':');
+            copyright.setHeaderText(madeby + ":");
             copyright.setContentText("Mészáros Szandra \nKecskeméthy Zoltán");
             copyright.show();
         }
@@ -458,15 +464,16 @@ public class dashboardController implements Initializable {
 
         if (event.getSource() == miLogOpen) {
             try {
-                FXMLLoader OpenLog = new FXMLLoader(getClass().getResource("LogViewer.fxml"));
-                Parent OpenLogWindow = (Parent) OpenLog.load();
+                Parent OpenLogwindow = FXMLLoader.load(getClass().getResource("/officelog/view/LogViewer.fxml"));
+                //Parent OpenLogWindow = OpenLog.load();
                 Stage stageOL = new Stage();
-                stageOL.setScene(new Scene(OpenLogWindow));
+                stageOL.setScene(new Scene(OpenLogwindow));
                 stageOL.setTitle("Officelog");
                 stageOL.show();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
+                
         }
 
         if (event.getSource() == miLogDel) {
@@ -545,8 +552,12 @@ public class dashboardController implements Initializable {
                     }
                 }
                 try {
-                    msg = suspPers + ":\n" + model.getPeople().getPerson(baddude)
-                            + " (" + baddudemistakes + failString + ")";
+                    if(baddudemistakes>1)
+                        msg = suspPers + ": \n" + model.getPeople().getPerson(baddude)
+                            + " (" + baddudemistakes +" "+ failsString + ")";
+                    else
+                        msg = suspPers + ": \n" + model.getPeople().getPerson(baddude)
+                            + " (" + baddudemistakes +" "+ failString + ")";
                 } catch (NullPointerException e) {
                     msg = suspmissing;
                 }
@@ -777,7 +788,7 @@ public class dashboardController implements Initializable {
 
     private void PersonSelecter(ActionEvent event) {
         try {
-            FXMLLoader load = new FXMLLoader(getClass().getResource("PersonSelecter.fxml"));
+            FXMLLoader load = new FXMLLoader(getClass().getResource("/officelog/view//PersonSelecter.fxml"));
             PersonSelecterController.setSelectedList(((ButtonPerson) (event.getSource())).getPerson().getLocation().getBtnRoom().getPplList());
             Parent Window = (Parent) load.load();
             Stage stage = new Stage();
@@ -879,6 +890,9 @@ public class dashboardController implements Initializable {
                         case "copy":
                             miCopyRight.setText(miList.item(i).getTextContent());
                             break;
+                        case "madeby":
+                            madeby = miList.item(i).getTextContent();
+                            break;    
                     }
                 }
             }
@@ -912,6 +926,9 @@ public class dashboardController implements Initializable {
                         case "failString":
                             failString = sList.item(i).getTextContent();
                             break;
+                        case "failsString":
+                            failsString = sList.item(i).getTextContent();
+                            break;
                         case "suspmissing":
                             suspmissing = sList.item(i).getTextContent();
                             break;
@@ -924,15 +941,16 @@ public class dashboardController implements Initializable {
                         case "saveintString":
                             saveintString = sList.item(i).getTextContent();
                             break;
-                        case "saveinterrorString":
-                            saveinterrorString = sList.item(i).getTextContent();
-                            break;
                         case "madeby":
                             madeby = sList.item(i).getTextContent();
                             break;
+                        case "saveinterrorString":
+                            saveinterrorString = sList.item(i).getTextContent();
+                            break;                        
                     }
                 }
             }
+            System.out.println();
         } catch (Exception e) {
             if (Language.getSrc().equals("lang\\En.xml")) {                
                 Alert lalert = new Alert(Alert.AlertType.ERROR);

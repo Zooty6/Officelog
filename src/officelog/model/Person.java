@@ -1,4 +1,4 @@
-package officelog;
+package officelog.model;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

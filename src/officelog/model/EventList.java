@@ -1,5 +1,6 @@
-package officelog;
+package officelog.model;
 
+import officelog.model.Event;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

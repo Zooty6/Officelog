@@ -1,4 +1,4 @@
-package officelog;
+package officelog.model;
 
 import java.io.Serializable;
 import java.text.DateFormat;

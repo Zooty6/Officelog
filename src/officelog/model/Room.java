@@ -1,9 +1,10 @@
-package officelog;
+package officelog.model;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import officelog.control.ButtonRoom;
 
 /**
  * This class represents a Room in the office

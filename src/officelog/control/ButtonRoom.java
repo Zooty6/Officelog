@@ -1,5 +1,7 @@
-package officelog;
+package officelog.control;
 
+import officelog.model.Room;
+import officelog.model.Person;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javafx.scene.Node;

@@ -1,5 +1,8 @@
-package officelog;
+package officelog.control;
 
+import officelog.view.Language;
+import officelog.model.Room;
+import officelog.model.Model;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -113,7 +116,7 @@ public class AddPersonController implements Initializable {
                         ivIcon.setImage(SwingFXUtils.toFXImage(NewImg, null));
                     }
                     else{
-                        Alert alert = new Alert(AlertType.ERROR);
+                        Alert alert = new Alert(AlertType.WARNING);
                         alert.setTitle("Officelog");
                         alert.setHeaderText(ErrorTitle);
                         alert.setContentText(ErrorPic);
@@ -132,14 +135,14 @@ public class AddPersonController implements Initializable {
         }
         if (event.getSource() == btnSubmit) {
             if ("".equals(tfName.getText())) {
-                Alert alert = new Alert(AlertType.ERROR);
+                Alert alert = new Alert(AlertType.WARNING);
                 alert.setTitle("Officelog");
                 alert.setHeaderText(ErrorTitle);
                 alert.setContentText(ErrorName);
                 alert.showAndWait();
             } else if (cbEmp.selectedProperty().get()) {
                 if (tfJob.getText().equals("")) {
-                    Alert alert = new Alert(AlertType.ERROR);
+                    Alert alert = new Alert(AlertType.WARNING);
                     alert.setTitle("Officelog");
                     alert.setHeaderText(ErrorTitle);
                     alert.setContentText(ErrorJob);
@@ -190,7 +193,7 @@ public class AddPersonController implements Initializable {
             System.out.println("failed to load default icon");
         }        
         
-        try {
+        try {            
             NodeList nList = Language.getLang().getElementsByTagName("newperson").item(0).getChildNodes();
             for (int i = 0; i < nList.getLength(); i++) {
                 if (nList.item(i).hasAttributes()) {

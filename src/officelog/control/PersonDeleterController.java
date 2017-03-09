@@ -1,5 +1,8 @@
-package officelog;
+package officelog.control;
 
+import officelog.view.Language;
+import officelog.model.Person;
+import officelog.model.Model;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -69,7 +72,7 @@ public class PersonDeleterController implements Initializable {
         lvPplItems.addAll(model.getPeople().getIPeople());
         lvPpl.setItems(lvPplItems);
         if (model.getPeople().getIPeople().size() == 0) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Officelog");
             alert.setHeaderText(ErrorTitle);
             alert.setContentText(ErrorString);

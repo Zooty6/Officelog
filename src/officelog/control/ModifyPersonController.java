@@ -1,5 +1,11 @@
-package officelog;
+package officelog.control;
 
+import officelog.view.Language;
+import officelog.model.Employee;
+import officelog.model.Room;
+import officelog.model.Person;
+import officelog.model.Event;
+import officelog.model.Model;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -241,7 +247,7 @@ public class ModifyPersonController implements Initializable {
             throw e;
         }
         if (model.getPeople().getNumberOfPpl() == 0) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Officelog");
             alert.setHeaderText(ErrorTitle);
             alert.setContentText(ErrorString);

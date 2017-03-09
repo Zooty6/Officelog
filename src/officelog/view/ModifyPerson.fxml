@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <!-- By Szandi -->
-<SplitPane fx:id="spMain" dividerPositions="0.41774193548387095" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="513.0" minWidth="511.0" prefHeight="573.0" prefWidth="622.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="officelog.ModifyPersonController">
+<SplitPane fx:id="spMain" dividerPositions="0.41774193548387095" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="513.0" minWidth="511.0" prefHeight="573.0" prefWidth="622.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="officelog.control.ModifyPersonController">
   <items>
     <AnchorPane minHeight="513.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>

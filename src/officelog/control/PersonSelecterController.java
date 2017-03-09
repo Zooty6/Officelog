@@ -1,5 +1,6 @@
-package officelog;
+package officelog.control;
 
+import officelog.model.Person;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;

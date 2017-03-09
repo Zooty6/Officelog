@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.Pane?>
 
 <!-- By Szandi -->
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="298.0" prefWidth="224.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="officelog.PersonDeleterController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="298.0" prefWidth="224.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="officelog.control.PersonDeleterController">
    <children>
       <Button fx:id="btDelete" layoutX="121.0" layoutY="249.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="93.0" text="Delete" onAction="#handleButtonAction" />
       <Button fx:id="btCancel" layoutX="14.0" layoutY="249.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="93.0" text="Cancel" onAction="#handleButtonAction" />

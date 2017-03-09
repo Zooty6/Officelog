@@ -1,5 +1,7 @@
-package officelog;
+package officelog.model;
 
+import officelog.model.Room;
+import officelog.model.Person;
 import java.awt.image.BufferedImage;
 import java.util.HashSet;
 import java.util.Set;
