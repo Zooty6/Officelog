@@ -21,7 +21,7 @@ public class Officelog extends Application {
         primaryStage.setMinWidth(700);
         primaryStage.setMaxWidth(900);
         primaryStage.setMinHeight(700);
-        primaryStage.show();        
+        primaryStage.show();         
     }
 
     public static void main(String[] args) {              

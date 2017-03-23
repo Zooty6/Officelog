@@ -40,8 +40,8 @@
 			<MenuItem name="help">Help</MenuItem>
 			<MenuItem name="lang">Select language</MenuItem>
 			<MenuItem name="feedback">Feedback</MenuItem>
-			<MenuItem name="copy">Copyright</MenuItem>
 			<MenuItem name="madeby">Made by</MenuItem>
+			<MenuItem name="copy">Copyright</MenuItem>
 		</MenuItems>
 		<Strings>
 			<String name="save">Save People</String>
@@ -53,11 +53,12 @@
 			<String name="suspGood">No suspicious activity.</String>
 			<String name="suspPers">Most suspicious person is</String>
 			<String name="failString">failed attempt</String>
+			<String name="failsString">failed attempts</String>
 			<String name="suspmissing">the most suspicious person is not in the database anymore</String>
 			<String name="mostsusptitleString">Most failed attempts:</String>
 			<String name="saveinttitleString">Saving intervall</String>
 			<String name="saveintString">Set the saving intervalls in seconds (5-60)</String>
-			<String name="saveinterrorString">Must be a number between 5 and 60</String>			
+			<String name="saveinterrorString">Must be a number between 5 and 60</String>
 		</Strings>
 	</dashboard>
 	<logviewer>
@@ -96,7 +97,9 @@
 	<DelPerson>
 		<String name="ErrorTitle">Error</String>
 		<String name="ErrorString">There are no people in the database!</String>		
-		<String name="cancelString">cancel</String>
+		<String name="cancelString">Cancel</String>
 		<String name="delString">Delete</String>
+		<String name="ConfirmHeader">Are you sure?</String>
+		<String name="ConfirmText">Do you want to delete</String>
 	</DelPerson>
 </root>

@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import officelog.model.Event;
 import org.w3c.dom.NodeList;
 
 /**
@@ -33,6 +34,8 @@ public class PersonDeleterController implements Initializable {
     private ListView<Person> lvPpl;
     ObservableList<Person> lvPplItems = FXCollections.observableArrayList();
     private static Model model;
+    private String ConfirmHeaderString = null;
+    private String ConfirmString = null;
 
     /**
      * Initializes the controller class.
@@ -57,6 +60,12 @@ public class PersonDeleterController implements Initializable {
                             break;
                         case "submitDel":
                             btDelete.setText(nList.item(i).getTextContent());
+                            break;
+                        case "ConfirmHeader":
+                            ConfirmHeaderString = nList.item(i).getTextContent();
+                            break;
+                        case "ConfirmText":
+                            ConfirmString = nList.item(i).getTextContent();
                             break;
                     }
                 }
@@ -94,14 +103,15 @@ public class PersonDeleterController implements Initializable {
         }
         if (event.getSource() == btDelete) {
             Alert alert = new Alert(AlertType.CONFIRMATION);
-            alert.setTitle("TODO");
-            alert.setHeaderText("Look, a Confirmation Dialog");
-            alert.setContentText("TODO: U want to rekt " + lvPpl.getSelectionModel().getSelectedItem().getName() +
+            alert.setTitle("Officelog");
+            alert.setHeaderText(ConfirmHeaderString);
+            alert.setContentText(ConfirmString + ": " + lvPpl.getSelectionModel().getSelectedItem().getName() +
                     " (ID: "+ lvPpl.getSelectionModel().getSelectedItem().getID()+")?");
             if(alert.showAndWait().get() == ButtonType.OK){
                 ButtonRoom tmpBtr = lvPpl.getSelectionModel().getSelectedItem().getLocation().getBtnRoom();                
                 dashboardController.setSelectedPerson(null);
-                model.getPeople().removePerson(lvPpl.getSelectionModel().getSelectedItem());                
+                model.getPeople().removePerson(lvPpl.getSelectionModel().getSelectedItem()); 
+                model.getEventList().addEvent(new Event("Person Deleted", lvPpl.getSelectionModel().getSelectedItem()));
                 tmpBtr.leave(lvPpl.getSelectionModel().getSelectedItem());
                 ((Stage) (btCancel.getScene().getWindow())).close();
             }

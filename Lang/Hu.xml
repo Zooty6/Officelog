@@ -35,8 +35,8 @@
 			<MenuItem name="add">Új ember</MenuItem>
 			<MenuItem name="modify">Ember módosítás</MenuItem>
 			<MenuItem name="deleteperson">Ember törlése</MenuItem>
-			<MenuItem name="openperson">File megnyitása</MenuItem>
-			<MenuItem name="save">Mentés fileba</MenuItem>
+			<MenuItem name="openperson">Fájl megnyitása</MenuItem>
+			<MenuItem name="save">Mentés fájlba</MenuItem>
 			<MenuItem name="help">Segítség</MenuItem>
 			<MenuItem name="lang">Nyelv kiválasztás</MenuItem>
 			<MenuItem name="feedback">Visszajelzés</MenuItem>
@@ -53,6 +53,7 @@
 			<String name="suspGood">Nem gyanús a tevékenység.</String>
 			<String name="suspPers">A leggyanúsabb személy </String>
 			<String name="failString">sikertelen kísérlet</String>
+			<String name="failsString">sikertelen kísérlet</String>
 			<String name="suspmissing">A leginkább gyanús személy nincs az adatbázisban többé</String>
 			<String name="mostsusptitleString">A legtöbb sikertelen kísérletek:</String>
 			<String name="saveinttitleString">Mentési intervallum</String>

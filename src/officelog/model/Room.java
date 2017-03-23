@@ -96,6 +96,14 @@ public class Room implements Serializable{
     public int getMaxPeople() {
         return MaxPeople;
     }
+    /**
+     * Returns The set of this room's neighbors.
+     * 
+     * @return The set of this room's neighbors.
+     */
+    public Set<Room> getNeighbors() {
+        return Neighbors;
+    }    
 
     /**
      * Tells if this Room is open for guests.

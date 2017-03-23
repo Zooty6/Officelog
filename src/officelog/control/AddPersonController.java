@@ -29,6 +29,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
+import officelog.model.Event;
 import org.w3c.dom.NodeList;
 
 /**
@@ -134,6 +135,7 @@ public class AddPersonController implements Initializable {
             ((Stage)(btnCancel.getScene().getWindow())).close();
         }
         if (event.getSource() == btnSubmit) {
+            int newPersonID;
             if ("".equals(tfName.getText())) {
                 Alert alert = new Alert(AlertType.WARNING);
                 alert.setTitle("Officelog");
@@ -154,19 +156,28 @@ public class AddPersonController implements Initializable {
                         per[i++] = room;                        
                     }
                     if (NewImg == null) {
-                        model.getPeople().getPerson(model.getPeople().addEmployee(tfName.getText(), tfJob.getText(), per)).setLocation(model.getRoom("Outside"));
+                        newPersonID = model.getPeople().addEmployee(tfName.getText(), tfJob.getText(), per);
+                        model.getPeople().getPerson(newPersonID).setLocation(model.getRoom("Outside"));
+                        model.getEventList().addEvent(new Event("New Person", model.getPeople().getPerson(newPersonID)));
                         ((Stage)(btnSubmit.getScene().getWindow())).close();
                     }else{
-                        model.getPeople().getPerson(model.getPeople().addEmployee(tfName.getText(), NewImg, tfJob.getText(), per)).setLocation(model.getRoom("Outside"));
+                        newPersonID = model.getPeople().addEmployee(tfName.getText(), NewImg, tfJob.getText(), per);
+                        model.getPeople().getPerson(newPersonID).setLocation(model.getRoom("Outside"));
+                        model.getEventList().addEvent(new Event("New Person", model.getPeople().getPerson(newPersonID)));
                         ((Stage)(btnSubmit.getScene().getWindow())).close();
                     }
                 }
             }else{// if Person (not employee)
+                
                 if(NewImg == null){
-                    model.getPeople().getPerson(model.getPeople().addPerson(tfName.getText())).setLocation(model.getRoom("Outside"));
+                    newPersonID = model.getPeople().addPerson(tfName.getText());
+                    model.getPeople().getPerson(newPersonID).setLocation(model.getRoom("Outside"));
+                    model.getEventList().addEvent(new Event("New Person", model.getPeople().getPerson(newPersonID)));
                     ((Stage)(btnSubmit.getScene().getWindow())).close();
                 }else{
-                    model.getPeople().getPerson(model.getPeople().addPerson(tfName.getText(),NewImg)).setLocation(model.getRoom("Outside"));
+                    newPersonID = model.getPeople().addPerson(tfName.getText(),NewImg);
+                    model.getPeople().getPerson(newPersonID).setLocation(model.getRoom("Outside"));
+                    model.getEventList().addEvent(new Event("New Person", model.getPeople().getPerson(newPersonID)));
                     ((Stage)(btnSubmit.getScene().getWindow())).close();
                 }
             }

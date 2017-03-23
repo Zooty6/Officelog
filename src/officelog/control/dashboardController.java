@@ -38,6 +38,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javax.imageio.ImageIO;
+import officelog.DBConnection;
 import org.w3c.dom.NodeList;
 
 /**
@@ -45,7 +46,7 @@ import org.w3c.dom.NodeList;
  *
  * @author Szandi, Zooty
  */
-public class dashboardController implements Initializable {
+public class dashboardController implements Initializable, DBConnection {
 
     private final Model model = new Model();
     private static Person selectedPerson;
@@ -326,6 +327,7 @@ public class dashboardController implements Initializable {
         if (event.getSource() == miAddPerson) {
             try {
                 FXMLLoader LoadAddPerson = new FXMLLoader(getClass().getResource("/officelog/view/AddPerson.fxml"));
+                System.out.println(LoadAddPerson.getResources());
                 Parent AddPersonWindow = (Parent) LoadAddPerson.load();
                 Stage stageAP = new Stage();
                 stageAP.initModality(Modality.WINDOW_MODAL);
@@ -613,6 +615,11 @@ public class dashboardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        try {
+            Class.forName(DRIVER);
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
         //<editor-fold defaultstate="collapsed" desc="linking buttons and Rooms">
         R1.setRoom(model.getRoom("R1"));
         model.getRoom("R1").setBtnRoom(R1);
@@ -757,6 +764,7 @@ public class dashboardController implements Initializable {
         allRooms[19] = R20;
 
         //</editor-fold>
+        //RoomsReload.load(model.getOffice());
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
         Language.load("lang\\En.xml");
