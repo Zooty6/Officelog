@@ -23,6 +23,9 @@
                   <MenuItem mnemonicParsing="false" onAction="#handleButtonAction" fx:id="miLogOpen" text="Open" />
             </items>
             <items>
+                  <MenuItem mnemonicParsing="false" onAction="#handleButtonAction" fx:id="miROpen" text="Open Report Window" />
+            </items>
+            <items>
                   <MenuItem mnemonicParsing="false" onAction="#handleButtonAction" fx:id="miLogDel" text="Delete" />
             </items>
             <items>

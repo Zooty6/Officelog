@@ -51,7 +51,6 @@ public class dashboardController implements Initializable, DBConnection {
 
     private final Model model = new Model();
     private static Person selectedPerson;
-    private String SaveString;
     private String labelString;
     private String avgmoveString;
     private String errorString;
@@ -268,6 +267,8 @@ public class dashboardController implements Initializable, DBConnection {
     @FXML
     MenuItem miLogOpen;
     @FXML
+    MenuItem miROpen;
+    @FXML
     MenuItem miLogDel;
     @FXML
     MenuItem miSetSave;
@@ -315,7 +316,6 @@ public class dashboardController implements Initializable, DBConnection {
             if (((ButtonPerson) (event.getSource())).isPlus()) {
                 selectedPerson = ((ButtonPerson) (event.getSource())).getPerson();
                 PersonSelecter(event);
-                //Thread.currentThread().suspend();
                 lbSelected.setText(labelString + ": " + selectedPerson.getName());
                 EnableNeighburs();
             } else {
@@ -478,8 +478,22 @@ public class dashboardController implements Initializable, DBConnection {
                 stageOL.show();
             } catch (IOException ex) {
                 ex.printStackTrace();
+            }                
+        }
+        
+        if (event.getSource() == miROpen){
+            try {
+                Parent OpenLogRwindow = FXMLLoader.load(getClass().getResource("/officelog/view/LogReports.fxml"));
+                Stage stageORL = new Stage();
+                stageORL.setScene(new Scene(OpenLogRwindow));
+                stageORL.setTitle("Officelog");
+                stageORL.setMinWidth(500);
+                stageORL.setMinHeight(400);
+                stageORL.getIcons().add(new Image("http://i.imgur.com/SDmKEqG.jpg"));
+                stageORL.show();
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
-                
         }
 
         if (event.getSource() == miLogDel) {
@@ -918,10 +932,7 @@ public class dashboardController implements Initializable, DBConnection {
             }
             for (int i = 0; i < sList.getLength(); i++) {
                 if (miList.item(i).hasAttributes()) {
-                    switch (sList.item(i).getAttributes().getNamedItem("name").getNodeValue()) {
-                        case "save":
-                            SaveString = sList.item(i).getTextContent();
-                            break;
+                    switch (sList.item(i).getAttributes().getNamedItem("name").getNodeValue()) {                        
                         case "avgmoveString":
                             avgmoveString = sList.item(i).getTextContent();
                             break;

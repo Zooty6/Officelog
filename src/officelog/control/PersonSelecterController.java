@@ -25,11 +25,8 @@ public class PersonSelecterController implements Initializable {
     private static String idString = "id: ";
     private static String nameString = "name: ";            
     private static ArrayList<Person> SelectedList = new ArrayList<>();
-    @FXML
     private Button btOk;
-    @FXML
     private Button btCancel;
-    @FXML
     private ListView<String> lvPlus;
     
     /**
@@ -37,7 +34,6 @@ public class PersonSelecterController implements Initializable {
      * 
      * @param event 
      */
-    @FXML
     private void handleButtonAction(ActionEvent event) {
         if(event.getSource().equals(btOk)){
             for (Person person : SelectedList)

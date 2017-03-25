@@ -117,35 +117,35 @@ public class EventList implements Serializable {
      * Saves the list of the events in a file to the place of an old file from 2 periods before.
      */
     public void Save() {        //TODO: CREATE FOLDER FOR EVERY DAY
-        DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
-        Date d = new Date();
-        File zombie; //https://www.youtube.com/watch?v=4e4bAsQ4r30
-        zombie = new File("EventLog\\" + dateFormat.format(d) + "(" + (Cicle+2)%4 + ").dat");
-        if (zombie.exists() && !zombie.isDirectory())
-            zombie.delete();
-        File f = new File("EventLog\\" + dateFormat.format(d) + "(" + Cicle + ").dat");
-        System.out.println(wgat[Cicle++]);
-        Cicle = Cicle == 4 ? 0 : Cicle;
-        ObjectOutputStream oos = null;
-        try {
-            oos = new ObjectOutputStream(new FileOutputStream(f));            
-                oos.writeObject(Elist);            
-        } catch (NotSerializableException e) {
-            System.out.println("Something is not serializable");
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        } finally {
-            if (oos != null) {
-                try {
-                    oos.close();
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-        }
-        //Clear();
+//        DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+//        Date d = new Date();
+//        File zombie; //https://www.youtube.com/watch?v=4e4bAsQ4r30
+//        zombie = new File("EventLog\\" + dateFormat.format(d) + "(" + (Cicle+2)%4 + ").dat");
+//        if (zombie.exists() && !zombie.isDirectory())
+//            zombie.delete();
+//        File f = new File("EventLog\\" + dateFormat.format(d) + "(" + Cicle + ").dat");
+//        System.out.println(wgat[Cicle++]);
+//        Cicle = Cicle == 4 ? 0 : Cicle;
+//        ObjectOutputStream oos = null;
+//        try {
+//            oos = new ObjectOutputStream(new FileOutputStream(f));            
+//                oos.writeObject(Elist);            
+//        } catch (NotSerializableException e) {
+//            System.out.println("Something is not serializable");
+//        } catch (IOException e) {
+//            System.out.println(e.getMessage());
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        } finally {
+//            if (oos != null) {
+//                try {
+//                    oos.close();
+//                } catch (IOException e) {
+//                    System.out.println(e.getMessage());
+//                }
+//            }
+//        }
+//        //Clear();
     }
 
     /**
