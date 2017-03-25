@@ -99,7 +99,7 @@ public class ModifyPersonController implements Initializable, DBConnection {
     @FXML
     private void handleClickAction(MouseEvent arg0) {
         arg0 = null; //Please don't use arg0
-        System.out.println(lvPeople.getSelectionModel().getSelectedItem());
+        //System.out.println(lvPeople.getSelectionModel().getSelectedItem());
         lbPersonID.setText(Integer.toString(lvPeople.getSelectionModel().getSelectedItem().getID()));
         lbPersonName.setText(lvPeople.getSelectionModel().getSelectedItem().getName());
         ivPic.setImage(SwingFXUtils.toFXImage(lvPeople.getSelectionModel().getSelectedItem().getPic(), null));

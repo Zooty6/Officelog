@@ -7,6 +7,8 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -17,10 +19,19 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ListView id="lvLogs" fx:id="lvLogs" layoutY="60.0" prefHeight="297.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
-                  <ComboBox id="cbPersonFilter" fx:id="cbPersonFilter" layoutX="225.0" layoutY="14.0" prefWidth="150.0" />
+                  <ComboBox id="cbPersonFilter" fx:id="cbPersonFilter" layoutX="225.0" layoutY="14.0" onAction="#cbAction" prefWidth="150.0" />
                   <Label layoutX="14.0" layoutY="19.0" text="Filter by Person:" />
                   <ImageView id="ivPic" fx:id="ivPic" fitHeight="60.0" fitWidth="60.0" layoutX="526.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <TableView fx:id="tvFLogs" layoutX="8.0" layoutY="60.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+                    <columns>
+                      <TableColumn fx:id="tcDate" prefWidth="120.0" text="Date" />
+                      <TableColumn fx:id="tcType" prefWidth="120.0" text="Type" />
+                        <TableColumn fx:id="tcID" prefWidth="120.0" text="ID" />
+                        <TableColumn fx:id="tcName" prefWidth="120.0" text="Name" />
+                        <TableColumn fx:id="tcRoom" prefWidth="120.0" text="Room" />
+                    </columns>
+                     
+                  </TableView>
                </children></AnchorPane>
       </content>
     </Tab>
