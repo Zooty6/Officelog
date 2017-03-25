@@ -1,5 +1,9 @@
 package officelog.control;
 
+import connections.DBConnection;
+import static connections.DBConnection.PASSW;
+import static connections.DBConnection.URL;
+import static connections.DBConnection.USER;
 import officelog.view.Language;
 import officelog.model.Employee;
 import officelog.model.Room;
@@ -7,11 +11,19 @@ import officelog.model.Person;
 import officelog.model.Event;
 import officelog.model.Model;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -36,7 +48,7 @@ import org.w3c.dom.NodeList;
  *
  * @author Zooty, Szandi
  */
-public class ModifyPersonController implements Initializable {
+public class ModifyPersonController implements Initializable, DBConnection {
 
     @FXML
     private ListView<Person> lvPeople;
@@ -83,8 +95,8 @@ public class ModifyPersonController implements Initializable {
 
     /**
      * Handles actions on the GUI.
-     * 
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void handleClickAction(MouseEvent arg0) {
@@ -108,10 +120,8 @@ public class ModifyPersonController implements Initializable {
                     if (!oneRoom.getName().equals("Outside")) {
                         lvRightItems.add(oneRoom);
                     }
-                } else {
-                    if (!oneRoom.getName().equals("Outside")) {
-                        lvLeftItems.add(oneRoom);
-                    }
+                } else if (!oneRoom.getName().equals("Outside")) {
+                    lvLeftItems.add(oneRoom);
                 }
             }
         } else {
@@ -153,15 +163,15 @@ public class ModifyPersonController implements Initializable {
                         ivPic.setImage(SwingFXUtils.toFXImage(NewImg, null));
                     } else {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Error Dialog");
-                        alert.setHeaderText("Look, an Error Dialog");
+                        alert.setTitle("Officelog");
+                        alert.setHeaderText("Error Dialog");
                         alert.setContentText("Icon is not NxN!");
                         alert.showAndWait();
                     }
                 } catch (IOException ex) {
                     Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Error Dialog");
-                    alert.setHeaderText("Look, an Error Dialog");
+                    alert.setTitle("Officelog");
+                    alert.setHeaderText("Error Dialog");
                     alert.setContentText("Ooops, there was an error!");
                     alert.showAndWait();
                 }
@@ -170,26 +180,69 @@ public class ModifyPersonController implements Initializable {
         if (event.getSource() == btnCancel) {
             ((Stage) (btnCancel.getScene().getWindow())).close();
         }
+
         if (event.getSource() == btnSubmit) {
             if (tfPersonJob.getText().equals("") && !tfPersonJob.disableProperty().get()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Dialog");
-                alert.setHeaderText("Look, an Error Dialog");
+                alert.setTitle("Officelog");
+                alert.setHeaderText("Error Dialog");
                 alert.setContentText("no jub");
                 alert.showAndWait();
-            }else{
-                (lvPeople.getSelectionModel().getSelectedItem()).setPic(NewImg);
-                if ((lvPeople.getSelectionModel().getSelectedItem()) instanceof Employee){
-                    ((Employee)(lvPeople.getSelectionModel().getSelectedItem())).setJob(tfPersonJob.getText());
-                    ((Employee)(lvPeople.getSelectionModel().getSelectedItem())).getPermissions().clear();
-                    for (Room room : lvRightItems) {
-                        ((Employee)(lvPeople.getSelectionModel().getSelectedItem())).getPermissions().add(room);
+            } else {
+                try (Connection conn = DriverManager.getConnection(URL, USER, PASSW)) {
+                    conn.setAutoCommit(false);
+                    PreparedStatement pstmPpl = conn.prepareStatement(
+                            "UPDATE People SET Pic = ?, Job = ? WHERE ID = ?");
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    ImageIO.write(NewImg, "jpg", baos);
+                    baos.flush();
+                    byte[] PersonImageBytes = baos.toByteArray();
+                    baos.close();
+                    pstmPpl.setBytes(1, PersonImageBytes);
+                    pstmPpl.setString(2, tfPersonJob.getText());
+                    pstmPpl.setInt(3, lvPeople.getSelectionModel().getSelectedItem().getID());
+                    pstmPpl.executeUpdate();
+                    if ((lvPeople.getSelectionModel().getSelectedItem()) instanceof Employee) {
+                        Statement stmD = conn.createStatement();
+                        Statement stmI = conn.createStatement();
+                        stmD.executeUpdate("DELETE FROM Permissions WHERE PersonID = " + lvPeople.getSelectionModel().getSelectedItem().getID());
+                        for (Room room : lvRightItems) {
+                            stmI.executeUpdate("INSERT INTO Permissions VALUES("
+                                    + lvPeople.getSelectionModel().getSelectedItem().getID() + ", '"
+                                    + room.getName() + "')");
+                        }
                     }
+
+                    conn.commit();
+                    (lvPeople.getSelectionModel().getSelectedItem()).setPic(NewImg);
+                    if ((lvPeople.getSelectionModel().getSelectedItem()) instanceof Employee) {
+                        ((Employee) (lvPeople.getSelectionModel().getSelectedItem())).setJob(tfPersonJob.getText());
+                        ((Employee) (lvPeople.getSelectionModel().getSelectedItem())).getPermissions().clear();
+                        for (Room room : lvRightItems) {
+                            ((Employee) (lvPeople.getSelectionModel().getSelectedItem())).getPermissions().add(room);
+                        }
+                    }
+                    lvPeople.getSelectionModel().getSelectedItem().getLocation().getBtnRoom().redraw();
+                    model.getEventList().addEvent(new Event("Person modified", lvPeople.getSelectionModel().getSelectedItem()));
+                    ((Stage) (btnSubmit.getScene().getWindow())).close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Officelog");
+                    alert.setHeaderText("SQL Error");
+                    alert.setContentText("There was an error connecting to the database");
+                    alert.showAndWait();
+                    System.exit(1);
+                } catch (IOException ex) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Officelog");
+                    alert.setHeaderText("IO Error");
+                    alert.setContentText("There was an error while opening the image file.");
+                    alert.showAndWait();
+                    System.exit(3);
                 }
-                lvPeople.getSelectionModel().getSelectedItem().getLocation().getBtnRoom().redraw();
-                model.getEventList().addEvent(new Event("Person modified", lvPeople.getSelectionModel().getSelectedItem()));
-                ((Stage) (btnSubmit.getScene().getWindow())).close();
-            }                
+
+            }
         }
     }
 
@@ -212,10 +265,10 @@ public class ModifyPersonController implements Initializable {
                             ErrorString = nList.item(i).getTextContent();
                             break;
                         case "idString":
-                            lbID.setText(nList.item(i).getTextContent()+':');
+                            lbID.setText(nList.item(i).getTextContent() + ':');
                             break;
                         case "nameString":
-                            lbName.setText(nList.item(i).getTextContent()+':');
+                            lbName.setText(nList.item(i).getTextContent() + ':');
                             break;
                         case "leftString":
                             lbLeft.setText(nList.item(i).getTextContent());
@@ -230,7 +283,7 @@ public class ModifyPersonController implements Initializable {
                             btnSubmit.setText(nList.item(i).getTextContent());
                             break;
                         case "jobString":
-                            lbJob.setText(nList.item(i).getTextContent()+':');
+                            lbJob.setText(nList.item(i).getTextContent() + ':');
                             break;
                         case "selimgString":
                             btnChangePic.setText(nList.item(i).getTextContent());
@@ -238,8 +291,8 @@ public class ModifyPersonController implements Initializable {
                     }
                 }
             }
-        }catch(Exception e){
-            Alert lalert = new Alert(Alert.AlertType.ERROR);        
+        } catch (Exception e) {
+            Alert lalert = new Alert(Alert.AlertType.ERROR);
             lalert.setTitle("Officelog");
             lalert.setHeaderText("Fatal Error");
             lalert.setContentText("Could not load Language file");
@@ -265,7 +318,7 @@ public class ModifyPersonController implements Initializable {
             lvRight.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
             lvLeft.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         }
-        
+
     }
 
     public static void setModel(Model model) {

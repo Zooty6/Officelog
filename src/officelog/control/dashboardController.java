@@ -38,7 +38,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javax.imageio.ImageIO;
-import officelog.DBConnection;
+import connections.DBConnection;
+import javafx.scene.image.Image;
 import org.w3c.dom.NodeList;
 
 /**
@@ -335,7 +336,8 @@ public class dashboardController implements Initializable, DBConnection {
                 stageAP.setScene(new Scene(AddPersonWindow));
                 stageAP.setTitle("Officelog");
                 stageAP.setResizable(false);
-                stageAP.show();
+                stageAP.getIcons().add(new Image("http://i.imgur.com/SDmKEqG.jpg"));
+                stageAP.showAndWait();
             } catch (IOException ex) {
                 System.out.println("Could not load AddPerson.fxml");
             }
@@ -366,6 +368,7 @@ public class dashboardController implements Initializable, DBConnection {
                 stageDP.setResizable(false);
                 stageDP.setTitle("officelog");
                 stageDP.setScene(new Scene(DelPersonWindow));
+                stageDP.getIcons().add(new Image("http://i.imgur.com/SDmKEqG.jpg"));
                 stageDP.show();
                 for (ButtonRoom allRoom : allRooms) {
                     allRoom.setDisable(true);
@@ -471,6 +474,7 @@ public class dashboardController implements Initializable, DBConnection {
                 Stage stageOL = new Stage();
                 stageOL.setScene(new Scene(OpenLogwindow));
                 stageOL.setTitle("Officelog");
+                stageOL.getIcons().add(new Image("http://i.imgur.com/SDmKEqG.jpg"));
                 stageOL.show();
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -610,7 +614,6 @@ public class dashboardController implements Initializable, DBConnection {
 
     public static void setSelectedPerson(Person selPerson) {
         selectedPerson = selPerson;
-
     }
 
     @Override
@@ -618,7 +621,12 @@ public class dashboardController implements Initializable, DBConnection {
         try {
             Class.forName(DRIVER);
         } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Officelog");
+            alert.setHeaderText("Driver Error");
+            alert.setContentText("There was a problem with loading the following driver: "+DRIVER);
+            alert.showAndWait();
+            System.exit(2);
         }
         //<editor-fold defaultstate="collapsed" desc="linking buttons and Rooms">
         R1.setRoom(model.getRoom("R1"));
@@ -773,7 +781,8 @@ public class dashboardController implements Initializable, DBConnection {
         ModifyPersonController.setModel(model);
         PersonDeleterController.setModel(model);
         LogViewerController.setElist(model.getEventList().getElist());
-        LoadLanguage();
+        LoadLanguage();    
+        FixNewModel();
 //        //TEST
 //        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek")).setLocation(model.getRoom("Outside")); //*.*
 //        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek1")).setLocation(model.getRoom("R6"));
@@ -795,16 +804,19 @@ public class dashboardController implements Initializable, DBConnection {
     }
 
     private void PersonSelecter(ActionEvent event) {
-        try {
-            FXMLLoader load = new FXMLLoader(getClass().getResource("/officelog/view//PersonSelecter.fxml"));
+        try {            
+            FXMLLoader load = new FXMLLoader(getClass().getResource("/officelog/view/PersonSelecter.fxml"));
             PersonSelecterController.setSelectedList(((ButtonPerson) (event.getSource())).getPerson().getLocation().getBtnRoom().getPplList());
-            Parent Window = (Parent) load.load();
+            System.out.println(((ButtonPerson) (event.getSource())).getPerson().getLocation());
+            Parent Window = (Parent) load.load();            
             Stage stage = new Stage();
             stage.setResizable(false);
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(((Node) (event.getSource())).getScene().getWindow());
             stage.setScene(new Scene(Window));
-            stage.show();
+            stage.setTitle("Officelog");
+            stage.getIcons().add(new Image("http://i.imgur.com/SDmKEqG.jpg"));
+            stage.showAndWait();
         } catch (IOException ex) {
             System.out.println("Can't load PersonSelecter.fxml");
         }

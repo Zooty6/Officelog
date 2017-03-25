@@ -1,8 +1,7 @@
 package officelog.model;
 
-import officelog.model.Room;
-import officelog.model.Person;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -60,6 +59,40 @@ public class Employee extends Person {
     public Employee(String Name, BufferedImage Pic, int ID, String Job, Room[] per) {
         super(Name, Pic, ID);
         this.Job = Job;
+        for (Room room : per) {
+            Permissions.add(room);
+        }
+    }
+    
+    /**
+     * Creates and Employee.
+     * 
+     * @param Name name of the person.
+     * @param ID unique ID of the person.
+     * @param Loc The current location of the Employee.
+     * @param Job Job of the person.
+     * @param per list of permissions this employee can enter.
+     */
+    public Employee(String Name, int ID, Room Loc, String Job, Room[] per) {
+        super(Name, Loc, ID);
+        this.Job = Job;        
+        for (Room room : per) {
+            Permissions.add(room);
+        }
+    }
+    
+    /**
+     * Creates and Employee.
+     * 
+     * @param Name name of the person.
+     * @param ID unique ID of the person.
+     * @param Loc The current location of the Employee.
+     * @param Job Job of the person.
+     * @param per list of permissions this employee can enter.
+     */
+    public Employee(String Name, int ID, BufferedImage Pic, Room Loc, String Job, ArrayList<Room> per) {
+        super(Name, Loc, Pic, ID);
+        this.Job = Job;        
         for (Room room : per) {
             Permissions.add(room);
         }

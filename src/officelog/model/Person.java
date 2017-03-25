@@ -4,14 +4,23 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.imageio.ImageIO;
+import connections.DBConnection;
+import static connections.DBConnection.PASSW;
+import static connections.DBConnection.USER;
+import javafx.scene.control.Alert;
+import static connections.DBConnection.URL;
 
 /**
  * This class represents a person in the model.
  *
  * @author Zooty
  */
-public class Person implements Serializable {
+public class Person implements Serializable, DBConnection {
 
     /**
      * Language specific string for "Name"
@@ -55,8 +64,38 @@ public class Person implements Serializable {
         } catch (IOException e) {
             System.out.println("failed to load "+Name+"'s icon");
          */
-
     }
+
+    /**
+     * Creates a Person.
+     *
+     * @param Name The name of the Person
+     * @param Location The location of this person
+     * @param pic The picture assigned to this Person. Must be NxN
+     * @param ID The unique Id of the person. Serves as a primary key.
+     *
+     * @throws IllegalArgumentException if picture is not NxN.
+     */
+    public Person(String Name, Room Location, BufferedImage pic, int ID) {
+        this.Name = Name;
+        this.Location = Location;
+        this.ID = ID;
+        if (pic == null) {
+            this.Pic="icons\\Default.png";            
+        } else {            
+            if (pic.getWidth() != pic.getHeight()) {
+                throw new IllegalArgumentException("Icon is not NxN");
+            }
+            File savefile = new File("icons\\" + this.ID + ".png");
+            try {
+                ImageIO.write(pic, "png", savefile);
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
+            Pic = savefile.getPath();
+        }        
+    }
+    
 
     /**
      * Creates a Person.
@@ -82,6 +121,20 @@ public class Person implements Serializable {
         Pic = savefile.getPath();
         System.out.println(Pic);
         this.Location = null;
+    }
+
+    /**
+     * Creates a Person.
+     *
+     * @param Name The name of the Person
+     * @param Location The location of this person
+     * @param ID The unique Id of the person. Serves as a primary key
+     */
+    public Person(String Name, Room Location, int ID) {
+        this.Name = Name;
+        this.Location = Location;
+        this.ID = ID;
+        this.Pic = "icons\\Default.png";
     }
 
     /**
@@ -119,8 +172,20 @@ public class Person implements Serializable {
      * @param newLoc The new location this person will be at.
      */
     public void setLocation(Room newLoc) {
-        this.Location = newLoc;
-        newLoc.getBtnRoom().addPerson(this);
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSW)) {
+            Statement stm = conn.createStatement();
+            this.Location = newLoc;
+            newLoc.getBtnRoom().addPerson(this);
+            stm.executeUpdate("UPDATE People\n" + "SET Loc = '" + newLoc.getName() + "'\n" + "WHERE ID =" + this.ID);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Officelog");
+            alert.setHeaderText("SQL Error");
+            alert.setContentText("There was an error connecting to the database");
+            alert.showAndWait();
+            System.exit(1);
+        }
     }
 
     /**
@@ -129,11 +194,11 @@ public class Person implements Serializable {
      * @return the picture of the person.
      */
     public BufferedImage getPic() {
-        BufferedImage r;    
+        BufferedImage r;
         try {
             r = ImageIO.read(new File(Pic));
         } catch (IOException e) {
-            System.out.println("failed to load "+Name+"'s icon");
+            System.out.println("failed to load " + Name + "'s icon");
             r = null;
         }
         return r;

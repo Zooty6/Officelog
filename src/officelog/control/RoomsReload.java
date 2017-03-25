@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import officelog.DBConnection;
+import connections.DBConnection;
 import officelog.model.Room;
 
 /**
@@ -17,7 +17,7 @@ import officelog.model.Room;
 public class RoomsReload implements DBConnection {
 
     public static void load(ArrayList<Room> Office) {
-        try (Connection conn = DriverManager.getConnection(URLLOCAL, USER, PASSW)) {
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSW)) {
             Statement stm = conn.createStatement();
             for (Room room : Office) {                
                 if (room.isOpen()) {

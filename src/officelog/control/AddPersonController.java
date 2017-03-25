@@ -8,8 +8,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -25,7 +23,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
@@ -120,7 +117,7 @@ public class AddPersonController implements Initializable {
                         Alert alert = new Alert(AlertType.WARNING);
                         alert.setTitle("Officelog");
                         alert.setHeaderText(ErrorTitle);
-                        alert.setContentText(ErrorPic);
+                        alert.setContentText(ErrorPic);                        
                         alert.showAndWait();
                     }                    
             } catch (IOException ex) {

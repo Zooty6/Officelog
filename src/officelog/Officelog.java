@@ -5,6 +5,7 @@ import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -21,6 +22,7 @@ public class Officelog extends Application {
         primaryStage.setMinWidth(700);
         primaryStage.setMaxWidth(900);
         primaryStage.setMinHeight(700);
+        primaryStage.getIcons().add(new Image("http://i.imgur.com/SDmKEqG.jpg"));
         primaryStage.show();         
     }
 
