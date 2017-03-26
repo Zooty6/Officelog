@@ -9,8 +9,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -43,8 +41,8 @@ public class LogReportsController implements Initializable, DBConnection {
     private Tab tFilteredLogs;
     @FXML
     private TableView<LogViewerController.LVEvent> tvFLogs;
-    private final ObservableList<LogViewerController.LVEvent> data =
-            FXCollections.observableArrayList();
+    private final ObservableList<LogViewerController.LVEvent> data
+            = FXCollections.observableArrayList();
     @FXML
     private TableColumn<LogViewerController.LVEvent, String> tcDate;
     @FXML
@@ -56,13 +54,21 @@ public class LogReportsController implements Initializable, DBConnection {
     @FXML
     private TableColumn<LogViewerController.LVEvent, String> tcRoom;
     @FXML
+    private TableView<DA> tvDA;
+    @FXML
+    private TableColumn<DA, String> tcDAID;
+    @FXML
+    private TableColumn<DA, String> tcDAName;
+    @FXML
+    private TableColumn<DA, String> tcDACount;
+    @FXML
     private ComboBox<String> cbPersonFilter;
     @FXML
     private ImageView ivPic;
     @FXML
     private ListView<?> lvDAList;
     @FXML
-    private ComboBox<?> cbRelation;
+    private ComboBox<String> cbRelation;
     @FXML
     private Button btRefreshDA;
     @FXML
@@ -95,23 +101,95 @@ public class LogReportsController implements Initializable, DBConnection {
             alert.setContentText("There was an error connecting to the database");
             alert.showAndWait();
         }
-        refresh();
+        refreshLogs();
+
+        cbRelation.getItems().add("TOP");
+        cbRelation.getItems().add("LEAST");
+        cbRelation.getSelectionModel().select(0);
+        refreshDA();
     }
 
+    private void refreshDA() {
+        int top;
+        String Rel = cbRelation.getValue().equals("TOP")?"DESC":"ASC";
+        String Perc = rbPercent.isSelected()?" PERCENT":"";
+        tvDA.getItems().clear();
+        try {
+            top = Integer.parseInt(tfAmount.getText());
+        }catch(NumberFormatException e){
+            top = 100;
+            tfAmount.setText("100");
+        }
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSW)) {            
+            ResultSet rs = conn.createStatement().executeQuery(
+                    "SELECT TOP " + top + Perc + " ID, Name, count(*) Attempts\n"
+                    + "FROM Logs l, People p\n"
+                    + "WHERE l.PersonID = p.ID AND l.Type = 'Access Denied'\n"
+                    + "Group by ID, Name\n"
+                    + "ORDER BY Attempts " + Rel);
+            tcDAID.setCellValueFactory(new PropertyValueFactory<>("ID"));
+            tcDAName.setCellValueFactory(new PropertyValueFactory<>("name"));
+            tcDACount.setCellValueFactory(new PropertyValueFactory<>("Count"));
+            while (rs.next()) {
+                tvDA.getItems().add(new DA(rs.getString(1),rs.getString(2),rs.getString(3)));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Officelog");
+            alert.setHeaderText("SQL Error");
+            alert.setContentText("There was an error connecting to the database");
+            alert.showAndWait();
+        }
+    }
     
-        
+    public class DA {
+        String ID;
+        String name;
+        String Count;
+
+        public DA(String ID, String name, String Count) {
+            this.ID = ID;
+            this.name = name;
+            this.Count = Count;
+        }
+
+        public String getID() {
+            return ID;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getCount() {
+            return Count;
+        }
+
+        public void setID(String ID) {
+            this.ID = ID;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public void setCount(String Count) {
+            this.Count = Count;
+        }       
     
-    
-    private void refresh() {
-        String where = cbPersonFilter.getSelectionModel().getSelectedItem().equals("") ? 
-                "" : "AND Name = '" + cbPersonFilter.getSelectionModel().getSelectedItem() + "'";
+    }
+
+    private void refreshLogs() {
+        String where = cbPersonFilter.getSelectionModel().getSelectedItem().equals("")
+                ? "" : "AND Name = '" + cbPersonFilter.getSelectionModel().getSelectedItem() + "'";
         data.clear();
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSW)) {
             ResultSet rs = conn.createStatement().executeQuery(
                     "SELECT Date, Type, ID, Name, l.Loc \n"
                     + "FROM Logs l, People p\n"
                     + "Where l.PersonID = p.ID \n"
-                    + where);            
+                    + where);
             tcDate.setCellValueFactory(new PropertyValueFactory<>("date"));
             tcType.setCellValueFactory(new PropertyValueFactory<>("type"));
             tcID.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -133,12 +211,14 @@ public class LogReportsController implements Initializable, DBConnection {
             alert.showAndWait();
         }
     }
-    
+
+    @FXML
+    private void cbAction(ActionEvent event) {        
+        refreshLogs();
+    }
     
     @FXML
-    private void cbAction (ActionEvent event) {
-        //System.out.println(cbPersonFilter.getSelectionModel().getSelectedItem());
-        refresh();
+    private void btAction(ActionEvent event) {        
+        refreshDA();
     }
-
 }

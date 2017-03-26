@@ -39,6 +39,13 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javax.imageio.ImageIO;
 import connections.DBConnection;
+import static connections.DBConnection.PASSW;
+import static connections.DBConnection.URL;
+import static connections.DBConnection.USER;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javafx.scene.image.Image;
 import org.w3c.dom.NodeList;
 
@@ -305,6 +312,19 @@ public class dashboardController implements Initializable, DBConnection {
             } else {
                 model.getEventList().addEvent(
                         new Event("Acces denied", selectedPerson, ((ButtonRoom) (event.getSource())).getRoom()));
+                try (Connection conn = DriverManager.getConnection(URL, USER, PASSW)) {
+                    conn.createStatement().executeUpdate(
+                            "INSERT INTO Logs VALUES('Access Denied', CURRENT_TIMESTAMP," + 
+                                    selectedPerson.getID() + ", '" + 
+                                    ((ButtonRoom) (event.getSource())).getRoom().getName() + "')");
+                } catch (SQLException ex) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Officelog");
+                    alert.setHeaderText("SQL Error");
+                    alert.setContentText("There was an error connecting to the database");
+                    alert.showAndWait();
+                    ex.printStackTrace();
+                }
                 //System.out.println("GTFO");
             }
             //lbSelected.setText("TODO: " + selectedPerson.getName());
@@ -351,6 +371,8 @@ public class dashboardController implements Initializable, DBConnection {
                 stageMP.initModality(Modality.WINDOW_MODAL);
                 stageMP.initOwner(((Node) R1).getScene().getWindow());
                 stageMP.setMinHeight(666);
+                stageMP.setTitle("Officelog");
+                stageMP.getIcons().add(new Image("http://i.imgur.com/SDmKEqG.jpg"));
                 stageMP.setScene(new Scene(ModPersonWindow));
                 stageMP.showAndWait();
             } catch (Exception ex) {
@@ -478,10 +500,10 @@ public class dashboardController implements Initializable, DBConnection {
                 stageOL.show();
             } catch (IOException ex) {
                 ex.printStackTrace();
-            }                
+            }
         }
-        
-        if (event.getSource() == miROpen){
+
+        if (event.getSource() == miROpen) {
             try {
                 Parent OpenLogRwindow = FXMLLoader.load(getClass().getResource("/officelog/view/LogReports.fxml"));
                 Stage stageORL = new Stage();
@@ -572,12 +594,13 @@ public class dashboardController implements Initializable, DBConnection {
                     }
                 }
                 try {
-                    if(baddudemistakes>1)
+                    if (baddudemistakes > 1) {
                         msg = suspPers + ": \n" + model.getPeople().getPerson(baddude)
-                            + " (" + baddudemistakes +" "+ failsString + ")";
-                    else
+                                + " (" + baddudemistakes + " " + failsString + ")";
+                    } else {
                         msg = suspPers + ": \n" + model.getPeople().getPerson(baddude)
-                            + " (" + baddudemistakes +" "+ failString + ")";
+                                + " (" + baddudemistakes + " " + failString + ")";
+                    }
                 } catch (NullPointerException e) {
                     msg = suspmissing;
                 }
@@ -638,7 +661,7 @@ public class dashboardController implements Initializable, DBConnection {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Officelog");
             alert.setHeaderText("Driver Error");
-            alert.setContentText("There was a problem with loading the following driver: "+DRIVER);
+            alert.setContentText("There was a problem with loading the following driver: " + DRIVER);
             alert.showAndWait();
             System.exit(2);
         }
@@ -795,7 +818,7 @@ public class dashboardController implements Initializable, DBConnection {
         ModifyPersonController.setModel(model);
         PersonDeleterController.setModel(model);
         LogViewerController.setElist(model.getEventList().getElist());
-        LoadLanguage();    
+        LoadLanguage();
         FixNewModel();
 //        //TEST
 //        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek")).setLocation(model.getRoom("Outside")); //*.*
@@ -818,11 +841,11 @@ public class dashboardController implements Initializable, DBConnection {
     }
 
     private void PersonSelecter(ActionEvent event) {
-        try {            
+        try {
             FXMLLoader load = new FXMLLoader(getClass().getResource("/officelog/view/PersonSelecter.fxml"));
             PersonSelecterController.setSelectedList(((ButtonPerson) (event.getSource())).getPerson().getLocation().getBtnRoom().getPplList());
             System.out.println(((ButtonPerson) (event.getSource())).getPerson().getLocation());
-            Parent Window = (Parent) load.load();            
+            Parent Window = (Parent) load.load();
             Stage stage = new Stage();
             stage.setResizable(false);
             stage.initModality(Modality.WINDOW_MODAL);
@@ -862,7 +885,7 @@ public class dashboardController implements Initializable, DBConnection {
             nList = Language.getLang().getElementsByTagName("dashboard").item(0).getChildNodes();
             for (int i = 0; i < nList.getLength(); i++) {
                 if (nList.item(i).getNodeName().equals("label")) {
-                    lbSelected.setText(nList.item(i).getTextContent()+':');
+                    lbSelected.setText(nList.item(i).getTextContent() + ':');
                     labelString = nList.item(i).getTextContent();
                 }
                 if (nList.item(i).getNodeName().equals("MenuItems")) {
@@ -926,13 +949,13 @@ public class dashboardController implements Initializable, DBConnection {
                             break;
                         case "madeby":
                             madeby = miList.item(i).getTextContent();
-                            break;    
+                            break;
                     }
                 }
             }
             for (int i = 0; i < sList.getLength(); i++) {
                 if (miList.item(i).hasAttributes()) {
-                    switch (sList.item(i).getAttributes().getNamedItem("name").getNodeValue()) {                        
+                    switch (sList.item(i).getAttributes().getNamedItem("name").getNodeValue()) {
                         case "avgmoveString":
                             avgmoveString = sList.item(i).getTextContent();
                             break;
@@ -977,24 +1000,24 @@ public class dashboardController implements Initializable, DBConnection {
                             break;
                         case "saveinterrorString":
                             saveinterrorString = sList.item(i).getTextContent();
-                            break;                        
+                            break;
                     }
                 }
             }
             System.out.println();
         } catch (Exception e) {
-            if (Language.getSrc().equals("lang\\En.xml")) {                
+            if (Language.getSrc().equals("lang\\En.xml")) {
                 Alert lalert = new Alert(Alert.AlertType.ERROR);
                 lalert.setTitle("Officelog");
                 lalert.setHeaderText("Fatal Error");
                 lalert.setContentText("Could not load Language file");
                 lalert.showAndWait();
                 throw e;
-            }else{
+            } else {
                 e.printStackTrace();
                 Language.load("lang\\En.xml");
                 LoadLanguage();
-            }            
+            }
         }
     }
 

@@ -39,9 +39,15 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ListView id="lvDAList" fx:id="lvDAList" layoutX="33.0" layoutY="81.0" prefHeight="331.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
+                  <TableView fx:id="tvDA" layoutX="8.0" layoutY="60.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+                    <columns>
+                        <TableColumn fx:id="tcDAID" prefWidth="220.0" text="ID" />
+                        <TableColumn fx:id="tcDAName" prefWidth="220.0" text="Name" />
+                        <TableColumn fx:id="tcDACount" prefWidth="160.0" text="Attempts" />
+                    </columns>                     
+                  </TableView> 
                   <ComboBox id="cbRelation" fx:id="cbRelation" layoutX="14.0" layoutY="14.0" prefHeight="31.0" prefWidth="82.0" />
-                  <Button id="btRefreshDA" fx:id="btRefreshDA" layoutX="521.0" layoutY="14.0" mnemonicParsing="false" text="Refresh" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0" />
+                  <Button id="btRefreshDA" fx:id="btRefreshDA" layoutX="521.0" layoutY="14.0" mnemonicParsing="false" onAction="#btAction" text="Refresh" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0" />
                   <TextField fx:id="tfAmount" layoutX="138.0" layoutY="14.0" prefHeight="31.0" prefWidth="62.0" />
                   <RadioButton id="rbPercent" fx:id="rbPercent" layoutX="218.0" layoutY="19.0" mnemonicParsing="false" text="\%" />
                </children></AnchorPane>
