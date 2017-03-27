@@ -37,14 +37,12 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javax.imageio.ImageIO;
 import connections.DBConnection;
 import static connections.DBConnection.PASSW;
 import static connections.DBConnection.URL;
 import static connections.DBConnection.USER;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javafx.scene.image.Image;
 import org.w3c.dom.NodeList;
@@ -318,12 +316,12 @@ public class dashboardController implements Initializable, DBConnection {
                                     selectedPerson.getID() + ", '" + 
                                     ((ButtonRoom) (event.getSource())).getRoom().getName() + "')");
                 } catch (SQLException ex) {
+                    ex.printStackTrace();
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Officelog");
                     alert.setHeaderText("SQL Error");
                     alert.setContentText("There was an error connecting to the database");
-                    alert.showAndWait();
-                    ex.printStackTrace();
+                    alert.showAndWait();                    
                 }
                 //System.out.println("GTFO");
             }
@@ -348,7 +346,7 @@ public class dashboardController implements Initializable, DBConnection {
         if (event.getSource() == miAddPerson) {
             try {
                 FXMLLoader LoadAddPerson = new FXMLLoader(getClass().getResource("/officelog/view/AddPerson.fxml"));
-                System.out.println(LoadAddPerson.getResources());
+                //System.out.println(LoadAddPerson.getResources());
                 Parent AddPersonWindow = (Parent) LoadAddPerson.load();
                 Stage stageAP = new Stage();
                 stageAP.initModality(Modality.WINDOW_MODAL);
