@@ -92,7 +92,6 @@ public class People implements Serializable, DBConnection {
                 }
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Officelog");
             alert.setHeaderText("SQL Error");
@@ -192,7 +191,6 @@ public class People implements Serializable, DBConnection {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(newPerson.getPic(), "jpg", baos);
             baos.flush();
-            //byte[] PersonImageBytes = ((DataBufferByte) newPerson.getPic().getData().getDataBuffer()).getData();
             byte[] PersonImageBytes = baos.toByteArray();
             baos.close();
             pstmPpl.setBytes(4, PersonImageBytes);
@@ -210,7 +208,6 @@ public class People implements Serializable, DBConnection {
             conn.commit();
             IPeople.add(newPerson);
         } catch (Exception ex) {
-            ex.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Officelog");
             alert.setHeaderText("SQL Error");
@@ -229,8 +226,8 @@ public class People implements Serializable, DBConnection {
      *
      * @return the unique ID of the new Person.
      */
-    public int addPerson(String Name) {
-        addPerson(new Person(Name, MaxID));
+    public int addPerson(String Name, Room loc) {
+        addPerson(new Person(Name, loc, MaxID));
         return MaxID - 1;
     }
 
@@ -242,8 +239,8 @@ public class People implements Serializable, DBConnection {
      *
      * @return the unique ID of the new Person.
      */
-    public int addPerson(String name, BufferedImage Pic) {
-        addPerson(new Person(name, Pic, MaxID));
+    public int addPerson(String name, Room loc, BufferedImage Pic) {
+        addPerson(new Person(name, loc, Pic, MaxID));
         return MaxID - 1;
     }
 
@@ -255,10 +252,10 @@ public class People implements Serializable, DBConnection {
      *
      * @return the unique ID of the new Employee.
      */
-    public int addEmployee(String name, String Job) {
-        addPerson(new Employee(name, MaxID, Job));
-        return MaxID - 1;
-    }
+//    public int addEmployee(String name, String Job) {
+//        addPerson(new Employee(name, MaxID, Job));
+//        return MaxID - 1;
+//    }
 
     /**
      * Adds a new Employee with given parameters.
@@ -269,8 +266,8 @@ public class People implements Serializable, DBConnection {
      *
      * @return the unique ID of the new Employee.
      */
-    public int addEmployee(String name, String Job, Room[] per) {
-        addPerson(new Employee(name, MaxID, Job, per));
+    public int addEmployee(String name, Room loc, String Job, Room[] per) {
+        addPerson(new Employee(name, MaxID, loc, Job, per));
         return MaxID - 1;
     }
 
@@ -298,8 +295,8 @@ public class People implements Serializable, DBConnection {
      *
      * @return the unique ID of the new Employee.
      */
-    public int addEmployee(String name, BufferedImage pic, String Job, Room[] per) {
-        addPerson(new Employee(name, pic, MaxID, Job, per));
+    public int addEmployee(String name, Room loc, BufferedImage pic, String Job, Room[] per) {
+        addPerson(new Employee(name ,MaxID, pic, loc, Job, per));
         return MaxID - 1;
     }
 

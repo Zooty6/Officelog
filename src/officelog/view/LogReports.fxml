@@ -89,7 +89,8 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Button layoutX="25.0" layoutY="196.0" mnemonicParsing="false" onAction="#RefreshVisits" text="Refresh" />
+                              <Button layoutX="25.0" layoutY="201.0" mnemonicParsing="false" onAction="#RefreshVisits" text="Refresh" />
+                              <RadioButton fx:id="rbCor" layoutX="26.0" layoutY="169.0" mnemonicParsing="false" onAction="#CorRefresh" selected="true" text="Corridor included" />
                            </children>
                         </AnchorPane>
                     </items>

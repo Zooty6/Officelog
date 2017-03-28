@@ -1,7 +1,5 @@
 package connections;
 
-
-
 /**
  * Defines the parameters needed to connect to the database
  * 

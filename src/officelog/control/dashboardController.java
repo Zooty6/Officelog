@@ -316,7 +316,6 @@ public class dashboardController implements Initializable, DBConnection {
                                     selectedPerson.getID() + ", '" + 
                                     ((ButtonRoom) (event.getSource())).getRoom().getName() + "')");
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Officelog");
                     alert.setHeaderText("SQL Error");
@@ -374,7 +373,7 @@ public class dashboardController implements Initializable, DBConnection {
                 stageMP.setScene(new Scene(ModPersonWindow));
                 stageMP.showAndWait();
             } catch (Exception ex) {
-                ;
+                
             }
         }
 
@@ -394,7 +393,7 @@ public class dashboardController implements Initializable, DBConnection {
                     allRoom.setDisable(true);
                 }
             } catch (IOException ex) {
-                ;
+                
             }
         }
 
@@ -415,7 +414,7 @@ public class dashboardController implements Initializable, DBConnection {
                 } finally {
                     try {
                         oos.close();
-                    } catch (IOException ex) {
+                    } catch (Exception ex) {
                         System.out.println("Can't close stuff! " + ex.getMessage());
                     }
                 }
@@ -468,7 +467,6 @@ public class dashboardController implements Initializable, DBConnection {
                 Language.load(f);
                 LoadLanguage();
             }
-
         }
 
         if (event.getSource() == miCopyRight) {
@@ -497,7 +495,6 @@ public class dashboardController implements Initializable, DBConnection {
                 stageOL.getIcons().add(new Image("http://i.imgur.com/SDmKEqG.jpg"));
                 stageOL.show();
             } catch (IOException ex) {
-                ex.printStackTrace();
             }
         }
 
@@ -512,7 +509,6 @@ public class dashboardController implements Initializable, DBConnection {
                 stageORL.getIcons().add(new Image("http://i.imgur.com/SDmKEqG.jpg"));
                 stageORL.show();
             } catch (IOException ex) {
-                ex.printStackTrace();
             }
         }
 
@@ -1012,7 +1008,6 @@ public class dashboardController implements Initializable, DBConnection {
                 lalert.showAndWait();
                 throw e;
             } else {
-                e.printStackTrace();
                 Language.load("lang\\En.xml");
                 LoadLanguage();
             }

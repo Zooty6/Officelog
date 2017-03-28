@@ -1,8 +1,5 @@
-package officelog.control;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -10,7 +7,8 @@ import connections.DBConnection;
 import officelog.model.Room;
 
 /**
- * Reloads all Rooms in the database. Used when the database was built.
+ * Reloads all Rooms in the database. It was used once, when the database was built.
+ * Not needed anymore.
  *
  * @author Zooty
  */
@@ -32,8 +30,7 @@ public class RoomsReload implements DBConnection {
                 }
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            
         }
-
     }
 }

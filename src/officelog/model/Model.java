@@ -27,14 +27,13 @@ public class Model implements DBConnection{
     /**
      * Creates a collection for all the rooms in the office
      */
-    private ArrayList<Room> office = new ArrayList<>();
+    private final ArrayList<Room> office = new ArrayList<>();
     
     /**
      * Builds up the model of the office.
      */
     public Model(){
-        eventList.addEvent(new Event("Officelog has started"));        
-        //FetchPeople();
+        eventList.addEvent(new Event("Officelog has started"));
         BuildOffice();        
         people = new People(this);
     }

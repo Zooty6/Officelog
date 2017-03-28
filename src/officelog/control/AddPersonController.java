@@ -153,13 +153,13 @@ public class AddPersonController implements Initializable {
                         per[i++] = room;                        
                     }
                     if (NewImg == null) {
-                        newPersonID = model.getPeople().addEmployee(tfName.getText(), tfJob.getText(), per);
-                        model.getPeople().getPerson(newPersonID).setLocation(model.getRoom("Outside"));
+                        newPersonID = model.getPeople().addEmployee(tfName.getText(), model.getRoom("Outside"), tfJob.getText(), per);
+                        //model.getPeople().getPerson(newPersonID).setLocation(model.getRoom("Outside"));
                         model.getEventList().addEvent(new Event("New Person", model.getPeople().getPerson(newPersonID)));
                         ((Stage)(btnSubmit.getScene().getWindow())).close();
                     }else{
-                        newPersonID = model.getPeople().addEmployee(tfName.getText(), NewImg, tfJob.getText(), per);
-                        model.getPeople().getPerson(newPersonID).setLocation(model.getRoom("Outside"));
+                        newPersonID = model.getPeople().addEmployee(tfName.getText(), model.getRoom("Outside"), NewImg, tfJob.getText(), per);
+                        //model.getPeople().getPerson(newPersonID).setLocation(model.getRoom("Outside"));
                         model.getEventList().addEvent(new Event("New Person", model.getPeople().getPerson(newPersonID)));
                         ((Stage)(btnSubmit.getScene().getWindow())).close();
                     }
@@ -167,13 +167,13 @@ public class AddPersonController implements Initializable {
             }else{// if Person (not employee)
                 
                 if(NewImg == null){
-                    newPersonID = model.getPeople().addPerson(tfName.getText());
-                    model.getPeople().getPerson(newPersonID).setLocation(model.getRoom("Outside"));
+                    newPersonID = model.getPeople().addPerson(tfName.getText(), model.getRoom("Outside"));
+                    //model.getPeople().getPerson(newPersonID).setLocation(model.getRoom("Outside"));
                     model.getEventList().addEvent(new Event("New Person", model.getPeople().getPerson(newPersonID)));
                     ((Stage)(btnSubmit.getScene().getWindow())).close();
                 }else{
-                    newPersonID = model.getPeople().addPerson(tfName.getText(),NewImg);
-                    model.getPeople().getPerson(newPersonID).setLocation(model.getRoom("Outside"));
+                    newPersonID = model.getPeople().addPerson(tfName.getText(), model.getRoom("Outside"), NewImg);
+                    //model.getPeople().getPerson(newPersonID).setLocation(model.getRoom("Outside"));
                     model.getEventList().addEvent(new Event("New Person", model.getPeople().getPerson(newPersonID)));
                     ((Stage)(btnSubmit.getScene().getWindow())).close();
                 }

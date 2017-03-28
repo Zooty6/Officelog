@@ -27,10 +27,11 @@ public class Employee extends Person {
      * 
      * @param Name name of the person.
      * @param ID unique ID of the person.
+     * @Param location Location of the person.
      * @param Job Job of the person.
      */
-    public Employee(String Name, int ID, String Job) { 
-        super(Name, ID);
+    public Employee(String Name, int ID, Room location, String Job) { 
+        super(Name, location, ID);
         this.Job = Job;
     }
      
@@ -90,6 +91,23 @@ public class Employee extends Person {
      * @param Job Job of the person.
      * @param per list of permissions this employee can enter.
      */
+    public Employee(String Name, int ID, BufferedImage Pic, Room Loc, String Job, Room[] per) {
+        super(Name, Loc, Pic, ID);
+        this.Job = Job;        
+        for (Room room : per) {
+            Permissions.add(room);
+        }
+    }
+    
+     /**
+     * Creates and Employee.
+     * 
+     * @param Name name of the person.
+     * @param ID unique ID of the person.
+     * @param Loc The current location of the Employee.
+     * @param Job Job of the person.
+     * @param per list of permissions this employee can enter.
+     */
     public Employee(String Name, int ID, BufferedImage Pic, Room Loc, String Job, ArrayList<Room> per) {
         super(Name, Loc, Pic, ID);
         this.Job = Job;        
@@ -113,6 +131,7 @@ public class Employee extends Person {
             Permissions.add(room);
         }
     }
+    
     /**
      * Returns the job of the person.
      * 

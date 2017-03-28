@@ -81,8 +81,8 @@ public class Person implements Serializable, DBConnection {
         this.Location = Location;
         this.ID = ID;
         if (pic == null) {
-            this.Pic="icons\\Default.png";            
-        } else {            
+            this.Pic = "icons\\Default.png";
+        } else {
             if (pic.getWidth() != pic.getHeight()) {
                 throw new IllegalArgumentException("Icon is not NxN");
             }
@@ -93,9 +93,8 @@ public class Person implements Serializable, DBConnection {
                 System.out.println(ex.getMessage());
             }
             Pic = savefile.getPath();
-        }        
+        }
     }
-    
 
     /**
      * Creates a Person.
@@ -172,20 +171,23 @@ public class Person implements Serializable, DBConnection {
      * @param newLoc The new location this person will be at.
      */
     public void setLocation(Room newLoc) {
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSW)) {
-            Statement stm = conn.createStatement();
-            this.Location = newLoc;
-            newLoc.getBtnRoom().addPerson(this);
-            stm.executeUpdate("UPDATE People\n" + "SET Loc = '" + newLoc.getName() + "'\n" + "WHERE ID =" + this.ID);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Officelog");
-            alert.setHeaderText("SQL Error");
-            alert.setContentText("There was an error connecting to the database");
-            alert.showAndWait();
-            System.exit(1);
+
+        if (!this.Location.equals(newLoc)) {
+            try (Connection conn = DriverManager.getConnection(URL, USER, PASSW)) {
+                Statement stm = conn.createStatement();                
+                stm.executeUpdate("UPDATE People\n" + "SET Loc = '" + newLoc.getName() + "'\n" + "WHERE ID =" + this.ID);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Officelog");
+                alert.setHeaderText("SQL Error");
+                alert.setContentText("There was an error connecting to the database");
+                alert.showAndWait();
+                System.exit(1);
+            }
         }
+        newLoc.getBtnRoom().addPerson(this);
+        this.Location = newLoc;
     }
 
     /**
