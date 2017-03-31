@@ -190,8 +190,7 @@ public class Model implements DBConnection{
             //</editor-fold>
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSW)){
             
-            ResultSet cat = // Szandi likes cats
-                    conn.createStatement().executeQuery("SELECT * FROM Rooms");
+            ResultSet cat = conn.createStatement().executeQuery(SQLSELECTROOMS1);
             while (cat.next()){
                 //System.out.println(cat.getString(1) + "\t" + cat.getString(2) + "\t" + cat.getString(3));                
                 office.add(new Room(cat.getString(1),
@@ -200,7 +199,7 @@ public class Model implements DBConnection{
             }
             
             ResultSet fox = // Zoli likes foxes
-                        conn.createStatement().executeQuery("SELECT * FROM RoomConnections");           
+                    conn.createStatement().executeQuery(SQLSELECTROOMCONNECTIONS);           
             while (fox.next()){
                 getRoom(fox.getString(1)).getNeighbors().add(getRoom(fox.getString(2)));
             }            
@@ -208,7 +207,7 @@ public class Model implements DBConnection{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Officelog");
             alert.setHeaderText("SQL Error");
-            alert.setContentText("There was an error connecting to the database");
+            alert.setContentText("There was an error connecting to the database: " + ex.getMessage());
             alert.showAndWait();
             System.exit(1);
         }

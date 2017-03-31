@@ -189,8 +189,7 @@ public class ModifyPersonController implements Initializable, DBConnection {
             } else {
                 try (Connection conn = DriverManager.getConnection(URL, USER, PASSW)) {
                     conn.setAutoCommit(false);
-                    PreparedStatement pstmPpl = conn.prepareStatement(
-                            "UPDATE People SET Pic = ?, Job = ? WHERE ID = ?");
+                    PreparedStatement pstmPpl = conn.prepareStatement(SQLUPDATEPEOPLE1);
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     ImageIO.write(NewImg, "jpg", baos);
                     baos.flush();
@@ -203,9 +202,9 @@ public class ModifyPersonController implements Initializable, DBConnection {
                     if ((lvPeople.getSelectionModel().getSelectedItem()) instanceof Employee) {
                         Statement stmD = conn.createStatement();
                         Statement stmI = conn.createStatement();
-                        stmD.executeUpdate("DELETE FROM Permissions WHERE PersonID = " + lvPeople.getSelectionModel().getSelectedItem().getID());
+                        stmD.executeUpdate(SQLDELETEPERMISSIONS + lvPeople.getSelectionModel().getSelectedItem().getID());
                         for (Room room : lvRightItems) {
-                            stmI.executeUpdate("INSERT INTO Permissions VALUES("
+                            stmI.executeUpdate(SQLINSERTPERMISSIONS1
                                     + lvPeople.getSelectionModel().getSelectedItem().getID() + ", '"
                                     + room.getName() + "')");
                         }

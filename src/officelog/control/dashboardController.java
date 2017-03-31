@@ -312,7 +312,7 @@ public class dashboardController implements Initializable, DBConnection {
                         new Event("Acces denied", selectedPerson, ((ButtonRoom) (event.getSource())).getRoom()));
                 try (Connection conn = DriverManager.getConnection(URL, USER, PASSW)) {
                     conn.createStatement().executeUpdate(
-                            "INSERT INTO Logs VALUES('Access Denied', CURRENT_TIMESTAMP," + 
+                                    SQLINSERTLOGS + 
                                     selectedPerson.getID() + ", '" + 
                                     ((ButtonRoom) (event.getSource())).getRoom().getName() + "')");
                 } catch (SQLException ex) {
@@ -355,6 +355,8 @@ public class dashboardController implements Initializable, DBConnection {
                 stageAP.setResizable(false);
                 stageAP.getIcons().add(new Image("http://i.imgur.com/SDmKEqG.jpg"));
                 stageAP.showAndWait();
+                FixNewModel();
+                System.out.println("asd");
             } catch (IOException ex) {
                 System.out.println("Could not load AddPerson.fxml");
             }

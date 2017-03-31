@@ -186,11 +186,7 @@ public class LogReportsController implements Initializable, DBConnection {
         cbPersonFilter.getItems().add("All");
         Set<String> types = new HashSet<>();
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSW)) {
-            ResultSet rs = conn.createStatement().executeQuery(
-                    "SELECT Name, ID\n"
-                    + "FROM Logs l, People p\n"
-                    + "Where l.PersonID = p.ID\n"
-                    + "GROUP BY Name, ID");
+            ResultSet rs = conn.createStatement().executeQuery(SQLSELECTLOGSPEOPLE1);
             while (rs.next()) {
                 //cbPersonFilter.getItems().add("ID:" + rs.getString(2) + ", " + rs.getString(1));
                 cbPersonFilter.getItems().add(rs.getString(1));
@@ -218,11 +214,7 @@ public class LogReportsController implements Initializable, DBConnection {
         }
         data.clear();
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSW)) {
-            ResultSet rs = conn.createStatement().executeQuery(
-                    "SELECT Date, Type, ID, Name, l.Loc \n"
-                    + "FROM Logs l, People p\n"
-                    + "Where l.PersonID = p.ID\n"
-                    + where1 + "\n" + where2);
+            ResultSet rs = conn.createStatement().executeQuery(SQLSELECTPEOPLE2 + where1 + "\n" + where2);
             tcDate.setCellValueFactory(new PropertyValueFactory<>("date"));
             tcType.setCellValueFactory(new PropertyValueFactory<>("type"));
             tcID.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -272,11 +264,7 @@ public class LogReportsController implements Initializable, DBConnection {
         }
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSW)) {
             ResultSet rs = conn.createStatement().executeQuery(
-                    "SELECT TOP " + top + Perc + " ID, Name, count(*) Attempts\n"
-                    + "FROM Logs l, People p\n"
-                    + "WHERE l.PersonID = p.ID AND l.Type = 'Access Denied'\n"
-                    + "Group by ID, Name\n"
-                    + "ORDER BY Attempts " + Rel);
+                    SQLSELECTLOGSPEOPLE2FIRST + top + Perc + SQLSELECTLOGSPEOPLE2SECOND + Rel);
             tcDAID.setCellValueFactory(new PropertyValueFactory<>("ID"));
             tcDAName.setCellValueFactory(new PropertyValueFactory<>("name"));
             tcDACount.setCellValueFactory(new PropertyValueFactory<>("Count"));
@@ -376,15 +364,12 @@ public class LogReportsController implements Initializable, DBConnection {
         ArrayList<String> Rooms = new ArrayList<>();
         ArrayList<EnteredLogs> logs = new ArrayList<>();
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSW)) {
-            ResultSet rs = conn.createStatement().executeQuery("SELECT Name FROM Rooms");
+            ResultSet rs = conn.createStatement().executeQuery(SQLSELECTROOMS2);
             while (rs.next()) {
                 Rooms.add(rs.getString(1));
                 roomvisits.add(new DateEnter(rs.getString(1)));
             }
-            rs = conn.createStatement().executeQuery(
-                    "SELECT Date, ID, Name, logs.Loc, People.Pic\n"
-                    + "FROM logs, People\n"
-                    + "WHERE ID = PersonID AND Type = 'Entered'");
+            rs = conn.createStatement().executeQuery(SQLSELECTLOGSPEOPLE3);
             while (rs.next()) {
                 logs.add(new EnteredLogs(rs.getDate(1), rs.getInt(2), rs.getString(3), rs.getString(4)));
                 for (DateEnter roomvisit : roomvisits) {
@@ -394,7 +379,7 @@ public class LogReportsController implements Initializable, DBConnection {
                 }
             }
 
-            TreeItem<String> root = new TreeItem<String>("Office");
+            TreeItem<String> root = new TreeItem<>("Office");
             root.setExpanded(true);
             for (String room : Rooms) {
                 ArrayList<PersonEnter> PENodeModel = new ArrayList<>();
@@ -465,7 +450,7 @@ public class LogReportsController implements Initializable, DBConnection {
             lAverageVisits.setText("" + ((float) sumEnterCorPos / roomvisits.size()));
         } else {
             lMostVisitedRoom.setText(maxEnterRoomNameCorNeg);
-            lAverageVisits.setText("" + ((float) sumEnterCorNeg / roomvisits.size()));
+            lAverageVisits.setText("" + ((float) sumEnterCorNeg / (roomvisits.size()-3)));
         }
     }
 }

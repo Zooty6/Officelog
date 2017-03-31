@@ -174,16 +174,14 @@ public class Person implements Serializable, DBConnection {
 
         if (!this.Location.equals(newLoc)) {
             try (Connection conn = DriverManager.getConnection(URL, USER, PASSW)) {
-                Statement stm = conn.createStatement();                
-                stm.executeUpdate("UPDATE People\n" + "SET Loc = '" + newLoc.getName() + "'\n" + "WHERE ID =" + this.ID);
+                Statement stm = conn.createStatement();               
+                stm.executeUpdate(SQLUPDATEPEOPLE3FIRST + newLoc.getName() + "'" + SQLUPDATEPEOPLE3SECOND + this.ID);                
             } catch (SQLException ex) {
-                ex.printStackTrace();
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Officelog");
                 alert.setHeaderText("SQL Error");
                 alert.setContentText("There was an error connecting to the database");
                 alert.showAndWait();
-                System.exit(1);
             }
         }
         newLoc.getBtnRoom().addPerson(this);

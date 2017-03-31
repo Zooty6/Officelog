@@ -64,7 +64,7 @@ public class People implements Serializable, DBConnection {
      */
     private void FetchPeople(Model model) {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSW)) {
-            ResultSet APerson = conn.createStatement().executeQuery("SELECT ID, Name, Loc, Pic, Job, IsDeleted FROM People");
+            ResultSet APerson = conn.createStatement().executeQuery(SQLSELECTPEOPLE1);
             while (APerson.next()) {
                 if (APerson.getInt(6) == 0) {
                     //System.out.println(APerson.getString(1)+"\t"+APerson.getString(2)+"\t"+APerson.getString(3)+"\t"+APerson.getString(5));
@@ -77,7 +77,7 @@ public class People implements Serializable, DBConnection {
                         IPeople.add(new Person(APerson.getString(2), model.getRoom(APerson.getString(3)), Pic, APerson.getInt(1)));
                     } else {
                         int NewEmployeeID = APerson.getInt(1);
-                        ResultSet PermissionResults = conn.createStatement().executeQuery("SELECT * FROM Permissions");
+                        ResultSet PermissionResults = conn.createStatement().executeQuery(SQLSELECTPERMISSIONS);
                         ArrayList<Room> PersonsPermission = new ArrayList<>();
                         while (PermissionResults.next()) {
                             if (PermissionResults.getInt(1) == NewEmployeeID) {
@@ -184,7 +184,7 @@ public class People implements Serializable, DBConnection {
         }
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSW)) {
             conn.setAutoCommit(false);
-            PreparedStatement pstmPpl = conn.prepareStatement("INSERT INTO People VALUES(?,?,?,?,?,?)");
+            PreparedStatement pstmPpl = conn.prepareStatement(SQLINSERTPEOPLE1);
             pstmPpl.setInt(1, newPerson.getID());
             pstmPpl.setString(2, newPerson.getName());
             pstmPpl.setString(3, "Outside");
@@ -199,7 +199,7 @@ public class People implements Serializable, DBConnection {
             pstmPpl.executeUpdate();
             if (newPerson instanceof Employee) {
                 for (Room room : ((Employee) (newPerson)).getPermissions()) {
-                    PreparedStatement pstmPerm = conn.prepareStatement("INSERT INTO Permissions VALUES(?,?)");
+                    PreparedStatement pstmPerm = conn.prepareStatement(SQLINSERTPERMISSIONS2);
                     pstmPerm.setInt(1, newPerson.getID());
                     pstmPerm.setString(2, room.getName());
                     pstmPerm.executeUpdate();
@@ -314,7 +314,7 @@ public class People implements Serializable, DBConnection {
     public void removePerson(Person oldPerson) {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSW)) {
             Statement stm = conn.createStatement();
-            stm.executeUpdate("UPDATE People SET IsDeleted = 1 Where ID = " + oldPerson.getID());
+            stm.executeUpdate(SQLUPDATEPEOPLE2 + oldPerson.getID());
             IPeople.remove(oldPerson);
             NumberOfPpl--;
             UpdateNumberOfPplInOffice();
