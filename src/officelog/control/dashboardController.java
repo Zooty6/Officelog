@@ -511,6 +511,7 @@ public class dashboardController implements Initializable, DBConnection {
                 stageORL.getIcons().add(new Image("http://i.imgur.com/SDmKEqG.jpg"));
                 stageORL.show();
             } catch (IOException ex) {
+                ex.printStackTrace();
             }
         }
 

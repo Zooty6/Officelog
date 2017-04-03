@@ -4,6 +4,7 @@ import connections.DBConnection;
 import static connections.DBConnection.PASSW;
 import static connections.DBConnection.URL;
 import static connections.DBConnection.USER;
+import javafx.scene.control.CheckBox;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -77,7 +78,7 @@ public class LogReportsController implements Initializable, DBConnection {
     @FXML
     private Label lAverageVisits;
     @FXML
-    private RadioButton rbCor;
+    private CheckBox cbCor;
 
     private class DateEnter {
 
@@ -445,7 +446,7 @@ public class LogReportsController implements Initializable, DBConnection {
             }
             sumEnterCorPos += roomvisit.getEnters();
         }
-        if (rbCor.isSelected()) {
+        if (cbCor.isSelected()) {
             lMostVisitedRoom.setText(maxEnterRoomNameCorPos);
             lAverageVisits.setText("" + ((float) sumEnterCorPos / roomvisits.size()));
         } else {
