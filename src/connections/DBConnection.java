@@ -7,7 +7,7 @@ package connections;
  */
 public interface DBConnection {
     String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    String URL = "jdbc:sqlserver://zoliftp.dlinkddns.com:1433;databaseName=OfficelogDB;";
+    String URL = "jdbc:sqlserver://localhost:1433;databaseName=OfficelogDB;";
     String URLLOCAL = "jdbc:sqlserver://localhost:1433;databaseName=OfficelogDB;";
     String URLREMOTE = "jdbc:sqlserver://zoliftp.dlinkddns.com:1433;databaseName=OfficelogDB;";
     String USER = "officelogUser";
@@ -19,7 +19,7 @@ public interface DBConnection {
     String SQLSELECTROOMS2 = "SELECT Name FROM Rooms";
     String SQLSELECTROOMCONNECTIONS = "SELECT * FROM RoomConnections";
     String SQLSELECTPERMISSIONS = "SELECT * FROM Permissions";
-    String SQLSELECTPEOPLE1 = "SELECT ID, Name, Loc, Pic, Job, IsDeleted FROM People";
+    String SQLSELECTPEOPLE1 = "SELECT ID, Name, Loc, Pic, Job FROM People WHERE IsDeleted = 0";
     String SQLSELECTPEOPLE2 = "SELECT Date, Type, ID, Name, l.Loc "
                             + "FROM Logs l, People p Where l.PersonID = p.ID\n";
     String SQLSELECTLOGSPEOPLE1 = "SELECT Name, ID FROM Logs l, People p "

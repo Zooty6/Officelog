@@ -49,7 +49,7 @@ public class People implements Serializable, DBConnection {
     private int MaxID = 1;
 
     /**
-     * Creates a new, empty collection.
+     * Creates a new collection for people, and fetches all data from database.
      */
     public People(Model model) {
         IPeople = new HashSet<>();
@@ -65,28 +65,26 @@ public class People implements Serializable, DBConnection {
     private void FetchPeople(Model model) {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSW)) {
             ResultSet APerson = conn.createStatement().executeQuery(SQLSELECTPEOPLE1);
-            while (APerson.next()) {
-                if (APerson.getInt(6) == 0) {
-                    //System.out.println(APerson.getString(1)+"\t"+APerson.getString(2)+"\t"+APerson.getString(3)+"\t"+APerson.getString(5));
-                    BufferedImage Pic = ImageIO.read(new ByteArrayInputStream(APerson.getBytes(4)));
-                    String job = APerson.getString(5);
-                    if (APerson.wasNull()) {
-                        //System.out.println(APerson.getString(1) + "\t" + APerson.getString(2) + "\t" + APerson.getString(3) + "\t" + APerson.getString(5));
+            while (APerson.next()) {                
+                //System.out.println(APerson.getString(1)+"\t"+APerson.getString(2)+"\t"+APerson.getString(3)+"\t"+APerson.getString(5));
+                BufferedImage Pic = ImageIO.read(new ByteArrayInputStream(APerson.getBytes(4)));
+                String job = APerson.getString(5);
+                if (APerson.wasNull()) {
+                    //System.out.println(APerson.getString(1) + "\t" + APerson.getString(2) + "\t" + APerson.getString(3) + "\t" + APerson.getString(5));
 
-                        // IPeople.add(new Person(APerson.getString(2), model.getRoom(APerson.getString(3)), APerson.getInt(1)));
-                        IPeople.add(new Person(APerson.getString(2), model.getRoom(APerson.getString(3)), Pic, APerson.getInt(1)));
-                    } else {
-                        int NewEmployeeID = APerson.getInt(1);
-                        ResultSet PermissionResults = conn.createStatement().executeQuery(SQLSELECTPERMISSIONS);
-                        ArrayList<Room> PersonsPermission = new ArrayList<>();
-                        while (PermissionResults.next()) {
-                            if (PermissionResults.getInt(1) == NewEmployeeID) {
-                                PersonsPermission.add(model.getRoom(PermissionResults.getString(2)));
-                            }
+                    // IPeople.add(new Person(APerson.getString(2), model.getRoom(APerson.getString(3)), APerson.getInt(1)));
+                    IPeople.add(new Person(APerson.getString(2), model.getRoom(APerson.getString(3)), Pic, APerson.getInt(1)));
+                } else {
+                    int NewEmployeeID = APerson.getInt(1);
+                    ResultSet PermissionResults = conn.createStatement().executeQuery(SQLSELECTPERMISSIONS);
+                    ArrayList<Room> PersonsPermission = new ArrayList<>();
+                    while (PermissionResults.next()) {
+                        if (PermissionResults.getInt(1) == NewEmployeeID) {
+                            PersonsPermission.add(model.getRoom(PermissionResults.getString(2)));
                         }
-                        IPeople.add(new Employee(APerson.getString(2), NewEmployeeID, Pic, model.getRoom(APerson.getString(3)), job, PersonsPermission));
                     }
-                }
+                    IPeople.add(new Employee(APerson.getString(2), NewEmployeeID, Pic, model.getRoom(APerson.getString(3)), job, PersonsPermission));
+                }                
                 if (APerson.getInt(1) > MaxID - 1) {
                     MaxID = APerson.getInt(1) + 1;
                 }

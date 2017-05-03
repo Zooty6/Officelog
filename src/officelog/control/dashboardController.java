@@ -652,6 +652,7 @@ public class dashboardController implements Initializable, DBConnection {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        miLogOpen.setDisable(true);
         try {
             Class.forName(DRIVER);
         } catch (ClassNotFoundException ex) {
