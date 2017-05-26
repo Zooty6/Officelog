@@ -1,7 +1,10 @@
 package officelog.model;
 
+import Messages.PersonTemplate;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -127,8 +130,17 @@ public class Employee extends Person {
     public Employee(String Name, int ID, String Job, Room[] per) {
         super(Name, ID);
         this.Job = Job;
-        for (Room room : per) {
-            Permissions.add(room);
+        Permissions.addAll(Arrays.asList(per));
+    }
+    
+    public Employee(PersonTemplate tmpl, Room room, ArrayList<Room> office) throws IOException{
+        super(tmpl,room);
+        this.Job = tmpl.getJob();
+         for (String pername : tmpl.getPer()) {            
+            for (Room room1 : office) {
+                if(room1.getName().equals(pername))
+                    this.Permissions.add(room1);
+            }
         }
     }
     
@@ -211,6 +223,6 @@ public class Employee extends Person {
      */
     @Override
     public String toString() {
-        return "ID: " + this.getID() + ", " + NameString + ": "+ this.getName();
+        return "ID: " + this.getID() + ", Name: "+ this.getName();
     }    
 }

@@ -1,17 +1,15 @@
 package officelog.model;
 
+import connections.ConnectionToServer;
 import connections.DBConnection;
 import static connections.DBConnection.PASSW;
 import static connections.DBConnection.URL;
 import static connections.DBConnection.USER;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import javafx.scene.control.Alert;
@@ -19,6 +17,8 @@ import javax.imageio.ImageIO;
 import java.io.ByteArrayOutputStream;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * A collection class for all the people in the office.
@@ -30,7 +30,7 @@ public class People implements Serializable, DBConnection {
     /**
      * Collection of the people.
      */
-    private final Set<Person> IPeople;
+    private Set<Person> IPeople;
 
     /**
      * Number of the people who are currently in the building (and not outside). Not used, can be
@@ -53,7 +53,7 @@ public class People implements Serializable, DBConnection {
      */
     public People(Model model) {
         IPeople = new HashSet<>();
-        FetchPeople(model);
+        IPeople = FetchPeople(model);
         NumberOfPpl = IPeople.size();
         NumberOfPplInOffice = 0;
         UpdateNumberOfPplInOffice();
@@ -62,41 +62,14 @@ public class People implements Serializable, DBConnection {
     /**
      * Fetches people from the database
      */
-    private void FetchPeople(Model model) {
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSW)) {
-            ResultSet APerson = conn.createStatement().executeQuery(SQLSELECTPEOPLE1);
-            while (APerson.next()) {                
-                //System.out.println(APerson.getString(1)+"\t"+APerson.getString(2)+"\t"+APerson.getString(3)+"\t"+APerson.getString(5));
-                BufferedImage Pic = ImageIO.read(new ByteArrayInputStream(APerson.getBytes(4)));
-                String job = APerson.getString(5);
-                if (APerson.wasNull()) {
-                    //System.out.println(APerson.getString(1) + "\t" + APerson.getString(2) + "\t" + APerson.getString(3) + "\t" + APerson.getString(5));
-
-                    // IPeople.add(new Person(APerson.getString(2), model.getRoom(APerson.getString(3)), APerson.getInt(1)));
-                    IPeople.add(new Person(APerson.getString(2), model.getRoom(APerson.getString(3)), Pic, APerson.getInt(1)));
-                } else {
-                    int NewEmployeeID = APerson.getInt(1);
-                    ResultSet PermissionResults = conn.createStatement().executeQuery(SQLSELECTPERMISSIONS);
-                    ArrayList<Room> PersonsPermission = new ArrayList<>();
-                    while (PermissionResults.next()) {
-                        if (PermissionResults.getInt(1) == NewEmployeeID) {
-                            PersonsPermission.add(model.getRoom(PermissionResults.getString(2)));
-                        }
-                    }
-                    IPeople.add(new Employee(APerson.getString(2), NewEmployeeID, Pic, model.getRoom(APerson.getString(3)), job, PersonsPermission));
-                }                
-                if (APerson.getInt(1) > MaxID - 1) {
-                    MaxID = APerson.getInt(1) + 1;
-                }
-            }
-        } catch (Exception ex) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Officelog");
-            alert.setHeaderText("SQL Error");
-            alert.setContentText("There was an error connecting to the database");
-            alert.showAndWait();
-            System.exit(1);
+    private Set<Person> FetchPeople(Model model) {
+        
+        try {
+            return ConnectionToServer.fetcfPeople(model.getOffice());
+        } catch (InterruptedException ex) {
+            Logger.getLogger(People.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return IPeople; 
     }
 
     /**
@@ -363,7 +336,7 @@ public class People implements Serializable, DBConnection {
         }
     }
 
-    public void UpdateNumberOfPplInOffice() {
+    public final void UpdateNumberOfPplInOffice() {
         NumberOfPplInOffice = 0;
         for (Person person : IPeople) {
             if (!person.getLocation().getName().equals("Outside")) {

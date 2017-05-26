@@ -1,5 +1,6 @@
 package officelog.model;
 
+import Messages.RoomTemplate;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
@@ -77,6 +78,10 @@ public class Room implements Serializable{
      */
     public Room(String Name){
         this(Name, 0);
+    }
+    
+    public Room(RoomTemplate roomtmpl){
+        this(roomtmpl.getName(),roomtmpl.getMaxPeople(), roomtmpl.getOpen());
     }
 
     /**

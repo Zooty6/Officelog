@@ -1,5 +1,6 @@
 package officelog.model;
 
+import Messages.PersonTemplate;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +15,8 @@ import static connections.DBConnection.PASSW;
 import static connections.DBConnection.USER;
 import javafx.scene.control.Alert;
 import static connections.DBConnection.URL;
+import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
 
 /**
  * This class represents a person in the model.
@@ -21,11 +24,6 @@ import static connections.DBConnection.URL;
  * @author Zooty
  */
 public class Person implements Serializable, DBConnection {
-
-    /**
-     * Language specific string for "Name"
-     */
-    protected String NameString = "Name";
 
     /**
      * This String stores the name of the Person.
@@ -135,15 +133,11 @@ public class Person implements Serializable, DBConnection {
         this.ID = ID;
         this.Pic = "icons\\Default.png";
     }
-
-    /**
-     * Set the "Name" string according to the selected language.
-     *
-     * @param NameString "Name" in the selected language.
-     */
-    public void setNameString(String NameString) {
-        this.NameString = NameString;
-    }
+    
+    public Person(PersonTemplate tmpl, Room room) throws IOException {
+        this(tmpl.getName(), room, ImageIO.read(new ByteArrayInputStream(tmpl.getPic())), tmpl.getID());
+        
+    }   
 
     /**
      * Sets the picture of the Person.
@@ -162,7 +156,7 @@ public class Person implements Serializable, DBConnection {
         }
         Pic = savefile.getPath();
         System.out.println(pic);
-    }
+    }    
 
     /**
      * Sets the current location of the specific person. Also adds the Person to the button's list
@@ -247,8 +241,8 @@ public class Person implements Serializable, DBConnection {
      * @return a String of the ID and name of the Person.
      */
     @Override
-    public String toString() {
-        return "ID: " + ID + ", " + NameString + ": " + Name;
+        public String toString() {
+        return "ID: " + ID + ", Name: " + Name;
     }
 
 }

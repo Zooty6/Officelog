@@ -1,5 +1,6 @@
 package officelog.control;
 
+import connections.ConnectionToServer;
 import officelog.view.Language;
 import officelog.model.People;
 import officelog.model.Person;
@@ -44,6 +45,7 @@ import static connections.DBConnection.USER;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import org.w3c.dom.NodeList;
 
@@ -293,6 +295,9 @@ public class dashboardController implements Initializable, DBConnection {
     @FXML
     private void handleButtonAction(ActionEvent event) {
         if (event.getSource() instanceof ButtonRoom) {
+            ConnectionToServer.enter(selectedPerson.getID(), ((ButtonRoom) (event.getSource())).getRoom().getName());
+            
+            //TODO not rely on this..
             if (((ButtonRoom) (event.getSource())).getRoom().isOpen()
                     || selectedPerson.isAllowed(((ButtonRoom) (event.getSource())).getRoom())) {
                 if (((ButtonRoom) (event.getSource())).getRoom().getMaxPeople() == 0
@@ -652,7 +657,7 @@ public class dashboardController implements Initializable, DBConnection {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        miLogOpen.setDisable(true);
+        miLogOpen.setDisable(true);        
         try {
             Class.forName(DRIVER);
         } catch (ClassNotFoundException ex) {
@@ -835,7 +840,8 @@ public class dashboardController implements Initializable, DBConnection {
 //            System.out.println("failed to load an icon");
 //        }
 //        tmpPerm = null;
-//        //\TEST        
+//        //\TEST    
+//        exitApplication(new ActionEvent());
     }
 
     private void PersonSelecter(ActionEvent event) {
@@ -1002,7 +1008,7 @@ public class dashboardController implements Initializable, DBConnection {
                     }
                 }
             }
-            System.out.println();
+            //System.out.println();
         } catch (Exception e) {
             if (Language.getSrc().equals("lang\\En.xml")) {
                 Alert lalert = new Alert(Alert.AlertType.ERROR);
@@ -1016,6 +1022,12 @@ public class dashboardController implements Initializable, DBConnection {
                 LoadLanguage();
             }
         }
+    }
+    
+    @FXML
+    public void exitApplication(ActionEvent event) {
+        //System.out.println("hi");
+        ((Stage)R2.getScene().getWindow()).close();
     }
 
     private void FixNewModel() {

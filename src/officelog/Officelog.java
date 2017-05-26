@@ -1,5 +1,6 @@
 package officelog;
 
+import connections.ConnectionToServer;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +14,8 @@ import javafx.stage.Stage;
  */
 public class Officelog extends Application {    
     @Override
-    public void start(Stage primaryStage) throws Exception{        
+    public void start(Stage primaryStage) throws Exception{ 
+        ConnectionToServer.initClient();
         Parent root = FXMLLoader.load(getClass().getResource("view/dashboard.fxml"));
         Scene scene = new Scene(root);        
         primaryStage.setScene(scene);
@@ -23,8 +25,14 @@ public class Officelog extends Application {
         primaryStage.setMaxWidth(900);
         primaryStage.setMinHeight(700);
         primaryStage.getIcons().add(new Image("http://i.imgur.com/SDmKEqG.jpg"));
-        primaryStage.show();         
+        primaryStage.setOnCloseRequest(event -> {
+            System.out.println("Stage is closing");
+            ConnectionToServer.disconnect();
+            System.exit(0);
+            });
+        primaryStage.show();                  
     }
+
 
     public static void main(String[] args) {              
         launch(args);

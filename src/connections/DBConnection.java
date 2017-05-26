@@ -6,10 +6,10 @@ package connections;
  * @author Zooty
  */
 public interface DBConnection {
-    String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    String URL = "jdbc:sqlserver://localhost:1433;databaseName=OfficelogDB;";
+    String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";    
     String URLLOCAL = "jdbc:sqlserver://localhost:1433;databaseName=OfficelogDB;";
     String URLREMOTE = "jdbc:sqlserver://zoliftp.dlinkddns.com:1433;databaseName=OfficelogDB;";
+    String URL = URLLOCAL;
     String USER = "officelogUser";
     String PASSW = "officelogPW";
     
@@ -21,7 +21,7 @@ public interface DBConnection {
     String SQLSELECTPERMISSIONS = "SELECT * FROM Permissions";
     String SQLSELECTPEOPLE1 = "SELECT ID, Name, Loc, Pic, Job FROM People WHERE IsDeleted = 0";
     String SQLSELECTPEOPLE2 = "SELECT Date, Type, ID, Name, l.Loc "
-                            + "FROM Logs l, People p Where l.PersonID = p.ID\n";
+                            + "FROM Logs l, People p WHERE l.PersonID = p.ID\n";
     String SQLSELECTLOGSPEOPLE1 = "SELECT Name, ID FROM Logs l, People p "
                                 + "WHERE l.PersonID = p.ID GROUP BY Name, ID";
     String SQLSELECTLOGSPEOPLE2FIRST = "SELECT TOP ";
