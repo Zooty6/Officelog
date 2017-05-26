@@ -14,9 +14,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import officelog.model.Employee;
-import officelog.model.Person;
-import officelog.model.Room;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import officelog.control.dashboardController;
+import officelog.model.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,25 +36,30 @@ public class ConnectionToServer {
     private static final Set<Person> peopleSet = new HashSet<>();
     private static final ArrayList<PersonTemplate> peopleTmpl = new ArrayList<>();
     private static ArrayList<Room> office = null;
+    private static Model model;
 
     public static void initClient() {
+        IO.Options o = new IO.Options();
+        o.timeout = 1000;
+        o.forceNew = false;
         objMapper.registerModule(new JsonOrgModule());
         try {
-            client = IO.socket(SERVER);
+            client = IO.socket(SERVER, o);
         } catch (URISyntaxException ex) {
             System.out.println("Uri syntax is wrong: " + ex.getMessage());
         }
-        System.out.println("Connecting to server...");
 
-        client.connect();
         if (client.connected()) {
             System.out.println("Connected.");
         }
-        addListeners();       
-        
+        addListeners();
     }
-    
-    public static void enter(int ID, String room){
+
+    public static void setModel(Model model) {
+        ConnectionToServer.model = model;
+    }
+
+    public static void enter(int ID, String room) {
         client.emit("enterrequest", objMapper.convertValue(new Moving(ID, room), JSONObject.class));
     }
 
@@ -83,18 +89,19 @@ public class ConnectionToServer {
                     } else {
                         peopleSet.add(new Employee(personTemplate, room, office));
                     }
-                }catch(IOException ex){
+                } catch (IOException ex) {
                     System.out.println("Can't read data from server.");
                 }
             }
-            System.out.println("out");
-            System.out.println(peopleSet);
-            pplready=true;            
+//            System.out.println("out");
+//            System.out.println(peopleSet);
+            pplready = true;
         });
-        while(!pplready)
+        while (!pplready) {
             Thread.sleep(100);
+        }
         pplready = false;
-        return peopleSet;
+        return new HashSet<Person>(peopleSet);
     }
 
     public static ArrayList<Room> fetchRooms() throws InterruptedException {
@@ -151,8 +158,8 @@ public class ConnectionToServer {
                         }
                     }
                 }
-                if(room.getNeighbors().size()>2)
-                    System.out.println(room);
+//                if(room.getNeighbors().size()>2)
+//                    System.out.println(room);
             }
 //            System.out.println("ˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇ");
 
@@ -164,14 +171,65 @@ public class ConnectionToServer {
         }
         rready = false;
 //        System.out.println("SIZE: " + rooms.size());
-        return rooms;
+        return new ArrayList<Room>(rooms);
     }
 
     public static void disconnect() {
         client.disconnect();
     }
 
-    private static void addListeners() {
+    private static synchronized void addListeners() {
+        client.on(Socket.EVENT_DISCONNECT, (Object... os) -> {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Officelog");
+                    alert.setHeaderText("Connection Error");
+                    alert.setContentText("You have been disconnected from the server! Application will close.");
+                    alert.showAndWait();
+                    System.exit(2);
+                }
+            });
+
+        });
+
+        client.on("entered", (Object... os) -> {
+            Moving m = objMapper.convertValue(os[0], Moving.class);
+            String roomname = m.getRoom();
+            Room destRoom = null;
+            for (Room room : model.getOffice()) {
+                if (room.getName().equals(roomname)) {
+                    destRoom = room;
+                }
+            }
+//            if(destRoom.getName().equals(roomname))
+//                System.out.println("yayyy " + destRoom.getName());
+            Person person = null;
+            for (Person personi : model.getPeople().getIPeople()) {
+                if (personi.getID() == m.getPersonID()) {
+                    person = personi;
+                }
+            }
+            try {
+//                System.out.println(person.getID());
+//                System.out.println("I will enter " + destRoom.getBtnRoom().getRoom().getName()+" or" + destRoom.getName());
+                final Person fp = person;
+                final Room fr = destRoom;
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        fr.getBtnRoom().Enter(fp);
+                        dashboardController.d.EnableNeighburs();
+                    }
+                });
+
+            } catch (NullPointerException ex) {
+                System.out.println("Couldn't find something in the local model..");
+            }
+
+        });
+
         client.on("people", (Object... pplack) -> {
             //System.out.println("reading reply..");
             JSONArray json = (JSONArray) pplack[0];
@@ -182,7 +240,7 @@ public class ConnectionToServer {
                     System.out.println("Can't read data from server.");
                 }
             }
-            System.out.println(peopleTmpl);
+            //System.out.println(peopleTmpl);
             Room room = null;
             for (PersonTemplate personTemplate : peopleTmpl) {
                 for (Room room1 : office) {
@@ -196,14 +254,19 @@ public class ConnectionToServer {
                     } else {
                         peopleSet.add(new Employee(personTemplate, room, office));
                     }
-                }catch(IOException ex){
+                    //System.out.println(room.getName());
+                } catch (IOException ex) {
                     System.out.println("Can't read data from server.");
                 }
             }
             //System.out.println("out");
             //System.out.println(peopleSet);
-            pplready=true; 
+            pplready = true;
         });
+    }
+
+    public static void connect() {
+        client.connect();
     }
 
 }

@@ -101,9 +101,10 @@ public class ButtonRoom extends Button implements Serializable{
         redraw();
     }
     
-    public void Enter (Person person){
+    public synchronized void Enter (Person person){
         person.getLocation().getBtnRoom().leave(person);
         person.setLocation(room);
+        pplList.add(person);
         redraw();
     }
      

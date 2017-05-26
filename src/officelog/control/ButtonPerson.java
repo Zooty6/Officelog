@@ -53,7 +53,7 @@ public class ButtonPerson extends Button implements Serializable{
      * 
      * @param person the person this Button will represent on the GUI.
      */
-    public void setPerson(Person person){
+    public synchronized void setPerson(Person person){
         if(person == null){
             this.setVisible(false);
         }

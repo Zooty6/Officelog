@@ -38,8 +38,8 @@ public class Model implements DBConnection{
     public Model(){        
         eventList.addEvent(new Event("Officelog has started"));
         BuildOffice();
-        people = new People(this);        
-        
+        people = new People(this);       
+        ConnectionToServer.setModel(this);
     }
     
     

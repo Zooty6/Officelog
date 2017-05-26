@@ -45,6 +45,8 @@ import static connections.DBConnection.USER;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 import org.w3c.dom.NodeList;
@@ -57,7 +59,7 @@ import org.w3c.dom.NodeList;
 public class dashboardController implements Initializable, DBConnection {
 
     private final Model model = new Model();
-    private static Person selectedPerson;
+    private static Person selectedPerson = null;
     private String labelString;
     private String avgmoveString;
     private String errorString;
@@ -74,6 +76,7 @@ public class dashboardController implements Initializable, DBConnection {
     private String saveintString;
     private String saveinterrorString;
     private String madeby;
+    public static dashboardController d;
 
     //<editor-fold defaultstate="collapsed" desc="linking buttons">
     @FXML
@@ -295,40 +298,44 @@ public class dashboardController implements Initializable, DBConnection {
     @FXML
     private void handleButtonAction(ActionEvent event) {
         if (event.getSource() instanceof ButtonRoom) {
+//            System.out.println(selectedPerson.getID());
+//            System.out.println(model.getPeople().getIPeople());
+//            System.out.println(selectedPerson.getLocation().getName());
+//            System.out.println("I want to enter here: "+((ButtonRoom) (event.getSource())).getRoom().getName());
             ConnectionToServer.enter(selectedPerson.getID(), ((ButtonRoom) (event.getSource())).getRoom().getName());
-            
+
             //TODO not rely on this..
-            if (((ButtonRoom) (event.getSource())).getRoom().isOpen()
-                    || selectedPerson.isAllowed(((ButtonRoom) (event.getSource())).getRoom())) {
-                if (((ButtonRoom) (event.getSource())).getRoom().getMaxPeople() == 0
-                        || (((ButtonRoom) (event.getSource())).getRoom().getMaxPeople()
-                        > ((ButtonRoom) (event.getSource())).getRoom().getBtnRoom().getPplHere())) {
-                    ((ButtonRoom) (event.getSource())).Enter(selectedPerson);
-                    model.getEventList().addEvent(
-                            new Event("Entered", selectedPerson, ((ButtonRoom) (event.getSource())).getRoom()));
-                    EnableNeighburs();
-                } else {
-                    model.getEventList().addEvent(
-                            new Event("No more place", selectedPerson, ((ButtonRoom) (event.getSource())).getRoom()));
-                    System.out.println("Sorry, we are full :(");
-                }
-            } else {
-                model.getEventList().addEvent(
-                        new Event("Acces denied", selectedPerson, ((ButtonRoom) (event.getSource())).getRoom()));
-                try (Connection conn = DriverManager.getConnection(URL, USER, PASSW)) {
-                    conn.createStatement().executeUpdate(
-                                    SQLINSERTLOGS + 
-                                    selectedPerson.getID() + ", '" + 
-                                    ((ButtonRoom) (event.getSource())).getRoom().getName() + "')");
-                } catch (SQLException ex) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Officelog");
-                    alert.setHeaderText("SQL Error");
-                    alert.setContentText("There was an error connecting to the database");
-                    alert.showAndWait();                    
-                }
-                //System.out.println("GTFO");
-            }
+//            if (((ButtonRoom) (event.getSource())).getRoom().isOpen()
+//                    || selectedPerson.isAllowed(((ButtonRoom) (event.getSource())).getRoom())) {
+//                if (((ButtonRoom) (event.getSource())).getRoom().getMaxPeople() == 0
+//                        || (((ButtonRoom) (event.getSource())).getRoom().getMaxPeople()
+//                        > ((ButtonRoom) (event.getSource())).getRoom().getBtnRoom().getPplHere())) {
+//                    ((ButtonRoom) (event.getSource())).Enter(selectedPerson);
+////                    model.getEventList().addEvent(
+////                            new Event("Entered", selectedPerson, ((ButtonRoom) (event.getSource())).getRoom()));
+//                    EnableNeighburs();
+//                } else {
+//                    model.getEventList().addEvent(
+//                            new Event("No more place", selectedPerson, ((ButtonRoom) (event.getSource())).getRoom()));
+//                    System.out.println("Sorry, we are full :(");
+//                }
+//            } else {
+//                model.getEventList().addEvent(
+//                        new Event("Acces denied", selectedPerson, ((ButtonRoom) (event.getSource())).getRoom()));
+//                try (Connection conn = DriverManager.getConnection(URL, USER, PASSW)) {
+//                    conn.createStatement().executeUpdate(
+//                                    SQLINSERTLOGS + 
+//                                    selectedPerson.getID() + ", '" + 
+//                                    ((ButtonRoom) (event.getSource())).getRoom().getName() + "')");
+//                } catch (SQLException ex) {
+//                    Alert alert = new Alert(Alert.AlertType.ERROR);
+//                    alert.setTitle("Officelog");
+//                    alert.setHeaderText("SQL Error");
+//                    alert.setContentText("There was an error connecting to the database");
+//                    alert.showAndWait();                    
+//                }
+//                //System.out.println("GTFO");
+//            }
             //lbSelected.setText("TODO: " + selectedPerson.getName());
             //System.out.println(((ButtonRoom) (event.getSource())));
         }
@@ -380,7 +387,7 @@ public class dashboardController implements Initializable, DBConnection {
                 stageMP.setScene(new Scene(ModPersonWindow));
                 stageMP.showAndWait();
             } catch (Exception ex) {
-                
+
             }
         }
 
@@ -400,7 +407,7 @@ public class dashboardController implements Initializable, DBConnection {
                     allRoom.setDisable(true);
                 }
             } catch (IOException ex) {
-                
+
             }
         }
 
@@ -641,12 +648,14 @@ public class dashboardController implements Initializable, DBConnection {
      * Enables all ButtonRooms that the selectedPerson can attend to enter. Call this method after a
      * Person moved or a new Person is selected.
      */
-    private void EnableNeighburs() {
-        for (ButtonRoom allRoom : allRooms) {
-            if (allRoom.getRoom().isNeighbor(selectedPerson.getLocation())) {
-                allRoom.setDisable(false);
-            } else {
-                allRoom.setDisable(true);
+    public void EnableNeighburs() {
+        if (selectedPerson != null) {
+            for (ButtonRoom allRoom : allRooms) {
+                if (allRoom.getRoom().isNeighbor(selectedPerson.getLocation())) {
+                    allRoom.setDisable(false);
+                } else {
+                    allRoom.setDisable(true);
+                }
             }
         }
     }
@@ -657,7 +666,9 @@ public class dashboardController implements Initializable, DBConnection {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        miLogOpen.setDisable(true);        
+        Platform.setImplicitExit(false);
+        dashboardController.d = this;
+        miLogOpen.setDisable(true);
         try {
             Class.forName(DRIVER);
         } catch (ClassNotFoundException ex) {
@@ -1023,11 +1034,11 @@ public class dashboardController implements Initializable, DBConnection {
             }
         }
     }
-    
+
     @FXML
     public void exitApplication(ActionEvent event) {
         //System.out.println("hi");
-        ((Stage)R2.getScene().getWindow()).close();
+        ((Stage) R2.getScene().getWindow()).close();
     }
 
     private void FixNewModel() {

@@ -178,8 +178,9 @@ public class Person implements Serializable, DBConnection {
                 alert.showAndWait();
             }
         }
-        newLoc.getBtnRoom().addPerson(this);
         this.Location = newLoc;
+        newLoc.getBtnRoom().addPerson(this);
+        
     }
 
     /**

@@ -15,7 +15,9 @@ import javafx.stage.Stage;
 public class Officelog extends Application {    
     @Override
     public void start(Stage primaryStage) throws Exception{ 
-        ConnectionToServer.initClient();
+        ConnectionToServer.initClient();        
+        ConnectionToServer.connect();
+        
         Parent root = FXMLLoader.load(getClass().getResource("view/dashboard.fxml"));
         Scene scene = new Scene(root);        
         primaryStage.setScene(scene);
