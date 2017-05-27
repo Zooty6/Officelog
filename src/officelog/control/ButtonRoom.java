@@ -121,6 +121,7 @@ public class ButtonRoom extends Button implements Serializable{
     }
 
     public void redraw(){
+        //System.out.println("redrawing" + this.room.getName());
         if (PplHere<=SubButtons.length){
             SubButtons[SubButtons.length-1].setPlus(false);
             int i;

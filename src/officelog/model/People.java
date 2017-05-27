@@ -1,5 +1,6 @@
 package officelog.model;
 
+import Messages.PersonTemplate;
 import connections.ConnectionToServer;
 import connections.DBConnection;
 import static connections.DBConnection.PASSW;
@@ -15,6 +16,7 @@ import java.util.Set;
 import javafx.scene.control.Alert;
 import javax.imageio.ImageIO;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
@@ -54,6 +56,7 @@ public class People implements Serializable, DBConnection {
     public People(Model model) {
         IPeople = new HashSet<>();
         IPeople = FetchPeople(model);
+        MaxID = IPeople.size() + 1;
         NumberOfPpl = IPeople.size();
         NumberOfPplInOffice = 0;
         UpdateNumberOfPplInOffice();
@@ -63,13 +66,13 @@ public class People implements Serializable, DBConnection {
      * Fetches people from the database
      */
     private Set<Person> FetchPeople(Model model) {
-        
+
         try {
             return ConnectionToServer.fetcfPeople(model.getOffice());
         } catch (InterruptedException ex) {
             Logger.getLogger(People.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return IPeople; 
+        return IPeople;
     }
 
     /**
@@ -147,47 +150,83 @@ public class People implements Serializable, DBConnection {
      *
      * @throws IllegalArgumentException if the new Person's ID already exist within the collection.
      */
-    private void addPerson(Person newPerson) {
+    private void addPersonReq(Person newPerson) {
+        System.out.println("requesting new person: "+ newPerson.getName());
         for (Person person : IPeople) {
             if (person.getID() == newPerson.getID()) {
                 throw new IllegalArgumentException("Person with this ID already exist");
             }
         }
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSW)) {
-            conn.setAutoCommit(false);
-            PreparedStatement pstmPpl = conn.prepareStatement(SQLINSERTPEOPLE1);
-            pstmPpl.setInt(1, newPerson.getID());
-            pstmPpl.setString(2, newPerson.getName());
-            pstmPpl.setString(3, "Outside");
+        byte[] PersonImageBytes = null;
+        try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(newPerson.getPic(), "jpg", baos);
             baos.flush();
-            byte[] PersonImageBytes = baos.toByteArray();
-            baos.close();
-            pstmPpl.setBytes(4, PersonImageBytes);
-            pstmPpl.setString(5, newPerson instanceof Employee ? ((Employee) newPerson).getJob() : null);
-            pstmPpl.setBoolean(6, false);
-            pstmPpl.executeUpdate();
+            PersonImageBytes = baos.toByteArray();
+        } catch (IOException ex) {
+            Logger.getLogger(People.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (PersonImageBytes != null) {
+            String[] perms = null;
             if (newPerson instanceof Employee) {
+                perms = new String[((Employee) (newPerson)).getPermissions().size()];
+                int i = 0;
                 for (Room room : ((Employee) (newPerson)).getPermissions()) {
-                    PreparedStatement pstmPerm = conn.prepareStatement(SQLINSERTPERMISSIONS2);
-                    pstmPerm.setInt(1, newPerson.getID());
-                    pstmPerm.setString(2, room.getName());
-                    pstmPerm.executeUpdate();
+                    perms[i++] = room.getName();
                 }
             }
-            conn.commit();
-            IPeople.add(newPerson);
-        } catch (Exception ex) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Officelog");
-            alert.setHeaderText("SQL Error");
-            alert.setContentText("There was an error connecting to the database");
-            alert.showAndWait();
-            System.exit(1);
+
+            ConnectionToServer.addPerson(new PersonTemplate(newPerson.getName(),
+                    "Outside", PersonImageBytes, newPerson.getID(),
+                    newPerson instanceof Employee ? ((Employee) newPerson).getJob() : null,
+                    newPerson instanceof Employee ? perms : null));
+        } else {
+            System.out.println("NO PIC!");
         }
+
+//        //TODO not rely on this
+//        try (Connection conn = DriverManager.getConnection(URL, USER, PASSW)) {
+//            conn.setAutoCommit(false);
+//            PreparedStatement pstmPpl = conn.prepareStatement(SQLINSERTPEOPLE1);
+//            pstmPpl.setInt(1, newPerson.getID());
+//            pstmPpl.setString(2, newPerson.getName());
+//            pstmPpl.setString(3, "Outside");
+//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//            ImageIO.write(newPerson.getPic(), "jpg", baos);
+//            baos.flush();
+//            byte[] PersonImageBytes1 = baos.toByteArray();
+//            baos.close();
+//            pstmPpl.setBytes(4, PersonImageBytes1);
+//            pstmPpl.setString(5, newPerson instanceof Employee ? ((Employee) newPerson).getJob() : null);
+//            pstmPpl.setBoolean(6, false);
+//            pstmPpl.executeUpdate();
+//            if (newPerson instanceof Employee) {
+//                for (Room room : ((Employee) (newPerson)).getPermissions()) {
+//                    PreparedStatement pstmPerm = conn.prepareStatement(SQLINSERTPERMISSIONS2);
+//                    pstmPerm.setInt(1, newPerson.getID());
+//                    pstmPerm.setString(2, room.getName());
+//                    pstmPerm.executeUpdate();
+//                }
+//            }
+//            conn.commit();
+//
+//        } catch (Exception ex) {
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Officelog");
+//            alert.setHeaderText("SQL Error");
+//            alert.setContentText("There was an error connecting to the database");
+//            alert.showAndWait();
+//            System.exit(1);
+//        }
+
+    }
+
+    public void addPerson(Person newPerson) {
+        IPeople.add(newPerson);
         MaxID = newPerson.getID() + 1;
         NumberOfPpl = IPeople.size();
+        //System.out.println("redrawing");
+        newPerson.getLocation().getBtnRoom().redraw();
     }
 
     /**
@@ -198,7 +237,8 @@ public class People implements Serializable, DBConnection {
      * @return the unique ID of the new Person.
      */
     public int addPerson(String Name, Room loc) {
-        addPerson(new Person(Name, loc, MaxID));
+        //System.out.println("AAAAAAA");
+        addPersonReq(new Person(Name, loc, MaxID));
         return MaxID - 1;
     }
 
@@ -211,7 +251,8 @@ public class People implements Serializable, DBConnection {
      * @return the unique ID of the new Person.
      */
     public int addPerson(String name, Room loc, BufferedImage Pic) {
-        addPerson(new Person(name, loc, Pic, MaxID));
+        System.out.println(MaxID);
+        addPersonReq(new Person(name, loc, Pic, MaxID));
         return MaxID - 1;
     }
 
@@ -227,7 +268,6 @@ public class People implements Serializable, DBConnection {
 //        addPerson(new Employee(name, MaxID, Job));
 //        return MaxID - 1;
 //    }
-
     /**
      * Adds a new Employee with given parameters.
      *
@@ -238,7 +278,7 @@ public class People implements Serializable, DBConnection {
      * @return the unique ID of the new Employee.
      */
     public int addEmployee(String name, Room loc, String Job, Room[] per) {
-        addPerson(new Employee(name, MaxID, loc, Job, per));
+        addPersonReq(new Employee(name, MaxID, loc, Job, per));
         return MaxID - 1;
     }
 
@@ -252,7 +292,7 @@ public class People implements Serializable, DBConnection {
      * @return the unique ID of the new Employee.
      */
     public int addEmployee(String name, BufferedImage pic, String Job) {
-        addPerson(new Employee(name, pic, MaxID, Job));
+        addPersonReq(new Employee(name, pic, MaxID, Job));
         return MaxID - 1;
     }
 
@@ -267,7 +307,7 @@ public class People implements Serializable, DBConnection {
      * @return the unique ID of the new Employee.
      */
     public int addEmployee(String name, Room loc, BufferedImage pic, String Job, Room[] per) {
-        addPerson(new Employee(name ,MaxID, pic, loc, Job, per));
+        addPersonReq(new Employee(name, MaxID, pic, loc, Job, per));
         return MaxID - 1;
     }
 

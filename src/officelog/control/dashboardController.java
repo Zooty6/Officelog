@@ -368,7 +368,7 @@ public class dashboardController implements Initializable, DBConnection {
                 stageAP.getIcons().add(new Image("http://i.imgur.com/SDmKEqG.jpg"));
                 stageAP.showAndWait();
                 FixNewModel();
-                System.out.println("asd");
+                //System.out.println("asd");
             } catch (IOException ex) {
                 System.out.println("Could not load AddPerson.fxml");
             }

@@ -8,14 +8,19 @@ import com.fasterxml.jackson.datatype.jsonorg.JsonOrgModule;
 import io.socket.client.Ack;
 import io.socket.client.IO;
 import io.socket.client.Socket;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
+import javafx.util.Duration;
+import javax.imageio.ImageIO;
 import officelog.control.dashboardController;
 import officelog.model.*;
 import org.json.JSONArray;
@@ -37,10 +42,12 @@ public class ConnectionToServer {
     private static final ArrayList<PersonTemplate> peopleTmpl = new ArrayList<>();
     private static ArrayList<Room> office = null;
     private static Model model;
+    private static Timeline timeline = new Timeline(new KeyFrame(
+            Duration.millis(3000),
+            action -> client.emit(Socket.EVENT_PING, "Ping")));
 
     public static void initClient() {
         IO.Options o = new IO.Options();
-        o.timeout = 1000;
         o.forceNew = false;
         objMapper.registerModule(new JsonOrgModule());
         try {
@@ -61,6 +68,11 @@ public class ConnectionToServer {
 
     public static void enter(int ID, String room) {
         client.emit("enterrequest", objMapper.convertValue(new Moving(ID, room), JSONObject.class));
+    }
+
+    public static void addPerson(PersonTemplate personTemplate) {
+        //System.out.println("req addperson");
+        client.emit("addperson", objMapper.convertValue(personTemplate, JSONObject.class));
     }
 
     public static Set<Person> fetcfPeople(ArrayList<Room> off) throws InterruptedException {
@@ -179,19 +191,45 @@ public class ConnectionToServer {
     }
 
     private static synchronized void addListeners() {
+
         client.on(Socket.EVENT_DISCONNECT, (Object... os) -> {
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Officelog");
-                    alert.setHeaderText("Connection Error");
-                    alert.setContentText("You have been disconnected from the server! Application will close.");
-                    alert.showAndWait();
-                    System.exit(2);
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Officelog");
+                alert.setHeaderText("Connection Error");
+                alert.setContentText("You have been disconnected from the server! Application will close.");
+                alert.showAndWait();
+                System.exit(2);
+            });
+        });
+
+        client.on("newperson", (Object... os) -> {
+            Platform.runLater(() -> {
+                PersonTemplate persontmpl = objMapper.convertValue(os[0], PersonTemplate.class);
+                System.out.println(persontmpl.getID());
+                try {
+                    Person newPerson = null;
+                    if (persontmpl.getJob() == null) {
+                        newPerson = new Person(persontmpl.getName(), ImageIO.read(new ByteArrayInputStream(persontmpl.getPic())), persontmpl.getID());
+                    } else {
+                        Set<Room> per = new HashSet<>();
+                        for (String string : persontmpl.getPer()) {
+                            for (Room room : model.getOffice()) {
+                                if (string.equals(room.getName())) {
+                                    per.add(room);
+                                }
+                            }
+                        }
+                        newPerson = new Employee(persontmpl.getName(), ImageIO.read(new ByteArrayInputStream(persontmpl.getPic())),
+                                persontmpl.getID(), persontmpl.getJob(), per.toArray(new Room[per.size()]));
+                        //String Name, BufferedImage Pic, int ID, String Job, Room[] per
+                    }
+                    newPerson.setLocation(model.getRoom(persontmpl.getLocationName()));
+                    model.getPeople().addPerson(newPerson);
+                } catch (IOException ex) {
+                    System.out.println("Can't read picture.");
                 }
             });
-
         });
 
         client.on("entered", (Object... os) -> {
