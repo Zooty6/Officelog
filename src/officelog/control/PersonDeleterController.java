@@ -108,11 +108,11 @@ public class PersonDeleterController implements Initializable {
             alert.setContentText(ConfirmString + ": " + lvPpl.getSelectionModel().getSelectedItem().getName() +
                     " (ID: "+ lvPpl.getSelectionModel().getSelectedItem().getID()+")?");
             if(alert.showAndWait().get() == ButtonType.OK){
-                ButtonRoom tmpBtr = lvPpl.getSelectionModel().getSelectedItem().getLocation().getBtnRoom();                
+                //ButtonRoom tmpBtr = lvPpl.getSelectionModel().getSelectedItem().getLocation().getBtnRoom();                
                 dashboardController.setSelectedPerson(null);
                 model.getPeople().removePerson(lvPpl.getSelectionModel().getSelectedItem()); 
                 model.getEventList().addEvent(new Event("Person Deleted", lvPpl.getSelectionModel().getSelectedItem()));
-                tmpBtr.leave(lvPpl.getSelectionModel().getSelectedItem());
+                //tmpBtr.leave(lvPpl.getSelectionModel().getSelectedItem());
                 ((Stage) (btCancel.getScene().getWindow())).close();
             }
         }

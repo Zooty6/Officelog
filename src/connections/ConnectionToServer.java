@@ -8,6 +8,7 @@ import com.fasterxml.jackson.datatype.jsonorg.JsonOrgModule;
 import io.socket.client.Ack;
 import io.socket.client.IO;
 import io.socket.client.Socket;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -42,9 +43,9 @@ public class ConnectionToServer {
     private static final ArrayList<PersonTemplate> peopleTmpl = new ArrayList<>();
     private static ArrayList<Room> office = null;
     private static Model model;
-    private static Timeline timeline = new Timeline(new KeyFrame(
-            Duration.millis(3000),
-            action -> client.emit(Socket.EVENT_PING, "Ping")));
+//    private static Timeline timeline = new Timeline(new KeyFrame(
+//            Duration.millis(3000),
+//            action -> client.emit(Socket.EVENT_PING, "Ping")));
 
     public static void initClient() {
         IO.Options o = new IO.Options();
@@ -70,6 +71,12 @@ public class ConnectionToServer {
         client.emit("enterrequest", objMapper.convertValue(new Moving(ID, room), JSONObject.class));
     }
 
+    public static void delPerson(int id) {
+        PersonTemplate pt = new PersonTemplate();
+        pt.setID(id);
+        client.emit("delrequest", objMapper.convertValue(pt, JSONObject.class));
+    }
+
     public static void addPerson(PersonTemplate personTemplate) {
         //System.out.println("req addperson");
         client.emit("addperson", objMapper.convertValue(personTemplate, JSONObject.class));
@@ -78,7 +85,7 @@ public class ConnectionToServer {
     public static Set<Person> fetcfPeople(ArrayList<Room> off) throws InterruptedException {
         office = off;
         client.emit("fetchpeople", null, (Ack) (Object[] pplack) -> {
-            System.out.println("reading reply..");
+//            System.out.println("reading reply..");
             JSONArray json = (JSONArray) pplack[0];
             for (int i = 0; i < json.length(); i++) {
                 try {
@@ -87,7 +94,7 @@ public class ConnectionToServer {
                     System.out.println("Can't read data from server.");
                 }
             }
-            System.out.println(peopleTmpl);
+//            System.out.println(peopleTmpl);
             Room room = null;
             for (PersonTemplate personTemplate : peopleTmpl) {
                 for (Room room1 : office) {
@@ -203,40 +210,75 @@ public class ConnectionToServer {
             });
         });
 
-        client.on("newperson", (Object... os) -> {
+        client.on("message", (Object... os) -> {
             Platform.runLater(() -> {
-                PersonTemplate persontmpl = objMapper.convertValue(os[0], PersonTemplate.class);
-                System.out.println(persontmpl.getID());
-                try {
-                    Person newPerson = null;
-                    if (persontmpl.getJob() == null) {
-                        newPerson = new Person(persontmpl.getName(), ImageIO.read(new ByteArrayInputStream(persontmpl.getPic())), persontmpl.getID());
-                    } else {
-                        Set<Room> per = new HashSet<>();
-                        for (String string : persontmpl.getPer()) {
-                            for (Room room : model.getOffice()) {
-                                if (string.equals(room.getName())) {
-                                    per.add(room);
-                                }
-                            }
-                        }
-                        newPerson = new Employee(persontmpl.getName(), ImageIO.read(new ByteArrayInputStream(persontmpl.getPic())),
-                                persontmpl.getID(), persontmpl.getJob(), per.toArray(new Room[per.size()]));
-                        //String Name, BufferedImage Pic, int ID, String Job, Room[] per
-                    }
-                    newPerson.setLocation(model.getRoom(persontmpl.getLocationName()));
-                    model.getPeople().addPerson(newPerson);
-                } catch (IOException ex) {
-                    System.out.println("Can't read picture.");
-                }
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Officelog");
+                alert.setHeaderText("Server message");
+                alert.setContentText((String)os[0]);
+                alert.show();
             });
+        });
+
+        client.on("delperson", (Object... os) -> {
+            PersonTemplate persontmpl = objMapper.convertValue(os[0], PersonTemplate.class);
+            int delid = persontmpl.getID();
+            System.out.println(delid);
+            model.getPeople().removePerson(delid);
+
+//            Person delperson = null;
+//            for (Person person : model.getPeople().getIPeople()) {
+//                if(delid == person.getID())
+//                    delperson = person;                
+//            }
+//            if(delperson!=null){
+//                delperson.getLocation().getBtnRoom().leave(delperson);
+//                model.getPeople().removePerson(delperson);
+//            }
+        });
+
+        client.on("newperson", (Object... os) -> {
+
+            System.out.println("NEWPERSON!!");
+
+            //Platform.runLater(() -> {
+            PersonTemplate persontmpl = objMapper.convertValue(os[0], PersonTemplate.class);
+            BufferedImage pic = null;
+            Person newPerson = null;
+            try {
+                pic = ImageIO.read(new ByteArrayInputStream(persontmpl.getPic()));
+            } catch (IOException ex) {
+                System.out.println("Can't read picture.");
+            }
+            if (persontmpl.getJob() == null) {
+                newPerson = new Person(persontmpl.getName(), pic, persontmpl.getID());
+            } else {
+                Set<Room> per = new HashSet<>();
+                for (String string : persontmpl.getPer()) {
+                    for (Room room : model.getOffice()) {
+                        if (string.equals(room.getName())) {
+                            per.add(room);
+                        }
+                    }
+                }
+                newPerson = new Employee(persontmpl.getName(), pic,
+                        persontmpl.getID(), persontmpl.getJob(), per.toArray(new Room[per.size()]));
+                //String Name, BufferedImage Pic, int ID, String Job, Room[] per
+            }
+            newPerson.setLocation(model.getRoom(persontmpl.getLocationName()));
+            model.getPeople().addPerson(newPerson);
+
+            //});
         });
 
         client.on("entered", (Object... os) -> {
             Moving m = objMapper.convertValue(os[0], Moving.class);
             String roomname = m.getRoom();
             Room destRoom = null;
-            for (Room room : model.getOffice()) {
+            ArrayList<Room> off = model.getOffice();
+//            System.out.println(off);
+            for (Room room : off) {
+//                System.out.println(room.getName());
                 if (room.getName().equals(roomname)) {
                     destRoom = room;
                 }
@@ -252,15 +294,17 @@ public class ConnectionToServer {
             try {
 //                System.out.println(person.getID());
 //                System.out.println("I will enter " + destRoom.getBtnRoom().getRoom().getName()+" or" + destRoom.getName());
+                if (destRoom == null) {
+                    System.out.println("DESTROOM IS NULL");
+                }
+                if (person == null) {
+                    System.out.println("PERSON IS NULL");
+                }
                 final Person fp = person;
                 final Room fr = destRoom;
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        fr.getBtnRoom().Enter(fp);
-                        dashboardController.d.EnableNeighburs();
-                    }
-                });
+
+                fr.getBtnRoom().Enter(fp);
+                dashboardController.d.EnableNeighburs();
 
             } catch (NullPointerException ex) {
                 System.out.println("Couldn't find something in the local model..");

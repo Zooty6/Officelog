@@ -129,11 +129,11 @@ public class AddPersonController implements Initializable {
             }
         }
         if (event.getSource() == btnCancel){
-            System.out.println("cancer");
+//            System.out.println("cancer");
             ((Stage)(btnCancel.getScene().getWindow())).close();
         }
         if (event.getSource() == btnSubmit) {
-            System.out.println("submit");
+//            System.out.println("submit");
             int newPersonID;
             if ("".equals(tfName.getText())) {
                 Alert alert = new Alert(AlertType.WARNING);
@@ -169,7 +169,6 @@ public class AddPersonController implements Initializable {
             }else{// if Person (not employee)
                 
                 if(NewImg == null){
-                    System.out.println("come on!");
                     newPersonID = model.getPeople().addPerson(tfName.getText(), model.getRoom("Outside"));
                     //model.getPeople().getPerson(newPersonID).setLocation(model.getRoom("Outside"));
                     model.getEventList().addEvent(new Event("New Person", model.getPeople().getPerson(newPersonID)));

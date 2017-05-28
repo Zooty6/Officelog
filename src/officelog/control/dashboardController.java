@@ -834,6 +834,12 @@ public class dashboardController implements Initializable, DBConnection {
         LogViewerController.setElist(model.getEventList().getElist());
         LoadLanguage();
         FixNewModel();
+        miSavePerson.setDisable(true);
+        miSetSave.setDisable(true);
+        miOpenPerson.setDisable(true);
+        miMostSusp.setDisable(true);
+        miAvgMove.setDisable(true);
+        miLogDel.setDisable(true);
 //        //TEST
 //        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek")).setLocation(model.getRoom("Outside")); //*.*
 //        model.getPeople().getPerson(model.getPeople().addPerson("Test Elek1")).setLocation(model.getRoom("R6"));

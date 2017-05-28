@@ -66,7 +66,7 @@ public class People implements Serializable, DBConnection {
      * Fetches people from the database
      */
     private Set<Person> FetchPeople(Model model) {
-
+        
         try {
             return ConnectionToServer.fetcfPeople(model.getOffice());
         } catch (InterruptedException ex) {
@@ -151,7 +151,7 @@ public class People implements Serializable, DBConnection {
      * @throws IllegalArgumentException if the new Person's ID already exist within the collection.
      */
     private void addPersonReq(Person newPerson) {
-        System.out.println("requesting new person: "+ newPerson.getName());
+//        System.out.println("requesting new person: "+ newPerson.getName());
         for (Person person : IPeople) {
             if (person.getID() == newPerson.getID()) {
                 throw new IllegalArgumentException("Person with this ID already exist");
@@ -167,7 +167,7 @@ public class People implements Serializable, DBConnection {
             Logger.getLogger(People.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (PersonImageBytes != null) {
-            String[] perms = null;
+            String[] perms = new String[0];
             if (newPerson instanceof Employee) {
                 perms = new String[((Employee) (newPerson)).getPermissions().size()];
                 int i = 0;
@@ -175,11 +175,11 @@ public class People implements Serializable, DBConnection {
                     perms[i++] = room.getName();
                 }
             }
-
+            
             ConnectionToServer.addPerson(new PersonTemplate(newPerson.getName(),
                     "Outside", PersonImageBytes, newPerson.getID(),
                     newPerson instanceof Employee ? ((Employee) newPerson).getJob() : null,
-                    newPerson instanceof Employee ? perms : null));
+                    perms));
         } else {
             System.out.println("NO PIC!");
         }
@@ -218,9 +218,8 @@ public class People implements Serializable, DBConnection {
 //            alert.showAndWait();
 //            System.exit(1);
 //        }
-
     }
-
+    
     public void addPerson(Person newPerson) {
         IPeople.add(newPerson);
         MaxID = newPerson.getID() + 1;
@@ -323,19 +322,7 @@ public class People implements Serializable, DBConnection {
      * @throws UnsupportedOperationException if the remove operation is not supported by this set
      */
     public void removePerson(Person oldPerson) {
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSW)) {
-            Statement stm = conn.createStatement();
-            stm.executeUpdate(SQLUPDATEPEOPLE2 + oldPerson.getID());
-            IPeople.remove(oldPerson);
-            NumberOfPpl--;
-            UpdateNumberOfPplInOffice();
-        } catch (SQLException ex) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Officelog");
-            alert.setHeaderText("SQL Error");
-            alert.setContentText("There was an error connecting to the database");
-            alert.showAndWait();
-        }
+        ConnectionToServer.delPerson(oldPerson.getID());
     }
 
     /**
@@ -347,16 +334,20 @@ public class People implements Serializable, DBConnection {
      */
     public void removePerson(int oldPersonID) {
         Person otter = null; //otters are cute as well! http://i.imgur.com/TvhgtOs.mp4
-        for (Person person : IPeople) {
-            if (person.getID() == oldPersonID) {
-                IPeople.remove(person);
+        System.out.println(oldPersonID);
+        for (Person person : IPeople) {            
+            if (person.getID() == oldPersonID) {                
                 otter = person;
-                UpdateNumberOfPplInOffice();
-                NumberOfPpl--;
             }
         }
+        System.out.println(IPeople);
         if (otter == null) {
-            throw new IllegalArgumentException("This person isn't in the list!");
+//            throw new IllegalArgumentException("This person isn't in the list!");
+        } else {
+            otter.getLocation().getBtnRoom().leave(otter);
+            IPeople.remove(otter);
+            UpdateNumberOfPplInOffice();
+            NumberOfPpl--;
         }
     }
 
@@ -375,7 +366,7 @@ public class People implements Serializable, DBConnection {
             NumberOfPplInOffice--;
         }
     }
-
+    
     public final void UpdateNumberOfPplInOffice() {
         NumberOfPplInOffice = 0;
         for (Person person : IPeople) {

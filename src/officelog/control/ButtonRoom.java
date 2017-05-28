@@ -4,14 +4,16 @@ import officelog.model.Room;
 import officelog.model.Person;
 import java.io.Serializable;
 import java.util.ArrayList;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 
 /**
  * @author Zooty
  */
-public class ButtonRoom extends Button implements Serializable{
-    private int PplHere; 
+public class ButtonRoom extends Button implements Serializable {
+
+    private int PplHere;
     private ButtonPerson[] SubButtons;
     private final ArrayList<Person> pplList = new ArrayList<>();
     private Room room;
@@ -45,7 +47,7 @@ public class ButtonRoom extends Button implements Serializable{
 
     /**
      * Returns the number of subButtons.
-     * 
+     *
      * @return the number of subButtons.
      */
     public int getMaxSubBtn() {
@@ -54,7 +56,7 @@ public class ButtonRoom extends Button implements Serializable{
 
     /**
      * Returns how many people are in this Room right now.
-     * 
+     *
      * @return the number of people are in this Room right now.
      */
     public int getPplHere() {
@@ -63,16 +65,16 @@ public class ButtonRoom extends Button implements Serializable{
 
     /**
      * Returns the subButtons assigned to this Room.
-     * 
+     *
      * @return the subButtons assigned to this Room.
      */
-    public ButtonPerson[] getSubButtons() {        
+    public ButtonPerson[] getSubButtons() {
         return SubButtons;
     }
 
     /**
      * Returns the logical Room that this Button represents.
-     * 
+     *
      * @return the logical Room that this Button represents.
      */
     public Room getRoom() {
@@ -87,54 +89,60 @@ public class ButtonRoom extends Button implements Serializable{
         this.room = room;
     }
 
-    public void setSubButtons(ButtonPerson[] SubButtons) {        
+    public void setSubButtons(ButtonPerson[] SubButtons) {
         this.SubButtons = SubButtons;
-    }   
+    }
 
     public void setPpplHere(int PpplHere) {
         this.PplHere = PpplHere;
-    }    
-    
-    public void clear(){
+    }
+
+    public void clear() {
         pplList.clear();
         PplHere = 0;
         redraw();
     }
-    
-    public synchronized void Enter (Person person){
+
+    public synchronized void Enter(Person person) {
+//        System.out.println(person.getName() + "enters to: " + this.room.getName());
         person.getLocation().getBtnRoom().leave(person);
         person.setLocation(room);
-        pplList.add(person);
+        //pplList.add(person);
         redraw();
     }
-     
-    public void leave (Person person){
+
+    public void leave(Person person) {
         pplList.remove(person);
+//        System.out.println(person.getName() + "removed from:" + this.room.getName());
         PplHere--;
         redraw();
     }
-    
-    public void addPerson(Person newPerson){
+
+    public void addPerson(Person newPerson) {
         pplList.add(newPerson);
         PplHere++;
         redraw();
     }
 
-    public void redraw(){
+    public void redraw() {
         //System.out.println("redrawing" + this.room.getName());
-        if (PplHere<=SubButtons.length){
-            SubButtons[SubButtons.length-1].setPlus(false);
-            int i;
-            for (i = 0; i < PplHere; i++) 
-                SubButtons[i].setPerson(pplList.get(i));            
-            while(i<SubButtons.length)
-                SubButtons[i++].setPerson(null);
-        }
-        else{ //PplHere>MaxSubBtn
-            for (int i = 0; i < SubButtons.length; i++) 
-                SubButtons[i].setPerson(pplList.get(i));            
-            SubButtons[SubButtons.length-1].setPlus(true);            
-            /*
+        Platform.runLater(() -> {
+            if (PplHere <= SubButtons.length) {
+                SubButtons[SubButtons.length - 1].setPlus(false);
+                int i;
+                for (i = 0; i < PplHere; i++) {
+                    SubButtons[i].setPerson(pplList.get(i));
+                }
+                while (i < SubButtons.length) {
+                    SubButtons[i++].setPerson(null);
+                }
+            } else { //PplHere>MaxSubBtn
+                for (int i = 0; i < SubButtons.length; i++) {
+                    SubButtons[i].setPerson(pplList.get(i));
+                }
+//                System.out.println("+++++++++++++++++++++++++++++++");
+                SubButtons[SubButtons.length - 1].setPlus(true);
+                /*
             int i=0;
             for (Person nextperson : pplList) {
                 SubButtons[i++].setPerson(nextperson);
@@ -142,12 +150,13 @@ public class ButtonRoom extends Button implements Serializable{
                     SubButtons[i++].setPerson(null);
             
             }*/
-        }                 
+            }
+        });
     }
 
     @Override
     public String toString() {
         return "Room " + room.getName() + "; pplList=" + pplList;
     }
-    
+
 }

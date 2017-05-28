@@ -17,6 +17,8 @@ import javafx.scene.control.Alert;
 import static connections.DBConnection.URL;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class represents a person in the model.
@@ -38,7 +40,7 @@ public class Person implements Serializable, DBConnection {
     /**
      * The current picture of the Person.
      */
-    private String Pic;
+    private BufferedImage Pic;
 
     /**
      * The unique ID of the Person. Used as a primary key in the collection.
@@ -55,7 +57,11 @@ public class Person implements Serializable, DBConnection {
         this.Name = Name;
         this.ID = ID;
         this.Location = null;
-        this.Pic = "icons\\Default.png";
+        try {
+            this.Pic = ImageIO.read(new File("icons\\Default.png"));
+        } catch (IOException e) {
+            System.out.println("failed to load " + Name + "'s icon");
+        }
         /*
         try {
             setPic(ImageIO.read(new File("icons\\Default.png")));
@@ -79,18 +85,13 @@ public class Person implements Serializable, DBConnection {
         this.Location = Location;
         this.ID = ID;
         if (pic == null) {
-            this.Pic = "icons\\Default.png";
-        } else {
-            if (pic.getWidth() != pic.getHeight()) {
-                throw new IllegalArgumentException("Icon is not NxN");
-            }
-            File savefile = new File("icons\\" + this.ID + ".png");
             try {
-                ImageIO.write(pic, "png", savefile);
+                this.Pic = ImageIO.read(new File("icons\\Default.png"));
             } catch (IOException ex) {
-                System.out.println(ex.getMessage());
+                Logger.getLogger(Person.class.getName()).log(Level.SEVERE, null, ex);
             }
-            Pic = savefile.getPath();
+        } else {
+            this.Pic = pic;
         }
     }
 
@@ -106,17 +107,19 @@ public class Person implements Serializable, DBConnection {
     public Person(String Name, BufferedImage pic, int ID) {
         this.Name = Name;
         this.ID = ID;
-        if (pic.getWidth() != pic.getHeight()) {
-            throw new IllegalArgumentException("Icon is not NxN");
+        if (pic == null) {
+            try {
+                Pic = ImageIO.read(new File("icons\\Default.png"));
+            } catch (IOException ex) {
+                Logger.getLogger(Person.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            if (pic.getWidth() != pic.getHeight()) {
+                throw new IllegalArgumentException("Icon is not NxN");
+            }
+
+            Pic = pic;
         }
-        File savefile = new File("icons\\" + this.ID + ".png");
-        try {
-            ImageIO.write(pic, "png", savefile);
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
-        Pic = savefile.getPath();
-        System.out.println(Pic);
         this.Location = null;
     }
 
@@ -131,13 +134,17 @@ public class Person implements Serializable, DBConnection {
         this.Name = Name;
         this.Location = Location;
         this.ID = ID;
-        this.Pic = "icons\\Default.png";
+        try {
+            this.Pic = ImageIO.read(new File("icons\\Default.png"));
+        } catch (IOException ex) {
+            Pic = null;
+        }
     }
-    
+
     public Person(PersonTemplate tmpl, Room room) throws IOException {
         this(tmpl.getName(), room, ImageIO.read(new ByteArrayInputStream(tmpl.getPic())), tmpl.getID());
-        
-    }   
+
+    }
 
     /**
      * Sets the picture of the Person.
@@ -148,15 +155,8 @@ public class Person implements Serializable, DBConnection {
         if (pic.getWidth() != pic.getHeight()) {
             throw new IllegalArgumentException("Icon is not NxN");
         }
-        File savefile = new File("icons\\" + this.ID + ".png");
-        try {
-            ImageIO.write(pic, "png", savefile);
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
-        Pic = savefile.getPath();
-        System.out.println(pic);
-    }    
+        Pic = pic;
+    }
 
     /**
      * Sets the current location of the specific person. Also adds the Person to the button's list
@@ -180,7 +180,7 @@ public class Person implements Serializable, DBConnection {
 //        }
         this.Location = newLoc;
         newLoc.getBtnRoom().addPerson(this);
-        
+
     }
 
     /**
@@ -189,14 +189,7 @@ public class Person implements Serializable, DBConnection {
      * @return the picture of the person.
      */
     public BufferedImage getPic() {
-        BufferedImage r;
-        try {
-            r = ImageIO.read(new File(Pic));
-        } catch (IOException e) {
-            System.out.println("failed to load " + Name + "'s icon");
-            r = null;
-        }
-        return r;
+        return Pic;
     }
 
     /**
@@ -242,7 +235,7 @@ public class Person implements Serializable, DBConnection {
      * @return a String of the ID and name of the Person.
      */
     @Override
-        public String toString() {
+    public String toString() {
         return "ID: " + ID + ", Name: " + Name;
     }
 
